@@ -1,0 +1,11 @@
+{
+  "Name": "Carol Davis",
+  "Age": 20,
+  "Experience": 0,
+  "University": "HSE",
+  "Level": 1,
+  "Graduated": false,
+  "Previous_companies": [],
+  "Education_type": "Online",
+  "Specialty": "frontend"
+}
