@@ -1,24 +1,58 @@
 package main
 
-type Intern struct {
+type Applicant struct {
 	Name               string
 	Age                int
 	Experience         int
 	University         string
-	Level              int8
+	Level 			   int8
 	Graduated          bool
 	Previous_companies []string
 	Education_type     string
 	Specialty          string // backend frontend fullsteck
+	Languages          []string 
+	Technologies       []string 
+	Score			   int
 }
 
-// func NewIntern(_name string, _age string, _exp int, _univ int, _level int8, _prev_comp []string) *Intern{
-// 	return &Intern{
-// 		name: _name,
-// 		age: _age,
-// 		experience: _exp,
-// 		university: _univ,
-// 		level: _level,
-// 		previous_companies: _prev_comp,
-// 	}
-// }
+type RequestForApplicant struct {
+	Experience int
+	Level int8
+	Graduated bool
+	Education_type string 
+	Specialty string
+	LanguagesRequired []string 
+	LanguagesOptional []string 
+}
+
+const (
+	ExpWeight = 100
+	LangWeight = 52
+)
+
+func (x Applicant) CalcScore(r RequestForApplicant) {
+	x.Score = 0
+	x.Score += x.Experience * ExpWeight
+
+	var cnt = 0
+	mp := make(map[string]bool)
+	for _, lang := range r.LanguagesOptional {
+		mp[lang] = true
+	}
+	for _, lang := range x.Languages{
+		if mp[lang] {
+			cnt++
+		}
+	}
+
+	x.Score += cnt * LangWeight
+}
+
+func SortIntern(s []Applicant, r RequestForApplicant) {
+	for i, x := range s {
+		x.CalcScore(r)
+	}
+	sort.Slice(s, func(i, j int) bool {
+		return s[i].Score > s[j].Score
+	})
+}

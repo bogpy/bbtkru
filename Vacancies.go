@@ -6,7 +6,7 @@ type Vacancy struct {
 	Company                  *Company
 	Necessary_experience     int
 	Work_type                int8 //remote inoffice outoffice
-	Salary_start, salary_end int
+	Salary_start, Salary_end int
 	Work_hours               int
 }
 
