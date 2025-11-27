@@ -9,7 +9,7 @@ type Applicant struct {
 	Graduated          bool
 	Previous_companies []string
 	Education_type     string
-	Specialty          string // backend frontend fullsteck
+	Specialty          string // backend frontend fullstack
 	Languages          []string 
 	Technologies       []string 
 	Score			   int
