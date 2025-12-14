@@ -6,6 +6,8 @@ import (
 	"os"
 )
 
+// comment
+
 func dump(ent any) error {
 	file_name := fmt.Sprintf("data/%T.json", ent)
 	file, err := os.OpenFile(file_name, os.O_CREATE | os.O_WRONLY, 0644)
