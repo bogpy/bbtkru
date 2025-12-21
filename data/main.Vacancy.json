@@ -1,17 +1,452 @@
-{
-  "Title": "DevOps Intern",
-  "Description": "Learn and assist with CI/CD pipelines",
-  "Company": {
-    "Name": "Google",
-    "Country": "USA",
-    "YearFound": 1998,
-    "EmployeeCount": 156000,
-    "Vacancies": null
+[
+  {
+    "Title": "iOS Software Engineer (L4)",
+    "Description": "Optimize CoreML performance for the next generation of iPhone processors.",
+    "Company": "Apple",
+    "Necessary_experience": 4,
+    "Work_type": 1,
+    "Salary_start": 265000,
+    "Work_hours": 40
   },
-  "Necessary_experience": 0,
-  "Work_type": 3,
-  "Salary_start": 40000,
-  "Work_hours": 20
-}
-
-
+  {
+    "Title": "Cloud Infrastructure Intern",
+    "Description": "Learn to manage Azure Kubernetes Service clusters at scale.",
+    "Company": "Microsoft",
+    "Necessary_experience": 0,
+    "Work_type": 3,
+    "Salary_start": 42000,
+    "Work_hours": 20
+  },
+  {
+    "Title": "Warehouse Robotics Architect",
+    "Description": "Design autonomous navigation systems for fulfillment center fulfillment bots.",
+    "Company": "Amazon",
+    "Necessary_experience": 8,
+    "Work_type": 1,
+    "Salary_start": 340000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Semiconductor Logic Designer",
+    "Description": "Develop 2nm process node logic libraries.",
+    "Company": "Samsung Electronics",
+    "Necessary_experience": 5,
+    "Work_type": 1,
+    "Salary_start": 190000,
+    "Work_hours": 45
+  },
+  {
+    "Title": "Autopilot Perception Engineer",
+    "Description": "Improve vision-based obstacle detection for FSD version 14.",
+    "Company": "Tesla",
+    "Necessary_experience": 6,
+    "Work_type": 1,
+    "Salary_start": 310000,
+    "Work_hours": 50
+  },
+  {
+    "Title": "Staff ML Engineer - Llama 4",
+    "Description": "Lead the scaling of foundational models for the Metaverse ecosystem.",
+    "Company": "Meta",
+    "Necessary_experience": 10,
+    "Work_type": 1,
+    "Salary_start": 485000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "EUV Process Engineer",
+    "Description": "Maintain and optimize Extreme Ultraviolet lithography machines.",
+    "Company": "TSMC",
+    "Necessary_experience": 3,
+    "Work_type": 1,
+    "Salary_start": 145000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "CUDA Performance Engineer",
+    "Description": "Optimize GPU kernels for generative AI workloads on Blackwell chips.",
+    "Company": "NVIDIA",
+    "Necessary_experience": 7,
+    "Work_type": 1,
+    "Salary_start": 380000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Video Streaming Intern",
+    "Description": "Optimize adaptive bitrate encoding for low-latency streaming.",
+    "Company": "Netflix",
+    "Necessary_experience": 0,
+    "Work_type": 1,
+    "Salary_start": 92000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Senior Fullstack Developer",
+    "Description": "Build data-rich dashboards for the Einstein AI CRM platform.",
+    "Company": "Salesforce",
+    "Necessary_experience": 6,
+    "Work_type": 1,
+    "Salary_start": 295000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Hardware Verification Intern",
+    "Description": "Design test benches for custom silicon power management units.",
+    "Company": "Apple",
+    "Necessary_experience": 0,
+    "Work_type": 3,
+    "Salary_start": 45000,
+    "Work_hours": 20
+  },
+  {
+    "Title": "Cybersecurity Lead (L6)",
+    "Description": "Architect zero-trust security for Windows 12 Enterprise.",
+    "Company": "Microsoft",
+    "Necessary_experience": 12,
+    "Work_type": 1,
+    "Salary_start": 410000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Supply Chain Data Scientist",
+    "Description": "Develop ML models to predict global shipping delays.",
+    "Company": "Amazon",
+    "Necessary_experience": 3,
+    "Work_type": 1,
+    "Salary_start": 210000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Display Tech Researcher",
+    "Description": "Next-gen MicroLED development for mobile devices.",
+    "Company": "Samsung Electronics",
+    "Necessary_experience": 10,
+    "Work_type": 1,
+    "Salary_start": 280000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Battery Management Systems Intern",
+    "Description": "Firmware development for thermal cooling of battery packs.",
+    "Company": "Tesla",
+    "Necessary_experience": 0,
+    "Work_type": 1,
+    "Salary_start": 75000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Backend Engineer (L4) - Ads",
+    "Description": "Scaling distributed ad-bidding systems for Instagram.",
+    "Company": "Meta",
+    "Necessary_experience": 4,
+    "Work_type": 1,
+    "Salary_start": 280000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "ASIC Design Intern",
+    "Description": "Assist in the front-end design of 3nm semiconductor chips.",
+    "Company": "TSMC",
+    "Necessary_experience": 0,
+    "Work_type": 3,
+    "Salary_start": 35000,
+    "Work_hours": 25
+  },
+  {
+    "Title": "Senior AI Infrastructure Lead",
+    "Description": "Architect the interconnect fabric for next-gen data centers.",
+    "Company": "NVIDIA",
+    "Necessary_experience": 15,
+    "Work_type": 1,
+    "Salary_start": 520000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Frontend Engineer - UI Frameworks",
+    "Description": "Contribute to React and internal design systems.",
+    "Company": "Netflix",
+    "Necessary_experience": 5,
+    "Work_type": 1,
+    "Salary_start": 350000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "DevOps Engineer (L3)",
+    "Description": "Manage global deployments for Slack infrastructure.",
+    "Company": "Salesforce",
+    "Necessary_experience": 2,
+    "Work_type": 1,
+    "Salary_start": 175000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "SwiftUI Specialist (L5)",
+    "Description": "Lead UI development for the visionOS ecosystem.",
+    "Company": "Apple",
+    "Necessary_experience": 8,
+    "Work_type": 1,
+    "Salary_start": 345000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Generative AI Intern",
+    "Description": "Research fine-tuning techniques for Copilot models.",
+    "Company": "Microsoft",
+    "Necessary_experience": 0,
+    "Work_type": 1,
+    "Salary_start": 98000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "AWS Solutions Architect",
+    "Description": "Help enterprise clients scale serverless architectures.",
+    "Company": "Amazon",
+    "Necessary_experience": 7,
+    "Work_type": 1,
+    "Salary_start": 315000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Kernel Developer - Tizen OS",
+    "Description": "Optimize low-level performance for Smart TVs.",
+    "Company": "Samsung Electronics",
+    "Necessary_experience": 5,
+    "Work_type": 1,
+    "Salary_start": 165000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Charging Infrastructure Intern",
+    "Description": "Analyze Supercharger load balance and reliability.",
+    "Company": "Tesla",
+    "Necessary_experience": 0,
+    "Work_type": 3,
+    "Salary_start": 40000,
+    "Work_hours": 20
+  },
+  {
+    "Title": "VR Graphics Engineer",
+    "Description": "Real-time rendering optimization for Quest 4 hardware.",
+    "Company": "Meta",
+    "Necessary_experience": 6,
+    "Work_type": 1,
+    "Salary_start": 330000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Cleanroom Operations Lead",
+    "Description": "Directing manufacturing yields for high-performance computing chips.",
+    "Company": "TSMC",
+    "Necessary_experience": 12,
+    "Work_type": 1,
+    "Salary_start": 260000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Deep Learning Compiler Intern",
+    "Description": "Implement new operators in the TensorRT compiler.",
+    "Company": "NVIDIA",
+    "Necessary_experience": 0,
+    "Work_type": 1,
+    "Salary_start": 105000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Content Delivery Network (CDN) Lead",
+    "Description": "Scaling Open Connect infrastructure globally.",
+    "Company": "Netflix",
+    "Necessary_experience": 10,
+    "Work_type": 1,
+    "Salary_start": 550000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Security Engineer - Identity",
+    "Description": "Secure MFA and SSO flows for over 150,000 corporate clients.",
+    "Company": "Salesforce",
+    "Necessary_experience": 5,
+    "Work_type": 1,
+    "Salary_start": 240000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Embedded Firmware Intern",
+    "Description": "Code low-level drivers for AirPods audio processing.",
+    "Company": "Apple",
+    "Necessary_experience": 0,
+    "Work_type": 3,
+    "Salary_start": 48000,
+    "Work_hours": 20
+  },
+  {
+    "Title": "Staff Engineer - LinkedIn Feed",
+    "Description": "Rethink the relevance algorithms for the main professional feed.",
+    "Company": "Microsoft",
+    "Necessary_experience": 11,
+    "Work_type": 1,
+    "Salary_start": 440000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Operations Tech Intern",
+    "Description": "Assist in the maintenance of AWS data center hardware.",
+    "Company": "Amazon",
+    "Necessary_experience": 0,
+    "Work_type": 3,
+    "Salary_start": 38000,
+    "Work_hours": 25
+  },
+  {
+    "Title": "Senior Android Dev - Galaxy",
+    "Description": "Customizing OneUI for next-gen foldable devices.",
+    "Company": "Samsung Electronics",
+    "Necessary_experience": 8,
+    "Work_type": 1,
+    "Salary_start": 220000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Manufacturing QA Lead",
+    "Description": "Oversee automated optical inspection for Cybertruck panels.",
+    "Company": "Tesla",
+    "Necessary_experience": 7,
+    "Work_type": 1,
+    "Salary_start": 250000,
+    "Work_hours": 45
+  },
+  {
+    "Title": "Privacy Engineer (L5)",
+    "Description": "Implement differential privacy for user data processing.",
+    "Company": "Meta",
+    "Necessary_experience": 6,
+    "Work_type": 1,
+    "Salary_start": 315000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Packaging Tech Intern",
+    "Description": "Researching 3D chip stacking and thermal dissipation.",
+    "Company": "TSMC",
+    "Necessary_experience": 0,
+    "Work_type": 1,
+    "Salary_start": 65000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Cloud Gaming Intern",
+    "Description": "Optimizing frame latency for GeForce NOW.",
+    "Company": "NVIDIA",
+    "Necessary_experience": 0,
+    "Work_type": 3,
+    "Salary_start": 46000,
+    "Work_hours": 20
+  },
+  {
+    "Title": "Studio Tech Engineer",
+    "Description": "Building cloud-based rendering pipelines for Netflix Animation.",
+    "Company": "Netflix",
+    "Necessary_experience": 4,
+    "Work_type": 1,
+    "Salary_start": 280000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Product Manager - AI Cloud",
+    "Description": "Define the roadmap for GenAI integration in Slack.",
+    "Company": "Salesforce",
+    "Necessary_experience": 5,
+    "Work_type": 1,
+    "Salary_start": 230000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Site Reliability Intern",
+    "Description": "Automating server recovery for iCloud storage nodes.",
+    "Company": "Apple",
+    "Necessary_experience": 0,
+    "Work_type": 1,
+    "Salary_start": 88000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Staff SRE - Azure Billing",
+    "Description": "Architect the global real-time billing engine for Cloud.",
+    "Company": "Microsoft",
+    "Necessary_experience": 10,
+    "Work_type": 1,
+    "Salary_start": 420000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Software Development Manager",
+    "Description": "Lead a team of 15 backend engineers in Prime Video.",
+    "Company": "Amazon",
+    "Necessary_experience": 12,
+    "Work_type": 1,
+    "Salary_start": 460000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "VLSI Design Intern",
+    "Description": "Assist in physical design and layout for mobile SoCs.",
+    "Company": "Samsung Electronics",
+    "Necessary_experience": 0,
+    "Work_type": 1,
+    "Salary_start": 60000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Senior Fullstack Engineer",
+    "Description": "Developing the internal factory management software (MOS).",
+    "Company": "Tesla",
+    "Necessary_experience": 8,
+    "Work_type": 1,
+    "Salary_start": 275000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Data Engineer (L3)",
+    "Description": "Building telemetry pipelines for WhatsApp messaging.",
+    "Company": "Meta",
+    "Necessary_experience": 1,
+    "Work_type": 1,
+    "Salary_start": 185000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Yield Enhancement Engineer",
+    "Description": "Applying AI to detect defects in 3nm wafer production.",
+    "Company": "TSMC",
+    "Necessary_experience": 5,
+    "Work_type": 1,
+    "Salary_start": 170000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Senior Software Engineer - DL",
+    "Description": "Develop PyTorch optimizations for NVIDIA hardware.",
+    "Company": "NVIDIA",
+    "Necessary_experience": 6,
+    "Work_type": 1,
+    "Salary_start": 320000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Cybersecurity Specialist",
+    "Description": "Protecting content distribution against piracy and leaks.",
+    "Company": "Netflix",
+    "Necessary_experience": 7,
+    "Work_type": 1,
+    "Salary_start": 420000,
+    "Work_hours": 40
+  },
+  {
+    "Title": "Platform Engineer Intern",
+    "Description": "Developing reusable Go libraries for the Mulesoft ecosystem.",
+    "Company": "Salesforce",
+    "Necessary_experience": 0,
+    "Work_type": 3,
+    "Salary_start": 40000,
+    "Work_hours": 20
+  }
+]

@@ -1,9 +1,72 @@
-{
-  "Name": "Google",
-  "Country": "USA",
-  "YearFound": 1998,
-  "EmployeeCount": 156000,
-  "Vacancies": null
-}
-
-
+[
+  {
+    "Name": "Apple",
+    "Country": "USA",
+    "YearFound": 1976,
+    "EmployeeCount": 166000,
+    "Vacancies": null
+  },
+  {
+    "Name": "Microsoft",
+    "Country": "USA",
+    "YearFound": 1975,
+    "EmployeeCount": 228000,
+    "Vacancies": null
+  },
+  {
+    "Name": "Amazon",
+    "Country": "USA",
+    "YearFound": 1994,
+    "EmployeeCount": 1560000,
+    "Vacancies": null
+  },
+  {
+    "Name": "Samsung Electronics",
+    "Country": "South Korea",
+    "YearFound": 1969,
+    "EmployeeCount": 267000,
+    "Vacancies": null
+  },
+  {
+    "Name": "Tesla",
+    "Country": "USA",
+    "YearFound": 2003,
+    "EmployeeCount": 125665,
+    "Vacancies": null
+  },
+  {
+    "Name": "Meta",
+    "Country": "USA",
+    "YearFound": 2004,
+    "EmployeeCount": 78450,
+    "Vacancies": null
+  },
+  {
+    "Name": "TSMC",
+    "Country": "Taiwan",
+    "YearFound": 1987,
+    "EmployeeCount": 83825,
+    "Vacancies": null
+  },
+  {
+    "Name": "NVIDIA",
+    "Country": "USA",
+    "YearFound": 1993,
+    "EmployeeCount": 36000,
+    "Vacancies": null
+  },
+  {
+    "Name": "Netflix",
+    "Country": "USA",
+    "YearFound": 1997,
+    "EmployeeCount": 14000,
+    "Vacancies": null
+  },
+  {
+    "Name": "Salesforce",
+    "Country": "USA",
+    "YearFound": 1999,
+    "EmployeeCount": 72000,
+    "Vacancies": null
+  }
+]
