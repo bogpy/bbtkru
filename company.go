@@ -1,11 +1,11 @@
 package main
 
 type Company struct {
-	Name           string
-	Country        string
+	Name          string
+	Country       string
 	YearFound     int //foundation year
 	EmployeeCount int
-	Vacancies      []*Vacancy
+	Vacancies     []*Vacancy
 }
 
 // func NewCompany(_name string, _country string, _yearFound int, _employeeCount int, _vacancies []*Vacancy) *Company{

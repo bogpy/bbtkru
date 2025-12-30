@@ -3,11 +3,12 @@ package main
 type Vacancy struct {
 	Title                    string
 	Description              string
-	Company                  *Company
-	Necessary_experience     int
-	Work_type                int8 //remote inoffice outoffice
-	Salary_start, Salary_end int
-	Work_hours               int
+	Company                  string
+	// CompanyID                int
+	Experience     int
+	Type                int8 //remote inoffice outoffice
+	Salary int
+	Hours               int
 }
 
 // func NewVacancy(_company *Company, _title string) *Vacancy{
