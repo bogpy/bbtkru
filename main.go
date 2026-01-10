@@ -45,19 +45,13 @@ func insertSql[T any](ent *T) (int, error) {
 	case Company:
 		result, err := db.Exec("INSERT INTO company (Name, Country, YearFound, EmployeeCount, Vacancies) VALUES (?, ?, ?, ?, ?)", v.Name, v.Country, v.YearFound, v.EmployeeCount, v.Vacancies)
 	case Applicant:
-		result, err := db.Exec("INSERT INTO applicant (Name, Age, Experience, University, Level, Graduated, Companies, Education, Specialty, Languages, Technologies, Score) VALUES (?, ?, ?, ?, ?)", v.Name, v.Age, v.Experience, v.Univesity, v.Level, v.Graduated, v.Companies, v.Education, v.Specialty, v.Languages, v.Technologies, v.Score)
+		result, err := db.Exec("INSERT INTO applicant (Name, Age, Experience, University, Level, Graduated, Companies, Education, Specialty, Languages, Technologies) VALUES (?, ?, ?, ?, ?)", v.Name, v.Age, v.Experience, v.Univesity, v.Level, v.Graduated, v.Companies, v.Education, v.Specialty, v.Languages, v.Technologies)
 	case Vacancy:
 		result, err := db.Exec("INSERT INTO vacancy (Title, Description, Company, Experience, Type, Salary, Hours) VALUES (?, ?, ?, ?, ?)", v.Title, v.Description, v.Company, v.Experience, v.Type, v.Salary, v.Hours)
 	}
-	_, err := query.Exec(table, )
     if err != nil {
-        return 0, fmt.Errorf("addAlbum: %v", err)
+        return 0, fmt.Errorf("insertSql: %v", err)
     }
-    id, err := result.LastInsertId()
-    if err != nil {
-        return 0, fmt.Errorf("addAlbum: %v", err)
-    }
-    return id, nil
 }
 
 func searchSqlBy(experience string) ([]Applicant, error) {
@@ -71,7 +65,7 @@ func searchSqlBy(experience string) ([]Applicant, error) {
 
     for rows.Next() {
         var app Applicant
-        if err := rows.Scan(&app.Name, &app.Age, &app.Experience, &app.University, &app.Level, &app.Graduated, &app.Companies, &app.Education, &app.Specialty, &app.Languages, &app.Technologies, &app.Score); err != nil {
+        if err := rows.Scan(&app.Name, &app.Age, &app.Experience, &app.University, &app.Level, &app.Graduated, &app.Companies, &app.Education, &app.Specialty, &app.Languages, &app.Technologies); err != nil {
             return nil, fmt.Errorf("searchSqlBy %q: %v", name, err)
         }
         applicants = append(applicants, app)

@@ -27,6 +27,33 @@ type RequestForApplicant struct {
 	Specialty         string
 	LanguagesRequired []string
 	LanguagesOptional []string
+} 
+
+func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error) {
+	var queryBuilder strings.Builder
+	queryBuilder.writeString("SELECT Name, Age, Experience, University, Level, Graduated, Companies, Education, Specialty, Languages, Technologies FROM applicant WHERE 1=1")
+	var args []interface{}
+
+	if request.experience != nil {
+		queryBuilder.writeString("AND Experience >= ?")
+		args = append(args, request.experience)
+	}
+	//add other requests
+	query := queryBuilder.String()
+	rows, err := db.Query(query, args...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var applicants []Applicant
+	for rows.Next() {
+		var a Applicant
+		if err := rows.Scan(a.Name, a.Age, a.Experience, a.University, a.Level, a.Graduated, a.Companies, a.Education, a.Specialty, a.Languages, a.Technologies) {
+			return nil, err
+		}
+		applicants = append(applicants, a)
+	}
+	return applicants, rows.Err()
 }
 
 const (
