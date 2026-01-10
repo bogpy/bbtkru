@@ -5,6 +5,7 @@ import (
 )
 
 type Applicant struct {
+	ID 			 int
 	Name         string
 	Age          int
 	Experience   int
@@ -31,7 +32,7 @@ type RequestForApplicant struct {
 
 func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error) {
 	var queryBuilder strings.Builder
-	queryBuilder.writeString("SELECT Name, Age, Experience, University, Level, Graduated, Companies, Education, Specialty, Languages, Technologies FROM applicant WHERE 1=1")
+	queryBuilder.writeString("SELECT ID, Name, Age, Experience, University, Level, Graduated, Companies, Education, Specialty, Languages, Technologies FROM applicant WHERE 1=1")
 	var args []interface{}
 
 	if request.experience != nil {
@@ -48,7 +49,7 @@ func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error)
 	var applicants []Applicant
 	for rows.Next() {
 		var a Applicant
-		if err := rows.Scan(a.Name, a.Age, a.Experience, a.University, a.Level, a.Graduated, a.Companies, a.Education, a.Specialty, a.Languages, a.Technologies) {
+		if err := rows.Scan(a.ID, a.Name, a.Age, a.Experience, a.University, a.Level, a.Graduated, a.Companies, a.Education, a.Specialty, a.Languages, a.Technologies) {
 			return nil, err
 		}
 		applicants = append(applicants, a)
