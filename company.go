@@ -8,3 +8,4 @@ type Company struct {
 	Vacancies     []*Vacancy
 }
 
+func delete
