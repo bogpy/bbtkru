@@ -24,7 +24,7 @@ type RequestForApplicant struct {
 	Experience        int
 	Level             int8
 	Graduated         bool
-	Education_type    string
+	Education_type    int
 	Specialty         string
 	LanguagesRequired []string
 	LanguagesOptional []string
@@ -32,7 +32,7 @@ type RequestForApplicant struct {
 
 func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error) {
 	var queryBuilder strings.Builder
-	queryBuilder.writeString("SELECT ID, Name, Age, Experience, University, Level, Graduated, Companies, Education, Specialty, Languages, Technologies FROM applicant WHERE 1=1")
+	queryBuilder.writeString("SELECT * FROM applicant WHERE 1=1")
 	var args []interface{}
 
 	if request.experience != nil {
@@ -40,6 +40,29 @@ func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error)
 		args = append(args, request.experience)
 	}
 	//add other requests
+	if request.LanguagesRequired != nil {
+		mp := make(map[string]bool)
+		for _, lang := request.LanguagesRequired {
+			mp[lang] = 1
+		}
+		//args = append(args, request.experience).........
+	}
+
+	if request.Level != nil {
+		queryBuilder.writeString("AND Level >= ?")
+		args = append(args, request.Level)
+	}
+
+	if request.Graduated != nil {
+		queryBuilder.qriteString("AND Graduted = ?")
+		args = append(args, request.Graduated)
+	}
+
+	if request.Education_type != nil {
+		queryBuilder.writeString("AND Education = ?")
+		args = append(args, request.Education_type)
+	}
+
 	query := queryBuilder.String()
 	rows, err := db.Query(query, args...)
 	if err != nil {
@@ -49,7 +72,7 @@ func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error)
 	var applicants []Applicant
 	for rows.Next() {
 		var a Applicant
-		if err := rows.Scan(a.ID, a.Name, a.Age, a.Experience, a.University, a.Level, a.Graduated, a.Companies, a.Education, a.Specialty, a.Languages, a.Technologies) {
+		if err := rows.Scan(&a.ID, &a.Name, &a.Age, &a.Experience, &a.University, &a.Level, &a.Graduated, &a.Companies, &a.Education, &a.Specialty, &a.Languages, &a.Technologies); err != nil {
 			return nil, err
 		}
 		applicants = append(applicants, a)
