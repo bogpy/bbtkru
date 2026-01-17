@@ -47,7 +47,7 @@ type Applicant struct {
 	Score        int
 }
 
-func readJSON[T any](arr []T) {
+func readJSON[T any](arr *[]T) {
 	var el T
 	path := fmt.Sprintf("data/%T.json", el)
 	file, err := os.Open(path)
@@ -57,7 +57,7 @@ func readJSON[T any](arr []T) {
 	}
 	defer file.Close()
 	decoder := json.NewDecoder(file)
-	err = decoder.Decode(&arr)
+	err = decoder.Decode(arr)
 	if err != nil {
 		fmt.Printf("JSON error: %v\n", err)
 		var typeErr *json.UnmarshalTypeError
@@ -69,19 +69,20 @@ func readJSON[T any](arr []T) {
 			fmt.Printf("Location in JSON: byte %d\n", typeErr.Offset)
 		}
 	}
-	fmt.Println(len(arr))
+	fmt.Println(len(*arr))
 	// for _, comp := range arr {
 	// 	// fmt.Println(comp)
 	// }
 }
 
-func insertSql[T any](ent *T) (int, error) {
+func insertSql[T any](ent *T) (int64, error) {
 	var result sql.Result
 	var err error
-	switch v := any(ent).(type) {
+	switch v := any(*ent).(type) {
 	default:
 		log.Fatal("Not supported")
 	case Company:
+		fmt.Printf("Company: %v\n", v.Name)
 		result, err = db.Exec("INSERT INTO company (Name, Country, YearFound, EmployeeCount, Vacancies) VALUES (?, ?, ?, ?, ?)", v.Name, v.Country, v.YearFound, v.EmployeeCount, v.Vacancies)
 	case Applicant:
 		result, err = db.Exec("INSERT INTO applicant (Name, Age, Experience, University, Level, Graduated, Companies, Education, Specialty, Languages, Technologies) VALUES (?, ?, ?, ?, ?)", v.Name, v.Age, v.Experience, v.University, v.Level, v.Graduated, v.Companies, v.Education, v.Specialty, v.Languages, v.Technologies)
@@ -99,66 +100,60 @@ func insertSql[T any](ent *T) (int, error) {
 }
 
 func searchSqlBy(experience string) ([]Applicant, error) {
-	var albums []Applicant
+	var applicants []Applicant
 	rows, err := db.Query("SELECT * FROM applicant WHERE experience = ?", experience)
 
 	if err != nil {
-		return nil, fmt.Errorf("searchSqlBy %q: %v", name, err)
+		return nil, fmt.Errorf("searchSqlBy %q: %v", experience, err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var app Applicant
 		if err := rows.Scan(&app.Name, &app.Age, &app.Experience, &app.University, &app.Level, &app.Graduated, &app.Companies, &app.Education, &app.Specialty, &app.Languages, &app.Technologies); err != nil {
-			return nil, fmt.Errorf("searchSqlBy %q: %v", name, err)
+			return nil, fmt.Errorf("searchSqlBy %q: %v", experience, err)
 		}
 		applicants = append(applicants, app)
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("searchSqlBy %q: %v", name, err)
+		return nil, fmt.Errorf("searchSqlBy %q: %v", experience, err)
 	}
 	return applicants, nil
 }
 
 var db *sqlx.DB
 
-func connectToDB() (*sqlx.DB, error) {
-	cfg := mysql.NewConfig{
-		User: os.Getenv("DBUSER")
-		Passwd: os.Getenv("DBPASS")
-		Net: "unix"
-		Addr: "/var/lib/mysql/mysql.sock"
-		DBName: "bbtkru"
-		AllowNativePasswords: true, // Recommended for modern MySQL versions.
-        ParseTime:            true,
-        Collation:            "utf8mb4_unicode_ci",
-        Loc:                  time.Local, // Use the system's local time zone.
-        Timeout:              5 * time.Second,
-        ReadTimeout:          30 * time.Second,
-        WriteTimeout:         30 * time.Second,
-	}
+func connectToDB() (*sqlx.DB) {
+	cfg := mysql.NewConfig()
+	cfg.User = os.Getenv("DBUSER")
+	cfg.Passwd = os.Getenv("DBPASS")
+	cfg.Net = "unix"
+	cfg.Addr = "/var/lib/mysql/mysql.sock"
+	cfg.DBName = "bbtkru"
 
 	// Get a database handle.
 	db, err := sqlx.Connect("mysql", cfg.FormatDSN())
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+	fmt.Println("Connection successfull!")
+	return db
 }
 
 func main() {
 	var companies []Company
 	var applicants []Applicant
 	var vacancies []Vacancy
-	readJSON(vacancies)
-	readJSON(applicants)
-	readJSON(companies)
+	readJSON(&vacancies)
+	readJSON(&applicants)
+	readJSON(&companies)
 	
 	db = connectToDB()
 	defer db.Close()
 
 	for _, comp := range companies {
-		insertSql(&comp)
+		id, _ := insertSql(&comp)
+		fmt.Printf("Last inserted id: %v\n", id)
 	}
 
 }

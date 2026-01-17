@@ -1,5 +1,11 @@
 package main
 
+import (
+	"strings"
+	"database/sql"
+	"fmt"
+)
+
 type Company struct {
 	ID			  int
 	Name          string
@@ -8,27 +14,27 @@ type Company struct {
 	EmployeeCount int
 	Vacancies     []*Vacancy
 	RevenuePerYear int
-
+	Score          int
 }
 
 type RequestForCompany struct {
-	RevenuePerYear int
-    EmployeeCount int
+	RevenuePerYear *int
+    EmployeeCount *int
 }
 
-func getCompanies(db *sql.DB, request RequestForCompany) ([]Company, err) {
+func getCompanies(db *sql.DB, request RequestForCompany) ([]Company, error) {
 	var queryBuilder strings.Builder
-	queryBuilder.writeString("SELECT * FROM company WHERE 1=1")
+	queryBuilder.WriteString("SELECT * FROM company WHERE 1=1")
 	var args []interface{}
 
 	if request.EmployeeCount != nil {
-		queryBuilder.writeString("AND EmployeeCount >= ?")
-		args = append(args, request.EmployeeCount)
+		queryBuilder.WriteString("AND EmployeeCount >= ?")
+		args = append(args, *request.EmployeeCount)
 	}
 
 	if request.RevenuePerYear != nil {
-		queryBuilder.writeString("AND RevenuePerYear >= ?")
-		args = append(args, request.RevenuePerYear)
+		queryBuilder.WriteString("AND RevenuePerYear >= ?")
+		args = append(args, *request.RevenuePerYear)
 	}
 
 	query := queryBuilder.String()
@@ -66,10 +72,21 @@ func deleteCompany(db *sql.DB, ID int) error {
 	if err != nil {
 		return err
 	}
-	count, err := result.RowsAffected()
+	count, err = result.RowsAffected()
 	if err != nil {
 		return err
 	}
 	
 	return nil
+}
+
+const (
+	RevWeight = 50
+	EmployeeWeight = 25
+)
+
+func (x Company) CalcScore(r RequestForCompany){
+	x.Score = 0
+	x.Score += x.RevenuePerYear * RevWeight
+	x.Score += x.EmployeeCount * EmployeeWeight
 }

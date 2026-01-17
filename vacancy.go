@@ -1,12 +1,17 @@
 package main
 
+import (
+	"database/sql"
+	"strings"
+)
+
 type Vacancy struct {
 	Title             string
 	Description       string
 	Company           string
 	CompanyID         int
 	Experience        int
-	Type              int8 //remote inoffice hybrid
+	Type              int //remote inoffice hybrid
 	Salary            int
 	Hours             int
 	LanguagesRequired []string
@@ -15,35 +20,35 @@ type Vacancy struct {
 }
 
 type RequestForVacancy struct {
-	Experience int
-	Salary     int
-	Type       int8
-	Hours      int
+	Experience *int
+	Salary     *int
+	Type       *int8
+	Hours      *int
 }
 
 func getVacancies(db *sql.DB, request RequestForVacancy) ([]Vacancy, error) {
 	var queryBuilder strings.Builder
-	queryBuilder.writeString("SELECT * FROM vacancy WHERE 1=1")
+	queryBuilder.WriteString("SELECT * FROM vacancy WHERE 1=1")
 	var args []interface{}
 
 	if request.Experience != nil {
-		queryBuilder.writeString("AND Experience <= ?")
-		args = append(args, request.Experience)
+		queryBuilder.WriteString("AND Experience <= ?")
+		args = append(args, *request.Experience)
 	}
 
 	if request.Salary != nil {
-		queryBuilder.writeString("AND Salary >= ?")
-		args = append(args, request.Salary)
+		queryBuilder.WriteString("AND Salary >= ?")
+		args = append(args, *request.Salary)
 	}
 
 	if request.Type != nil {
-		queryBuilder.writeString("AND Type = ?")
-		args = append(args, request.Type)
+		queryBuilder.WriteString("AND Type = ?")
+		args = append(args, *request.Type)
 	}
 
 	if request.Hours != nil {
-		queryBuilder.writeString("AND Hours <= ?")
-		args = append(args, request.Hours)
+		queryBuilder.WriteString("AND Hours <= ?")
+		args = append(args, *request.Hours)
 	}
 
 	query := queryBuilder.String()
@@ -67,6 +72,7 @@ const (
 	ExpWeight = 100
 	SalWeight = 50
 	TypeWeight = 15
+	HoursWeight = 10
 )
 
 func (x Vacancy) CalcScore(r RequestForVacancy) {
@@ -74,4 +80,5 @@ func (x Vacancy) CalcScore(r RequestForVacancy) {
 	x.Score += x.Experience * ExpWeight
 	x.Score += x.Salary * SalWeight
 	x.Score += x.Type * TypeWeight
+	x.Score += x.Hours * HoursWeight
 }
