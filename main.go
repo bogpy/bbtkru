@@ -11,15 +11,66 @@ import (
 	"os"
 )
 
+type EducationType string
+const (
+	HighSchool EducationType = "High School"
+	Bachelor EducationType = "Bachelor"
+	Master EducationType = "Master"
+	PhD EducationType = "PhD"
+)
+
+type SpecialtyType string
+const (
+	Frontend SpecialtyType = "Frontend"
+	Backend SpecialtyType = "Backend"
+	Fullstack SpecialtyType = "Fullstack"
+	DataEngineer SpecialtyType = "DataEngineer"
+	DevOps SpecialtyType = "DevOps"
+)
+
+type LevelType string
+const (
+	Intern LevelType = "Level"
+	Junior LevelType = "Junior"
+	Middle LevelType = "Middle"
+	Senior LevelType = "Senior"
+	Lead LevelType = "Lead"
+)
+
+type EmploymentType string
+const (
+	Internship EmploymentType = "Internship"
+	FullTime EmploymentType = "Full-time"
+	PartTime EmploymentType = "Part-time"
+)
+
+type LocationType string
+const (
+	Remote LocationType = "Remote"
+	Hybrid LocationType = "Hybrid"
+	InOffice LocationType = "In-office"
+)
+
+type Language struct {
+	ID			int
+	Name		string
+}
+
+type Technology struct {
+	ID			int
+	Name		string
+}
+
 type Vacancy struct {
+	ID			int
 	Title       string
 	Description string
-	Company     string
 	CompanyID   int
 	Experience  int
-	Type        int8 //remote inoffice outoffice
 	Salary      int
 	Hours       int
+	Employment	EmploymentType
+	Location	LocationType
 }
 
 type Company struct {
@@ -28,22 +79,19 @@ type Company struct {
 	Country       string
 	YearFound     int //foundation year
 	EmployeeCount int
-	Vacancies     []*Vacancy
 }
 
 type Applicant struct {
 	ID           int
 	Name         string
 	Age          int
-	Experience   int
+	Education    EducationType
 	University   string
-	Level        int8
 	Graduated    bool
-	Companies    []string
-	Education    int
-	Specialty    int // backend frontend fullstack
-	Languages    []string
-	Technologies []string
+	Specialty    SpecialtyType // backend frontend fullstack
+	Level        LevelType
+	Experience   int
+	WorkHistory	 string
 	Score        int
 }
 
@@ -69,10 +117,6 @@ func readJSON[T any](arr *[]T) {
 			fmt.Printf("Location in JSON: byte %d\n", typeErr.Offset)
 		}
 	}
-	fmt.Println(len(*arr))
-	// for _, comp := range arr {
-	// 	// fmt.Println(comp)
-	// }
 }
 
 func insertSql[T any](ent *T) (int64, error) {
@@ -83,11 +127,30 @@ func insertSql[T any](ent *T) (int64, error) {
 		log.Fatal("Not supported")
 	case Company:
 		fmt.Printf("Company: %v\n", v.Name)
-		result, err = db.Exec("INSERT INTO company (Name, Country, YearFound, EmployeeCount, Vacancies) VALUES (?, ?, ?, ?, ?)", v.Name, v.Country, v.YearFound, v.EmployeeCount, v.Vacancies)
+		result, err = db.Exec(
+			`INSERT INTO company
+			(Name, Country, YearFound, EmployeeCount)
+			VALUES (?, ?, ?, ?, ?)`,
+			v.Name, v.Country, v.YearFound, v.EmployeeCount
+		)
 	case Applicant:
-		result, err = db.Exec("INSERT INTO applicant (Name, Age, Experience, University, Level, Graduated, Companies, Education, Specialty, Languages, Technologies) VALUES (?, ?, ?, ?, ?)", v.Name, v.Age, v.Experience, v.University, v.Level, v.Graduated, v.Companies, v.Education, v.Specialty, v.Languages, v.Technologies)
+		result, err = db.Exec(
+			`INSERT INTO applicant
+			(Name, Age, Education, University, Graduated, Specialty, Level, Experience, WorkHistory)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+		 	v.Name, v.Age, v.Education, v.University, v.Graduated, v.Specialty v.Level, v.Experience, v.WorkHistory
+		)
 	case Vacancy:
-		result, err = db.Exec("INSERT INTO vacancy (Title, Description, Company, Experience, Type, Salary, Hours) VALUES (?, ?, ?, ?, ?)", v.Title, v.Description, v.Company, v.Experience, v.Type, v.Salary, v.Hours)
+		result, err = db.Exec(
+			`INSERT INTO vacancy
+			(Title, Description, CompanyID, Experience, Salary, Hours, Employment, Location) 
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+			v.Title, v.Description, v.CompanyID, v.Experience, v.Salary, v.Hours, v.Employment, v.Location
+		)
+	case Language:
+		result, err = db.Exec("INSERT INTO language (Name) VALUES (?)", v.Name)
+	case Technology:
+		result, err = db.Exec("INSERT INTO technology (Name) VALUES (?)", v.Name)
 	}
 	if err != nil {
 		return 0, fmt.Errorf("insertSql: %v", err)
@@ -121,7 +184,6 @@ func searchSqlBy(experience string) ([]Applicant, error) {
 	return applicants, nil
 }
 
-var db *sqlx.DB
 
 func connectToDB() (*sqlx.DB) {
 	cfg := mysql.NewConfig()
@@ -140,20 +202,32 @@ func connectToDB() (*sqlx.DB) {
 	return db
 }
 
-func main() {
-	var companies []Company
-	var applicants []Applicant
-	var vacancies []Vacancy
-	readJSON(&vacancies)
-	readJSON(&applicants)
-	readJSON(&companies)
-	
-	db = connectToDB()
-	defer db.Close()
-
-	for _, comp := range companies {
-		id, _ := insertSql(&comp)
+func populateDB() {
+	var languages []Language
+	readJSON(&languages)
+	for _, language := range languages {
+		id, _ := insertSql(&language)
 		fmt.Printf("Last inserted id: %v\n", id)
 	}
+	return
 
+	// var companies []Company
+	// var applicants []Applicant
+	// var vacancies []Vacancy
+	// readJSON(&vacancies)
+	// readJSON(&applicants)
+	// readJSON(&companies)
+
+	// for _, comp := range companies {
+	// 	id, _ := insertSql(&comp)
+	// 	fmt.Printf("Last inserted id: %v\n", id)
+	// }
+}
+
+var db *sqlx.DB
+
+func main() {
+	db = connectToDB()
+	defer db.Close()
+	populateDB()
 }
