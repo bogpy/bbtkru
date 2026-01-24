@@ -1,25 +1,24 @@
 package main
 
 import (
-	"strings"
 	"database/sql"
 	"fmt"
+	"strings"
 )
 
 type Company struct {
-	ID			  int
+	ID            int
 	Name          string
 	Country       string
 	YearFound     int //foundation year
 	EmployeeCount int
 	Vacancies     []*Vacancy
-	RevenuePerYear int
-	Score          int
+	Score         int
 }
 
 type RequestForCompany struct {
 	RevenuePerYear *int
-    EmployeeCount *int
+	EmployeeCount  *int
 }
 
 func getCompanies(db *sql.DB, request RequestForCompany) ([]Company, error) {
@@ -47,7 +46,7 @@ func getCompanies(db *sql.DB, request RequestForCompany) ([]Company, error) {
 	var companies []Company
 	for rows.Next() {
 		var c Company
-		if err := rows.Scan(&c.Name, &c.Country, &c.YearFound, &c.EmployeeCount, &c.Vacancies); err != nil{
+		if err := rows.Scan(&c.Name, &c.Country, &c.YearFound, &c.EmployeeCount, &c.Vacancies); err != nil {
 			return nil, err
 		}
 		companies = append(companies, c)
@@ -76,17 +75,17 @@ func deleteCompany(db *sql.DB, ID int) error {
 	if err != nil {
 		return err
 	}
-	
+
 	return nil
 }
 
 const (
-	RevWeight = 50
+	RevWeight      = 50
 	EmployeeWeight = 25
 )
 
-func (x Company) CalcScore(r RequestForCompany){
+func (x Company) CalcScore(r RequestForCompany) {
 	x.Score = 0
-	x.Score += x.RevenuePerYear * RevWeight
+	// x.Score += x.RevenuePerYear * RevWeight
 	x.Score += x.EmployeeCount * EmployeeWeight
 }

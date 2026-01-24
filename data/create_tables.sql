@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS applicant_language;
 DROP TABLE IF EXISTS applicant_technology;
+DROP TABLE IF EXISTS vacancy_language;
+DROP TABLE IF EXISTS vacancy_technology;
 DROP TABLE IF EXISTS language;
 DROP TABLE IF EXISTS technology;
 DROP TABLE IF EXISTS applicant;
@@ -9,14 +11,14 @@ DROP TABLE IF EXISTS company;
 CREATE TABLE applicant (
 	ID				INT AUTO_INCREMENT NOT NULL,
 	Name			VARCHAR(100) NOT NULL,
-	Age				INT,
+	DateOfBirth		DATE,
 	Education		ENUM('High School', 'Bachelor', 'Master', 'PhD'),
 	University		VARCHAR(100),
 	Graduated		BOOL,
 	Specialty		ENUM('Frontend', 'Backend', 'Fullstack', 'Data Engineer', 'DevOps'),
 	Level			ENUM('Intern', 'Junior', 'Middle', 'Senior', 'Lead'),
 	Experience		INT,
-	WorkHistory		VARCHAR(200),
+	WorkHistory		TEXT,
 	PRIMARY KEY (`ID`)
 );
 
@@ -32,7 +34,7 @@ CREATE TABLE company (
 CREATE TABLE vacancy (
 	ID				INT AUTO_INCREMENT NOT NULL,
 	Title			VARCHAR(100) NOT NULL,
-	Description		VARCHAR(200),
+	Description		TEXT,
 	CompanyID		INT NOT NULL,
 	Experience		INT,
 	Salary			INT,
@@ -74,4 +76,25 @@ CREATE TABLE applicant_technology (
 	FOREIGN KEY (technology_id) REFERENCES technology(ID) ON DELETE CASCADE,
 
 	PRIMARY KEY (applicant_id, technology_id)
+);
+
+CREATE TABLE vacancy_language (
+	vacancy_id	INT,
+	language_id		INT,
+
+	FOREIGN KEY (vacancy_id) REFERENCES vacancy(ID) ON DELETE CASCADE,
+	FOREIGN KEY (language_id) REFERENCES language(ID) ON DELETE CASCADE,
+
+	PRIMARY KEY (vacancy_id, language_id)
+);
+
+
+CREATE TABLE vacancy_technology (
+	vacancy_id	INT,
+	technology_id	INT,
+
+	FOREIGN KEY (vacancy_id) REFERENCES vacancy(ID) ON DELETE CASCADE,
+	FOREIGN KEY (technology_id) REFERENCES technology(ID) ON DELETE CASCADE,
+
+	PRIMARY KEY (vacancy_id, technology_id)
 );

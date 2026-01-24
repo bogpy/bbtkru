@@ -5,15 +5,32 @@ import (
 	"strings"
 )
 
+type EmploymentType string
+
+const (
+	Internship EmploymentType = "Internship"
+	FullTime   EmploymentType = "Full-time"
+	PartTime   EmploymentType = "Part-time"
+)
+
+type LocationType string
+
+const (
+	Remote   LocationType = "Remote"
+	Hybrid   LocationType = "Hybrid"
+	InOffice LocationType = "In-office"
+)
+
 type Vacancy struct {
+	ID                int
 	Title             string
 	Description       string
-	Company           string
 	CompanyID         int
 	Experience        int
-	Type              int //remote inoffice hybrid
 	Salary            int
 	Hours             int
+	Employment        EmploymentType
+	Location          LocationType
 	LanguagesRequired []string
 	LanguagesOptional []string
 	Score             int
@@ -60,7 +77,7 @@ func getVacancies(db *sql.DB, request RequestForVacancy) ([]Vacancy, error) {
 	var vacancies []Vacancy
 	for rows.Next() {
 		var v Vacancy
-		if err := rows.Scan(&v.Title, &v.Description, &v.Company, &v.Experience, &v.Type, &v.Salary, &v.Hours); err != nil {
+		if err := rows.Scan(&v.Title, &v.Description, &v.CompanyID, &v.Experience, &v.Employment, &v.Location, &v.Salary, &v.Hours); err != nil {
 			return nil, err
 		}
 		vacancies = append(vacancies, v)
@@ -69,9 +86,9 @@ func getVacancies(db *sql.DB, request RequestForVacancy) ([]Vacancy, error) {
 }
 
 const (
-	ExpWeight = 100
-	SalWeight = 50
-	TypeWeight = 15
+	ExpWeight   = 100
+	SalWeight   = 50
+	EmploymentWeight  = 15
 	HoursWeight = 10
 )
 
@@ -79,6 +96,6 @@ func (x Vacancy) CalcScore(r RequestForVacancy) {
 	x.Score = 0
 	x.Score += x.Experience * ExpWeight
 	x.Score += x.Salary * SalWeight
-	x.Score += x.Type * TypeWeight
+	// x.Score += x.Employment * EmploymentWeight
 	x.Score += x.Hours * HoursWeight
 }

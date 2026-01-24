@@ -6,17 +6,46 @@ import (
 	"strings"
 )
 
+type EducationType string
+
+const (
+	HighSchool EducationType = "High School"
+	Bachelor   EducationType = "Bachelor"
+	Master     EducationType = "Master"
+	PhD        EducationType = "PhD"
+)
+
+type SpecialtyType string
+
+const (
+	Frontend     SpecialtyType = "Frontend"
+	Backend      SpecialtyType = "Backend"
+	Fullstack    SpecialtyType = "Fullstack"
+	DataEngineer SpecialtyType = "DataEngineer"
+	DevOps       SpecialtyType = "DevOps"
+)
+
+type LevelType string
+
+const (
+	Intern LevelType = "Level"
+	Junior LevelType = "Junior"
+	Middle LevelType = "Middle"
+	Senior LevelType = "Senior"
+	Lead   LevelType = "Lead"
+)
+
 type Applicant struct {
-	ID 			 int
+	ID           int
 	Name         string
 	Age          int
-	Experience   int
+	Education    EducationType
 	University   string
-	Level        int8
 	Graduated    bool
-	Companies    []string
-	Education    int
-	Specialty    int // backend frontend fullstack
+	Specialty    SpecialtyType // backend frontend fullstack
+	Level        LevelType
+	Experience   int
+	WorkHistory  string
 	Languages    []string
 	Technologies []string
 	Score        int
@@ -30,7 +59,7 @@ type RequestForApplicant struct {
 	Specialty         string
 	LanguagesRequired []string
 	LanguagesOptional []string
-} 
+}
 
 func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error) {
 	var queryBuilder strings.Builder
@@ -74,7 +103,7 @@ func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error)
 	var applicants []Applicant
 	for rows.Next() {
 		var a Applicant
-		if err := rows.Scan(&a.ID, &a.Name, &a.Age, &a.Experience, &a.University, &a.Level, &a.Graduated, &a.Companies, &a.Education, &a.Specialty, &a.Languages, &a.Technologies); err != nil {
+		if err := rows.Scan(&a.ID, &a.Name, &a.Age, &a.Experience, &a.University, &a.Level, &a.Graduated, &a.WorkHistory, &a.Education, &a.Specialty, &a.Languages, &a.Technologies); err != nil {
 			return nil, err
 		}
 		applicants = append(applicants, a)
@@ -83,7 +112,7 @@ func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error)
 }
 
 const (
-	ExpWeight  = 100
+	AppExpWeight  = 100
 	LangWeight = 52
 )
 

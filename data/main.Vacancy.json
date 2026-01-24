@@ -4,449 +4,499 @@
     "Description": "Optimize CoreML performance for the next generation of iPhone processors.",
     "Company": "Apple",
     "Experience": 4,
-    "Type": 1,
     "Salary": 265000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Cloud Infrastructure Intern",
     "Description": "Learn to manage Azure Kubernetes Service clusters at scale.",
     "Company": "Microsoft",
     "Experience": 0,
-    "Type": 3,
     "Salary": 42000,
-    "Hours": 20
+    "Hours": 20,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   },
   {
     "Title": "Warehouse Robotics Architect",
     "Description": "Design autonomous navigation systems for fulfillment center fulfillment bots.",
     "Company": "Amazon",
     "Experience": 8,
-    "Type": 1,
     "Salary": 340000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Semiconductor Logic Designer",
     "Description": "Develop 2nm process node logic libraries.",
     "Company": "Samsung Electronics",
     "Experience": 5,
-    "Type": 1,
     "Salary": 190000,
-    "Hours": 45
+    "Hours": 45,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Autopilot Perception Engineer",
     "Description": "Improve vision-based obstacle detection for FSD version 14.",
     "Company": "Tesla",
     "Experience": 6,
-    "Type": 1,
     "Salary": 310000,
-    "Hours": 50
+    "Hours": 50,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Staff ML Engineer - Llama 4",
     "Description": "Lead the scaling of foundational models for the Metaverse ecosystem.",
     "Company": "Meta",
     "Experience": 10,
-    "Type": 1,
     "Salary": 485000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "EUV Process Engineer",
     "Description": "Maintain and optimize Extreme Ultraviolet lithography machines.",
     "Company": "TSMC",
     "Experience": 3,
-    "Type": 1,
     "Salary": 145000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "CUDA Performance Engineer",
     "Description": "Optimize GPU kernels for generative AI workloads on Blackwell chips.",
     "Company": "NVIDIA",
     "Experience": 7,
-    "Type": 1,
     "Salary": 380000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Video Streaming Intern",
     "Description": "Optimize adaptive bitrate encoding for low-latency streaming.",
     "Company": "Netflix",
     "Experience": 0,
-    "Type": 1,
     "Salary": 92000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   },
   {
     "Title": "Senior Fullstack Developer",
     "Description": "Build data-rich dashboards for the Einstein AI CRM platform.",
     "Company": "Salesforce",
     "Experience": 6,
-    "Type": 1,
     "Salary": 295000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Hardware Verification Intern",
     "Description": "Design test benches for custom silicon power management units.",
     "Company": "Apple",
     "Experience": 0,
-    "Type": 3,
     "Salary": 45000,
-    "Hours": 20
+    "Hours": 20,
+    "Employment": "Internship",
+    "Location": "In-office"
   },
   {
     "Title": "Cybersecurity Lead (L6)",
     "Description": "Architect zero-trust security for Windows 12 Enterprise.",
     "Company": "Microsoft",
     "Experience": 12,
-    "Type": 1,
     "Salary": 410000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Supply Chain Data Scientist",
     "Description": "Develop ML models to predict global shipping delays.",
     "Company": "Amazon",
     "Experience": 3,
-    "Type": 1,
     "Salary": 210000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Display Tech Researcher",
     "Description": "Next-gen MicroLED development for mobile devices.",
     "Company": "Samsung Electronics",
     "Experience": 10,
-    "Type": 1,
     "Salary": 280000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Remote"
   },
   {
     "Title": "Battery Management Systems Intern",
     "Description": "Firmware development for thermal cooling of battery packs.",
     "Company": "Tesla",
     "Experience": 0,
-    "Type": 1,
     "Salary": 75000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   },
   {
     "Title": "Backend Engineer (L4) - Ads",
     "Description": "Scaling distributed ad-bidding systems for Instagram.",
     "Company": "Meta",
     "Experience": 4,
-    "Type": 1,
     "Salary": 280000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "ASIC Design Intern",
     "Description": "Assist in the front-end design of 3nm semiconductor chips.",
     "Company": "TSMC",
     "Experience": 0,
-    "Type": 3,
     "Salary": 35000,
-    "Hours": 25
+    "Hours": 25,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   },
   {
     "Title": "Senior AI Infrastructure Lead",
     "Description": "Architect the interconnect fabric for next-gen data centers.",
     "Company": "NVIDIA",
     "Experience": 15,
-    "Type": 1,
     "Salary": 520000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Frontend Engineer - UI Frameworks",
     "Description": "Contribute to React and internal design systems.",
     "Company": "Netflix",
     "Experience": 5,
-    "Type": 1,
     "Salary": 350000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "DevOps Engineer (L3)",
     "Description": "Manage global deployments for Slack infrastructure.",
     "Company": "Salesforce",
     "Experience": 2,
-    "Type": 1,
     "Salary": 175000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "SwiftUI Specialist (L5)",
     "Description": "Lead UI development for the visionOS ecosystem.",
     "Company": "Apple",
     "Experience": 8,
-    "Type": 1,
     "Salary": 345000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Generative AI Intern",
     "Description": "Research fine-tuning techniques for Copilot models.",
     "Company": "Microsoft",
     "Experience": 0,
-    "Type": 1,
     "Salary": 98000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   },
   {
     "Title": "AWS Solutions Architect",
     "Description": "Help enterprise clients scale serverless architectures.",
     "Company": "Amazon",
     "Experience": 7,
-    "Type": 1,
     "Salary": 315000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Kernel Developer - Tizen OS",
     "Description": "Optimize low-level performance for Smart TVs.",
     "Company": "Samsung Electronics",
     "Experience": 5,
-    "Type": 1,
     "Salary": 165000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Charging Infrastructure Intern",
     "Description": "Analyze Supercharger load balance and reliability.",
     "Company": "Tesla",
     "Experience": 0,
-    "Type": 3,
     "Salary": 40000,
-    "Hours": 20
+    "Hours": 20,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   },
   {
     "Title": "VR Graphics Engineer",
     "Description": "Real-time rendering optimization for Quest 4 hardware.",
     "Company": "Meta",
     "Experience": 6,
-    "Type": 1,
     "Salary": 330000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Cleanroom Operations Lead",
     "Description": "Directing manufacturing yields for high-performance computing chips.",
     "Company": "TSMC",
     "Experience": 12,
-    "Type": 1,
     "Salary": 260000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Deep Learning Compiler Intern",
     "Description": "Implement new operators in the TensorRT compiler.",
     "Company": "NVIDIA",
     "Experience": 0,
-    "Type": 1,
     "Salary": 105000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Internship",
+    "Location": "In-office"
   },
   {
     "Title": "Content Delivery Network (CDN) Lead",
     "Description": "Scaling Open Connect infrastructure globally.",
     "Company": "Netflix",
     "Experience": 10,
-    "Type": 1,
     "Salary": 550000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Security Engineer - Identity",
     "Description": "Secure MFA and SSO flows for over 150,000 corporate clients.",
     "Company": "Salesforce",
     "Experience": 5,
-    "Type": 1,
     "Salary": 240000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Embedded Firmware Intern",
     "Description": "Code low-level drivers for AirPods audio processing.",
     "Company": "Apple",
     "Experience": 0,
-    "Type": 3,
     "Salary": 48000,
-    "Hours": 20
+    "Hours": 20,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   },
   {
     "Title": "Staff Engineer - LinkedIn Feed",
     "Description": "Rethink the relevance algorithms for the main professional feed.",
     "Company": "Microsoft",
     "Experience": 11,
-    "Type": 1,
     "Salary": 440000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Operations Tech Intern",
     "Description": "Assist in the maintenance of AWS data center hardware.",
     "Company": "Amazon",
     "Experience": 0,
-    "Type": 3,
     "Salary": 38000,
-    "Hours": 25
+    "Hours": 25,
+    "Employment": "Internship",
+    "Location": "In-office"
   },
   {
     "Title": "Senior Android Dev - Galaxy",
     "Description": "Customizing OneUI for next-gen foldable devices.",
     "Company": "Samsung Electronics",
     "Experience": 8,
-    "Type": 1,
     "Salary": 220000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Manufacturing QA Lead",
     "Description": "Oversee automated optical inspection for Cybertruck panels.",
     "Company": "Tesla",
     "Experience": 7,
-    "Type": 1,
     "Salary": 250000,
-    "Hours": 45
+    "Hours": 45,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Privacy Engineer (L5)",
     "Description": "Implement differential privacy for user data processing.",
     "Company": "Meta",
     "Experience": 6,
-    "Type": 1,
     "Salary": 315000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Packaging Tech Intern",
     "Description": "Researching 3D chip stacking and thermal dissipation.",
     "Company": "TSMC",
     "Experience": 0,
-    "Type": 1,
     "Salary": 65000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   },
   {
     "Title": "Cloud Gaming Intern",
     "Description": "Optimizing frame latency for GeForce NOW.",
     "Company": "NVIDIA",
     "Experience": 0,
-    "Type": 3,
     "Salary": 46000,
-    "Hours": 20
+    "Hours": 20,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   },
   {
     "Title": "Studio Tech Engineer",
     "Description": "Building cloud-based rendering pipelines for Netflix Animation.",
     "Company": "Netflix",
     "Experience": 4,
-    "Type": 1,
     "Salary": 280000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Product Manager - AI Cloud",
     "Description": "Define the roadmap for GenAI integration in Slack.",
     "Company": "Salesforce",
     "Experience": 5,
-    "Type": 1,
     "Salary": 230000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Site Reliability Intern",
     "Description": "Automating server recovery for iCloud storage nodes.",
     "Company": "Apple",
     "Experience": 0,
-    "Type": 1,
     "Salary": 88000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Internship",
+    "Location": "In-office"
   },
   {
     "Title": "Staff SRE - Azure Billing",
     "Description": "Architect the global real-time billing engine for Cloud.",
     "Company": "Microsoft",
     "Experience": 10,
-    "Type": 1,
     "Salary": 420000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Remote"
   },
   {
     "Title": "Software Development Manager",
     "Description": "Lead a team of 15 backend engineers in Prime Video.",
     "Company": "Amazon",
     "Experience": 12,
-    "Type": 1,
     "Salary": 460000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Remote"
   },
   {
     "Title": "VLSI Design Intern",
     "Description": "Assist in physical design and layout for mobile SoCs.",
     "Company": "Samsung Electronics",
     "Experience": 0,
-    "Type": 1,
     "Salary": 60000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Internship",
+    "Location": "In-office"
   },
   {
     "Title": "Senior Fullstack Engineer",
     "Description": "Developing the internal factory management software (MOS).",
     "Company": "Tesla",
     "Experience": 8,
-    "Type": 1,
     "Salary": 275000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Data Engineer (L3)",
     "Description": "Building telemetry pipelines for WhatsApp messaging.",
     "Company": "Meta",
     "Experience": 1,
-    "Type": 1,
     "Salary": 185000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Yield Enhancement Engineer",
     "Description": "Applying AI to detect defects in 3nm wafer production.",
     "Company": "TSMC",
     "Experience": 5,
-    "Type": 1,
     "Salary": 170000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Senior Software Engineer - DL",
     "Description": "Develop PyTorch optimizations for NVIDIA hardware.",
     "Company": "NVIDIA",
     "Experience": 6,
-    "Type": 1,
     "Salary": 320000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "Hybrid"
   },
   {
     "Title": "Cybersecurity Specialist",
     "Description": "Protecting content distribution against piracy and leaks.",
     "Company": "Netflix",
     "Experience": 7,
-    "Type": 1,
     "Salary": 420000,
-    "Hours": 40
+    "Hours": 40,
+    "Employment": "Full-time",
+    "Location": "In-office"
   },
   {
     "Title": "Platform Engineer Intern",
     "Description": "Developing reusable Go libraries for the Mulesoft ecosystem.",
     "Company": "Salesforce",
     "Experience": 0,
-    "Type": 3,
     "Salary": 40000,
-    "Hours": 20
+    "Hours": 20,
+    "Employment": "Internship",
+    "Location": "Hybrid"
   }
 ]
