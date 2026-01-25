@@ -7,18 +7,42 @@ import (
 )
 
 type Company struct {
-	ID            int
-	Name          string
-	Country       string
-	YearFound     int //foundation year
-	EmployeeCount int
-	Vacancies     []*Vacancy
+	ID            int `db:"ID"`
+	Name          string `db:"Name"`
+	Country       string `db:"Country"`
+	YearFound     int `db:"YearFound"`//foundation year
+	EmployeeCount int `db:"EmployeeCount"`
 	Score         int
 }
 
 type RequestForCompany struct {
-	RevenuePerYear *int
+	Country			string
 	EmployeeCount  *int
+}
+
+func getCompany(db *sql.DB, name string, id int) (Company, error) {
+	
+	if name != nill {
+		row, err = db.QueryRowx(
+			"SELECT * FROM company WHERE (Name) = (?)",
+			name
+		)
+	}
+	else if id != nil {
+		row, err = db.QueryRowx(
+			"SELECT * FROM company WHERE (ID) = (?)",
+			name
+		)
+	}
+	if err != nil {
+		return nil, err
+	}
+	// method get sqlx
+	var c Company
+	if err = row.StructScan(&c); err != nil{
+		return nil, err
+	}
+	return c, row.Err()
 }
 
 func getCompanies(db *sql.DB, request RequestForCompany) ([]Company, error) {
@@ -31,9 +55,9 @@ func getCompanies(db *sql.DB, request RequestForCompany) ([]Company, error) {
 		args = append(args, *request.EmployeeCount)
 	}
 
-	if request.RevenuePerYear != nil {
-		queryBuilder.WriteString("AND RevenuePerYear >= ?")
-		args = append(args, *request.RevenuePerYear)
+	if request.Country != nil {
+		queryBuilder.WriteString("AND Country = ?")
+		args = append(args, *request.Country)
 	}
 
 	query := queryBuilder.String()
@@ -46,7 +70,7 @@ func getCompanies(db *sql.DB, request RequestForCompany) ([]Company, error) {
 	var companies []Company
 	for rows.Next() {
 		var c Company
-		if err := rows.Scan(&c.Name, &c.Country, &c.YearFound, &c.EmployeeCount, &c.Vacancies); err != nil {
+		if err := rows.Scan(&c.Name, &c.Country, &c.YearFound, &c.EmployeeCount); err != nil {
 			return nil, err
 		}
 		companies = append(companies, c)

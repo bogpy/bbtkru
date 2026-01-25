@@ -22,15 +22,16 @@ const (
 )
 
 type Vacancy struct {
-	ID                int
-	Title             string
-	Description       string
-	CompanyID         int
-	Experience        int
-	Salary            int
-	Hours             int
-	Employment        EmploymentType
-	Location          LocationType
+	ID                int `db:"DB"`
+	Title             string `db:"Title"`
+	Description       string `db:"Description"`
+	CompanyID         int `db:CompanyID"`
+	CompanyName       string `db:CompanyName"`
+	Experience        int `db:"Experience"`
+	Salary            int `db:"Salary"`
+	Hours             int `db:"Hours"`
+	Employment        EmploymentType `db:"Employment"`
+	Location          LocationType `db:"Location"`
 	LanguagesRequired []string
 	LanguagesOptional []string
 	Score             int

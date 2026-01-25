@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"sort"
 	"strings"
+	"time"
 )
 
 type EducationType string
@@ -28,7 +29,7 @@ const (
 type LevelType string
 
 const (
-	Intern LevelType = "Level"
+	Intern LevelType = "Intern"
 	Junior LevelType = "Junior"
 	Middle LevelType = "Middle"
 	Senior LevelType = "Senior"
@@ -36,16 +37,16 @@ const (
 )
 
 type Applicant struct {
-	ID           int
-	Name         string
-	Age          int
-	Education    EducationType
-	University   string
-	Graduated    bool
-	Specialty    SpecialtyType // backend frontend fullstack
-	Level        LevelType
-	Experience   int
-	WorkHistory  string
+	ID           int `db:"ID"`
+	Name         string `db:"Name"`
+	DateOfBirth  time.Time `db:"DateOfBirth"`
+	Education    EducationType `db:"Education"`
+	University   string `db:"University"`
+	Graduated    bool `db:"Graduated"`
+	Specialty    SpecialtyType `db:"Specialty"`// backend frontend fullstack
+	Level        LevelType `db:"Level"`
+	Experience   int `db:"Experience"`
+	WorkHistory  string `db:"WorkHistory"`
 	Languages    []string
 	Technologies []string
 	Score        int
@@ -103,7 +104,7 @@ func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error)
 	var applicants []Applicant
 	for rows.Next() {
 		var a Applicant
-		if err := rows.Scan(&a.ID, &a.Name, &a.Age, &a.Experience, &a.University, &a.Level, &a.Graduated, &a.WorkHistory, &a.Education, &a.Specialty, &a.Languages, &a.Technologies); err != nil {
+		if err := rows.Scan(&a.ID, &a.Name, &a.Experience, &a.University, &a.Level, &a.Graduated, &a.WorkHistory, &a.Education, &a.Specialty, &a.Languages, &a.Technologies); err != nil {
 			return nil, err
 		}
 		applicants = append(applicants, a)

@@ -24,7 +24,7 @@ CREATE TABLE applicant (
 
 CREATE TABLE company (
 	ID				INT AUTO_INCREMENT NOT NULL,
-	Name			VARCHAR(100) NOT NULL,
+	Name			VARCHAR(100) NOT NULL UNIQUE,
 	Country			VARCHAR(50),
 	YearFound		INT,
 	EmployeeCount	INT,

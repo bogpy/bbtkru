@@ -18,29 +18,28 @@ func bulkInsertSql[T any](db *sqlx.DB, arr []T) {
 	case Company:
 		query = `INSERT INTO company
 			(Name, Country, YearFound, EmployeeCount)
-			VALUES (:Name, :Country, :Year, :EmployeeCount)`
+			VALUES (:Name, :Country, :YearFound, :EmployeeCount)`
 	case Applicant:
 		query = `INSERT INTO applicant
-			(Name, Age, Education, University, Graduated, Specialty, Level, Experience, WorkHistory)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+			(Name, DateOfBirth, Education, University, Graduated, Specialty, Level, Experience, WorkHistory)
+			VALUES (:Name, :DateOfBirth, :Education, :University, :Graduated, :Specialty, :Level, :Experience, :WorkHistory)`
 	case Vacancy:
 		query = `INSERT INTO vacancy
 			(Title, Description, CompanyID, Experience, Salary,
 			Hours, Employment, Location) 
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+			VALUES (:Title, :Description, :CompanyID, :Experience, :Salary, :Hours, :Employment, :Location)`
 	case Language:
-		query = `INSERT INTO language (Name) VALUES (:Name)`
+		query = "INSERT INTO language (Name) VALUES (:Name)"
 	case Technology:
 		query = `INSERT INTO technology (Name) VALUES (:Name)`
 	}
-	query, args, err := sqlx.In(query, arr)
+	// query, args, err := sqlx.In(query, arr)
+	// if err != nil {
+	// 	fmt.Errorf("bulkInsertSql: %v", err)
+	// }
+	_, err := db.NamedExec(query, arr)
 	if err != nil {
-		fmt.Errorf("insertSql: %v", err)
-	}
-	query = sqlx.Rebind(sqlx.QUESTION, query)
-	_, err = db.Exec(query, args...)
-	if err != nil {
-		fmt.Errorf("insertSql: %v", err)
+		fmt.Errorf("bulkInsertSql: %v", err)
 	}
 }
 
@@ -61,9 +60,9 @@ func insertSql[T any](db *sqlx.DB, ent *T) (int64, error) {
 	case Applicant:
 		result, err = db.Exec(
 			`INSERT INTO applicant
-			(Name, Age, Education, University, Graduated, Specialty, Level, Experience, WorkHistory)
+			(Name, Education, University, Graduated, Specialty, Level, Experience, WorkHistory)
 			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-			v.Name, v.Age, v.Education, v.University, v.Graduated,
+			v.Name, v.Education, v.University, v.Graduated,
 			v.Specialty, v.Level, v.Experience, v.WorkHistory,
 		)
 	case Vacancy:
@@ -111,5 +110,23 @@ func populateDB(db *sqlx.DB) {
 	var languages []Language
 	readJSON(&languages)
 	bulkInsertSql(db, languages)
-	return
+
+	var technologies []Technology
+	readJSON(&technologies)
+	bulkInsertSql(db, technologies)
+
+	var companies []Company
+	readJSON(&companies)
+	bulkInsertSql(db, companies)
+
+	var applicants []Applicant
+	readJSON(&applicants)
+	bulkInsertSql(db, applicants)
+
+	var vacancies []Vacancy
+	readJSON(&vacancies)
+	for _, vacancy := range vacancies {
+		
+	}
+	bulkInsertSql(db, vacancies)
 }
