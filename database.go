@@ -29,7 +29,7 @@ func bulkInsertSql[T any](db *sqlx.DB, arr []T) {
 			Hours, Employment, Location) 
 			VALUES (:Title, :Description, :CompanyID, :Experience, :Salary, :Hours, :Employment, :Location)`
 	case Language:
-		query = "INSERT INTO language (Name) VALUES (:Name)"
+		query = `INSERT INTO language (Name) VALUES (:Name)`
 	case Technology:
 		query = `INSERT INTO technology (Name) VALUES (:Name)`
 	}
@@ -37,6 +37,8 @@ func bulkInsertSql[T any](db *sqlx.DB, arr []T) {
 	// if err != nil {
 	// 	fmt.Errorf("bulkInsertSql: %v", err)
 	// }
+	fmt.Println(query)
+	fmt.Printf("%v\n", len(arr))
 	_, err := db.NamedExec(query, arr)
 	if err != nil {
 		fmt.Errorf("bulkInsertSql: %v", err)
@@ -106,6 +108,10 @@ func connectToDB() *sqlx.DB {
 	return db
 }
 
+func emptyDB(db *sqlx.DB) {
+
+}
+
 func populateDB(db *sqlx.DB) {
 	var languages []Language
 	readJSON(&languages)
@@ -125,8 +131,18 @@ func populateDB(db *sqlx.DB) {
 
 	var vacancies []Vacancy
 	readJSON(&vacancies)
+	good_vacancies := vacancies[:0]
 	for _, vacancy := range vacancies {
-		
+		company, err := getCompany(db, &vacancy.CompanyName, nil)
+		if err != nil {
+			log.Printf("Company name %v not found", vacancy.CompanyName)
+		} else {
+			vacancy.CompanyID = company.ID
+			// fmt.Printf("Vacancy %v, from company %v with id %v\n", 
+			// 		vacancy.Title, vacancy.CompanyName, vacancy.CompanyID)
+			good_vacancies = append(good_vacancies, vacancy)
+		}
 	}
-	bulkInsertSql(db, vacancies)
+	fmt.Printf("number of good vacancies: %v", len(good_vacancies))
+	bulkInsertSql(db, good_vacancies)
 }

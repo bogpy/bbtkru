@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"github.com/jmoiron/sqlx"
+	// "github.com/go-sql-driver/mysql"
 )
 
 type Company struct {
@@ -16,33 +18,28 @@ type Company struct {
 }
 
 type RequestForCompany struct {
-	Country			string
+	Country		   *string
 	EmployeeCount  *int
 }
 
-func getCompany(db *sql.DB, name string, id int) (Company, error) {
-	
-	if name != nill {
-		row, err = db.QueryRowx(
+func getCompany(db *sqlx.DB, name *string, id *int) (Company, error) {
+	var company Company
+	var err error
+	if name != nil {
+		err = db.Get(
+			&company,
 			"SELECT * FROM company WHERE (Name) = (?)",
-			name
+			*name,
 		)
-	}
-	else if id != nil {
-		row, err = db.QueryRowx(
+	} else if id != nil {
+		err = db.Get(
+			&company,
 			"SELECT * FROM company WHERE (ID) = (?)",
-			name
+			*id,
 		)
 	}
-	if err != nil {
-		return nil, err
-	}
-	// method get sqlx
-	var c Company
-	if err = row.StructScan(&c); err != nil{
-		return nil, err
-	}
-	return c, row.Err()
+	
+	return company, err
 }
 
 func getCompanies(db *sql.DB, request RequestForCompany) ([]Company, error) {
