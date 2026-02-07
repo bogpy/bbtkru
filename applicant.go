@@ -37,7 +37,7 @@ const (
 )
 
 type Applicant struct {
-	ID           int `db:"ID"`
+	ID           int64 `db:"ID"`
 	Name         string `db:"Name"`
 	DateOfBirth  time.Time `db:"DateOfBirth"`
 	Education    EducationType `db:"Education"`
@@ -50,6 +50,10 @@ type Applicant struct {
 	Languages    []string
 	Technologies []string
 	Score        int
+}
+
+func (x *Applicant) set_ID(id int64) {
+	x.ID = id
 }
 
 type RequestForApplicant struct {

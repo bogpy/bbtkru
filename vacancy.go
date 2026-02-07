@@ -22,10 +22,10 @@ const (
 )
 
 type Vacancy struct {
-	ID                int `db:"DB"`
+	ID                int64 `db:"DB"`
 	Title             string `db:"Title"`
 	Description       string `db:"Description"`
-	CompanyID         int `db:"CompanyID"`
+	CompanyID         int64 `db:"CompanyID"`
 	CompanyName       string `db:"CompanyName"`
 	Experience        int `db:"Experience"`
 	Salary            int `db:"Salary"`
@@ -35,6 +35,10 @@ type Vacancy struct {
 	LanguagesRequired []string
 	LanguagesOptional []string
 	Score             int
+}
+
+func (x *Vacancy) set_ID(id int64) {
+	x.ID =  id
 }
 
 type RequestForVacancy struct {

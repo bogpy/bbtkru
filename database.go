@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func bulkInsertSql[T any](db *sqlx.DB, arr []T) {
+func bulkInsertSql[T ID_setter](db *sqlx.DB, arr []T) {
 	var query string
 	var el T
 	switch any(el).(type) {
@@ -39,10 +39,23 @@ func bulkInsertSql[T any](db *sqlx.DB, arr []T) {
 	// }
 	fmt.Println(query)
 	fmt.Printf("%v\n", len(arr))
-	_, err := db.NamedExec(query, arr)
+	tx := db.MustBegin()
+	res, err := tx.NamedExec(query, arr)
 	if err != nil {
-		fmt.Errorf("bulkInsertSql: %v", err)
+		tx.Rollback()
+		log.Fatal(err)
 	}
+	tx.Commit()
+	id, err := res.LastInsertId()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, ent := range arr {
+		ent.set_ID(id)
+		id += 1
+	}
+	fmt.Printf("%v\n", arr)
 }
 
 func insertSql[T any](db *sqlx.DB, ent *T) (int64, error) {
@@ -116,6 +129,7 @@ func populateDB(db *sqlx.DB) {
 	var languages []Language
 	readJSON(&languages)
 	bulkInsertSql(db, languages)
+	fmt.Printf("%v\n", languages)
 
 	var technologies []Technology
 	readJSON(&technologies)
@@ -138,11 +152,9 @@ func populateDB(db *sqlx.DB) {
 			log.Printf("Company name %v not found", vacancy.CompanyName)
 		} else {
 			vacancy.CompanyID = company.ID
-			// fmt.Printf("Vacancy %v, from company %v with id %v\n", 
-			// 		vacancy.Title, vacancy.CompanyName, vacancy.CompanyID)
 			good_vacancies = append(good_vacancies, vacancy)
 		}
+		
 	}
-	fmt.Printf("number of good vacancies: %v", len(good_vacancies))
 	bulkInsertSql(db, good_vacancies)
 }

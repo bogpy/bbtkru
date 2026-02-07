@@ -9,12 +9,16 @@ import (
 )
 
 type Company struct {
-	ID            int `db:"ID"`
+	ID            int64 `db:"ID"`
 	Name          string `db:"Name"`
 	Country       string `db:"Country"`
 	YearFound     int `db:"YearFound"`//foundation year
 	EmployeeCount int `db:"EmployeeCount"`
 	Score         int
+}
+
+func (x *Company) set_ID(id int64) {
+	x.ID =  id
 }
 
 type RequestForCompany struct {
