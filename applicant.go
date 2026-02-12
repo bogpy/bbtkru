@@ -47,8 +47,8 @@ type Applicant struct {
 	Level        LevelType `db:"Level"`
 	Experience   int `db:"Experience"`
 	WorkHistory  string `db:"WorkHistory"`
-	Languages    []string
-	Technologies []string
+	Languages    []Language
+	Technologies []Technology
 	Score        int
 }
 
@@ -114,6 +114,50 @@ func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error)
 		applicants = append(applicants, a)
 	}
 	return applicants, rows.Err()
+}
+
+func GetApplicantLanguages(db *sqlx.DB, applicantId int) (*Applicant, error){
+	var applicant Applicant
+	err := db.Get(&applicant, "SELECT * FROM applicant WHERE ID = (?)", applicantId)
+	if err != nil{
+		return nil, err
+	}
+
+	query := `SELECT l.ID, l.Name
+	 		  FROM language l
+			  JOIN applicant_language al ON l.id = al.language_id
+			  WHERE al.applicant_id = (?)
+			  `
+	var languages []Language
+	err := db.Select(&languages, query, applicantId)
+	if err != nil{
+		return nil, err
+	}
+
+	applicant.Languages = languages
+	return &applicant, nil
+}
+
+func GetApplicantTechnologies(db *sqlx.DB, applicantId int) (*Technology, error){
+	var applicant Applicant
+	err := db.Get(&applicant, "SELECT * FROM applicant WHERE ID = (?)", applicantId)
+	if err != nil{
+		return nil, err
+	}
+
+	query := `SELECT t.ID, t.Name
+	 		  FROM technology t
+			  JOIN applicant_technology at ON t.id = at.technology_id
+			  WHERE at.applicant_id = (?)
+			  `
+	var technologies []Technology
+	err := db.Select(&technologies, query, applicantId)
+	if err != nil{
+		return nil, err
+	}
+	
+	applicant.Technologies = technologies
+	return &applicant, nil
 }
 
 const (
