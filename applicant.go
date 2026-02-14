@@ -160,7 +160,7 @@ func getApplicants(db *sqlx.DB, request RequestForApplicant) ([]Applicant, error
 		applicant.CalcScore(request)
 	}
 
-	return applicants, err
+	return applicants, nil
 }
 
 func (applicant *Applicant) GetLanguages(db *sqlx.DB) (error){

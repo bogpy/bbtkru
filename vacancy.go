@@ -32,8 +32,8 @@ type Vacancy struct {
 	Hours             int `db:"Hours"`
 	Employment        EmploymentType `db:"Employment"`
 	Location          LocationType `db:"Location"`
-	LanguagesRequired []string
-	LanguagesOptional []string
+	LanguagesRequired []Language
+	LanguagesOptional []Language
 	Score             int
 }
 
@@ -74,20 +74,24 @@ func getVacancies(db *sql.DB, request RequestForVacancy) ([]Vacancy, error) {
 	}
 
 	query := queryBuilder.String()
-	rows, err := db.Query(query, args...)
+	var vacancies []Vacancy
+	err := db.Select(&vacancies, query, args...)
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
-	var vacancies []Vacancy
-	for rows.Next() {
-		var v Vacancy
-		if err := rows.Scan(&v.Title, &v.Description, &v.CompanyID, &v.Experience, &v.Employment, &v.Location, &v.Salary, &v.Hours); err != nil {
+
+	for _, vacancy := range vacancies {
+		err := vacancy.GetLanguages(db)
+		if err != nil {
 			return nil, err
 		}
-		vacancies = append(vacancies, v)
+		err := vacancy.GetTechnologies(db)
+		if err != nil {
+			return nil, err
+		}
 	}
-	return vacancies, rows.Err()
+
+	return vacancies, nil
 }
 
 const (
