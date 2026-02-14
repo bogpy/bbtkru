@@ -58,34 +58,28 @@ func (x *Applicant) set_ID(id int64) {
 
 type RequestForApplicant struct {
 	Experience        *int
-	Level             *int8
+	Level             *LevelType
 	Graduated         *bool
-	Education_type    *int
-	Specialty         string
-	LanguagesRequired []string
-	LanguagesOptional []string
+	Education_type    *Education_type
+	Specialty         *SpecialtyType
+	LanguagesRequired []Language
+	LanguagesOptional []Language
+	TechnologiesRequired []Technology
+	TechnologiesOptional []Technology
 }
 
-func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error) {
+func getApplicants(db *sqlx.DB, request RequestForApplicant) ([]Applicant, error) {
 	var queryBuilder strings.Builder
-	queryBuilder.WriteString("SELECT * FROM applicant WHERE 1=1")
+	queryBuilder.WriteString("SELECT * FROM applicant a WHERE 1=1")
 	var args []interface{}
 
 	if request.Experience != nil {
 		queryBuilder.WriteString("AND Experience >= ?")
 		args = append(args, *request.Experience)
 	}
-	//add other requests
-	/*if request.LanguagesRequired != nil {
-		mp := make(map[string]bool)
-		for _, lang := request.LanguagesRequired {
-			mp[lang] = 1
-		}
-		//args = append(args, request.experience).........
-	}*/
 
 	if request.Level != nil {
-		queryBuilder.WriteString("AND Level >= ?")
+		queryBuilder.WriteString("AND Level = ?")
 		args = append(args, *request.Level)
 	}
 
@@ -99,91 +93,142 @@ func getApplicants(db *sql.DB, request RequestForApplicant) ([]Applicant, error)
 		args = append(args, *request.Education_type)
 	}
 
+	if request.Specialty != nil {
+		queryBuilder.WriteString("AND Specialty = ?")
+		args = append(args, *request.Specialty)
+	}
+
+	if len(request.LanguagesRequired) > 0 {
+		queryBuilder.WriteString(
+			"AND EXISTS (
+				SELECT 1 FROM applicant_language al
+				WHERE al.applicant_id = a.ID AND al.language_id IN (?)
+				GROUP BY al.applicant_id
+				HAVING COUNT(DISTINCT al.applicant_id) = ?
+			)"
+		)
+		languages_ids = make([]int64, len(request.LanguagesRequired))
+		for i, language := range request.LanguagesRequired {
+			languages_ids[i] = language.ID
+		}
+		args = append(
+			args,
+			languages_ids,
+			len(languages_ids)
+		)
+	}
+	
+	if len(request.TechnologiesRequired) > 0 {
+		queryBuilder.WriteString(
+			"AND EXISTS (
+				SELECT 1 FROM applicant_technology at
+				WHERE at.applicant_id = a.ID AND at.technology_id IN (?)
+				GROUP BY at.applicant_id
+				HAVING COUNT(DISTINCT at.applicant_id) = ?
+			)"
+		)
+		technologies_ids = make([]int64, len(request.TechnologiesRequired))
+		for i, technology := range request.TechnolgiesRequired {
+			technologies_ids[i] = technology.ID
+		}
+		args = append(
+			args,
+			technologies_ids,
+			len(technologies_ids)
+		)
+	}
+
 	query := queryBuilder.String()
-	rows, err := db.Query(query, args...)
+	var applicants []Applicant
+	err := db.Select(&applicants, query, args...)
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
-	var applicants []Applicant
-	for rows.Next() {
-		var a Applicant
-		if err := rows.Scan(&a.ID, &a.Name, &a.Experience, &a.University, &a.Level, &a.Graduated, &a.WorkHistory, &a.Education, &a.Specialty, &a.Languages, &a.Technologies); err != nil {
+
+	for _, applicant := range applicants {
+		err : = applicant.GetLanguages(db)
+		if err != nil {
 			return nil, err
 		}
-		applicants = append(applicants, a)
+		err : = applicant.GetTechnologies(db)
+		if err != nil {
+			return nil, err
+		}
 	}
-	return applicants, rows.Err()
+
+	for _, applicant := range applicants {
+		applicant.CalcScore(request)
+	}
+
+	return applicants, err
 }
 
-func GetApplicantLanguages(db *sqlx.DB, applicantId int) (*Applicant, error){
-	var applicant Applicant
-	err := db.Get(&applicant, "SELECT * FROM applicant WHERE ID = (?)", applicantId)
-	if err != nil{
-		return nil, err
-	}
-
+func (applicant *Applicant) GetLanguages(db *sqlx.DB) (error){
 	query := `SELECT l.ID, l.Name
 	 		  FROM language l
-			  JOIN applicant_language al ON l.id = al.language_id
-			  WHERE al.applicant_id = (?)
+			  JOIN applicant_language al ON l.ID = al.language_id
+			  WHERE al.applicant_id = ?
 			  `
 	var languages []Language
-	err := db.Select(&languages, query, applicantId)
+	err := db.Select(&languages, query, applicant.ID)
 	if err != nil{
-		return nil, err
+		return err
 	}
 
 	applicant.Languages = languages
-	return &applicant, nil
 }
 
-func GetApplicantTechnologies(db *sqlx.DB, applicantId int) (*Technology, error){
-	var applicant Applicant
-	err := db.Get(&applicant, "SELECT * FROM applicant WHERE ID = (?)", applicantId)
-	if err != nil{
-		return nil, err
-	}
-
+func (applicant *Applicant) GetTechnologies(db *sqlx.DB) (error){
 	query := `SELECT t.ID, t.Name
 	 		  FROM technology t
-			  JOIN applicant_technology at ON t.id = at.technology_id
-			  WHERE at.applicant_id = (?)
+			  JOIN applicant_technology at ON t.Id = at.technology_id
+			  WHERE at.applicant_id = ?
 			  `
 	var technologies []Technology
 	err := db.Select(&technologies, query, applicantId)
 	if err != nil{
-		return nil, err
+		return err
 	}
 	
 	applicant.Technologies = technologies
-	return &applicant, nil
 }
 
 const (
 	AppExpWeight  = 100
 	LangWeight = 52
+	TechWeight = 10
 )
 
-func (x Applicant) CalcScore(r RequestForApplicant) {
+func (x *Applicant) CalcScore(r RequestForApplicant) {
 	x.Score = 0
 	x.Score += x.Experience * ExpWeight
 
-	cnt := 0
 	if r.LanguagesOptional != nil {
 		var cnt = 0
-		mp := make(map[string]bool)
+		mp := make(map[int64]bool)
 		for _, lang := range r.LanguagesOptional {
-			mp[lang] = true
+			mp[lang.ID] = true
 		}
 		for _, lang := range x.Languages {
-			if mp[lang] {
+			if mp[lang.ID] {
 				cnt++
 			}
 		}
+		x.Score += cnt * LangWeight
 	}
-
-	x.Score += cnt * LangWeight
+	if r.TechnologiesOptional != nil {
+		var cnt = 0
+		mp := make(map[int64]bool)
+		for _, tech := range r.TechnologiesOptional {
+			mp[tech.ID] = true
+		}
+		for _, tech := range x.Technologies {
+			if mp[tech.ID] {
+				cnt++
+			}
+		}
+		x.Score += cnt * TechWeight
+	}
 }
 
 func SortIntern(s []Applicant, r RequestForApplicant) {
