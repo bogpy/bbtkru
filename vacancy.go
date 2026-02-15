@@ -1,7 +1,8 @@
 package main
 
 import (
-	"database/sql"
+	// "database/sql"
+	"github.com/jmoiron/sqlx"
 	"strings"
 )
 
@@ -26,7 +27,7 @@ type Vacancy struct {
 	Title             string `db:"Title"`
 	Description       string `db:"Description"`
 	CompanyID         int64 `db:"CompanyID"`
-	CompanyName       string `db:"CompanyName"`
+	CompanyName       string
 	Experience        int `db:"Experience"`
 	Salary            int `db:"Salary"`
 	Hours             int `db:"Hours"`
@@ -48,7 +49,7 @@ type RequestForVacancy struct {
 	Hours      *int
 }
 
-func getVacancies(db *sql.DB, request RequestForVacancy) ([]Vacancy, error) {
+func getVacancies(db *sqlx.DB, request RequestForVacancy) ([]Vacancy, error) {
 	var queryBuilder strings.Builder
 	queryBuilder.WriteString("SELECT * FROM vacancy WHERE 1=1")
 	var args []interface{}
@@ -80,16 +81,16 @@ func getVacancies(db *sql.DB, request RequestForVacancy) ([]Vacancy, error) {
 		return nil, err
 	}
 
-	for _, vacancy := range vacancies {
-		err := vacancy.GetLanguages(db)
-		if err != nil {
-			return nil, err
-		}
-		err := vacancy.GetTechnologies(db)
-		if err != nil {
-			return nil, err
-		}
-	}
+	// for _, vacancy := range vacancies {
+	// 	err := vacancy.GetLanguages(db)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	// 	err := vacancy.GetTechnologies(db)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	// }
 
 	return vacancies, nil
 }

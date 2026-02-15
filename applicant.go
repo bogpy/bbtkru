@@ -1,10 +1,11 @@
 package main
 
 import (
-	"database/sql"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/jmoiron/sqlx"
 )
 
 type EducationType string
@@ -37,16 +38,16 @@ const (
 )
 
 type Applicant struct {
-	ID           int64 `db:"ID"`
-	Name         string `db:"Name"`
-	DateOfBirth  time.Time `db:"DateOfBirth"`
+	ID           int64         `db:"ID"`
+	Name         string        `db:"Name"`
+	DateOfBirth  time.Time     `db:"DateOfBirth"`
 	Education    EducationType `db:"Education"`
-	University   string `db:"University"`
-	Graduated    bool `db:"Graduated"`
-	Specialty    SpecialtyType `db:"Specialty"`// backend frontend fullstack
-	Level        LevelType `db:"Level"`
-	Experience   int `db:"Experience"`
-	WorkHistory  string `db:"WorkHistory"`
+	University   string        `db:"University"`
+	Graduated    bool          `db:"Graduated"`
+	Specialty    SpecialtyType `db:"Specialty"` // backend frontend fullstack
+	Level        LevelType     `db:"Level"`
+	Experience   int           `db:"Experience"`
+	WorkHistory  string        `db:"WorkHistory"`
 	Languages    []Language
 	Technologies []Technology
 	Score        int
@@ -57,13 +58,13 @@ func (x *Applicant) set_ID(id int64) {
 }
 
 type RequestForApplicant struct {
-	Experience        *int
-	Level             *LevelType
-	Graduated         *bool
-	Education_type    *Education_type
-	Specialty         *SpecialtyType
-	LanguagesRequired []Language
-	LanguagesOptional []Language
+	Experience           *int
+	Level                *LevelType
+	Graduated            *bool
+	Education_type       *EducationType
+	Specialty            *SpecialtyType
+	LanguagesRequired    []Language
+	LanguagesOptional    []Language
 	TechnologiesRequired []Technology
 	TechnologiesOptional []Technology
 }
@@ -100,41 +101,41 @@ func getApplicants(db *sqlx.DB, request RequestForApplicant) ([]Applicant, error
 
 	if len(request.LanguagesRequired) > 0 {
 		queryBuilder.WriteString(
-			"AND EXISTS (
+			`AND EXISTS (
 				SELECT 1 FROM applicant_language al
 				WHERE al.applicant_id = a.ID AND al.language_id IN (?)
 				GROUP BY al.applicant_id
 				HAVING COUNT(DISTINCT al.applicant_id) = ?
-			)"
+			)`,
 		)
-		languages_ids = make([]int64, len(request.LanguagesRequired))
+		languages_ids := make([]int64, len(request.LanguagesRequired))
 		for i, language := range request.LanguagesRequired {
 			languages_ids[i] = language.ID
 		}
 		args = append(
 			args,
 			languages_ids,
-			len(languages_ids)
+			len(languages_ids),
 		)
 	}
-	
+
 	if len(request.TechnologiesRequired) > 0 {
 		queryBuilder.WriteString(
-			"AND EXISTS (
+			`AND EXISTS (
 				SELECT 1 FROM applicant_technology at
 				WHERE at.applicant_id = a.ID AND at.technology_id IN (?)
 				GROUP BY at.applicant_id
 				HAVING COUNT(DISTINCT at.applicant_id) = ?
-			)"
+			)`,
 		)
-		technologies_ids = make([]int64, len(request.TechnologiesRequired))
-		for i, technology := range request.TechnolgiesRequired {
+		technologies_ids := make([]int64, len(request.TechnologiesRequired))
+		for i, technology := range request.TechnologiesRequired {
 			technologies_ids[i] = technology.ID
 		}
 		args = append(
 			args,
 			technologies_ids,
-			len(technologies_ids)
+			len(technologies_ids),
 		)
 	}
 
@@ -146,11 +147,11 @@ func getApplicants(db *sqlx.DB, request RequestForApplicant) ([]Applicant, error
 	}
 
 	for _, applicant := range applicants {
-		err : = applicant.GetLanguages(db)
+		err := applicant.GetLanguages(db)
 		if err != nil {
 			return nil, err
 		}
-		err : = applicant.GetTechnologies(db)
+		err = applicant.GetTechnologies(db)
 		if err != nil {
 			return nil, err
 		}
@@ -160,10 +161,10 @@ func getApplicants(db *sqlx.DB, request RequestForApplicant) ([]Applicant, error
 		applicant.CalcScore(request)
 	}
 
-	return applicants, nil
+	return applicants, err
 }
 
-func (applicant *Applicant) GetLanguages(db *sqlx.DB) (error){
+func (applicant *Applicant) GetLanguages(db *sqlx.DB) error {
 	query := `SELECT l.ID, l.Name
 	 		  FROM language l
 			  JOIN applicant_language al ON l.ID = al.language_id
@@ -171,32 +172,34 @@ func (applicant *Applicant) GetLanguages(db *sqlx.DB) (error){
 			  `
 	var languages []Language
 	err := db.Select(&languages, query, applicant.ID)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
 	applicant.Languages = languages
+	return err
 }
 
-func (applicant *Applicant) GetTechnologies(db *sqlx.DB) (error){
+func (applicant *Applicant) GetTechnologies(db *sqlx.DB) error {
 	query := `SELECT t.ID, t.Name
 	 		  FROM technology t
 			  JOIN applicant_technology at ON t.Id = at.technology_id
 			  WHERE at.applicant_id = ?
 			  `
 	var technologies []Technology
-	err := db.Select(&technologies, query, applicantId)
-	if err != nil{
+	err := db.Select(&technologies, query, applicant.ID)
+	if err != nil {
 		return err
 	}
-	
+
 	applicant.Technologies = technologies
+	return err
 }
 
 const (
-	AppExpWeight  = 100
-	LangWeight = 52
-	TechWeight = 10
+	AppExpWeight = 100
+	LangWeight   = 52
+	TechWeight   = 10
 )
 
 func (x *Applicant) CalcScore(r RequestForApplicant) {
