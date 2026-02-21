@@ -1,0 +1,1104 @@
+[
+  {
+    "title": "iOS Software Engineer (L4)",
+    "description": "Optimize CoreML performance for the next generation of iPhone processors.",
+    "companyName": "Apple",
+    "experience": 4,
+    "salary": 265000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "B4X",
+      "Java",
+      "Haskell"
+    ],
+    "technologies": [
+      "Express.js",
+      "Stripe API",
+      "WPF",
+      "Grafana",
+      "Gin"
+    ]
+  },
+  {
+    "title": "Cloud Infrastructure Intern",
+    "description": "Learn to manage Azure Kubernetes Service clusters at scale.",
+    "companyName": "Microsoft",
+    "experience": 0,
+    "salary": 42000,
+    "hours": 20,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "Logo",
+      "R",
+      "Rust"
+    ],
+    "technologies": [
+      "NestJS",
+      "Zustand",
+      "Okta",
+      "VirtualBox",
+      "Recoil"
+    ]
+  },
+  {
+    "title": "Warehouse Robotics Architect",
+    "description": "Design autonomous navigation systems for fulfillment center fulfillment bots.",
+    "companyName": "Amazon",
+    "experience": 8,
+    "salary": 340000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Apex",
+      "Erlang",
+      "Groovy",
+      "C#"
+    ],
+    "technologies": [
+      "Xamarin",
+      "Prettier",
+      "Etcd"
+    ]
+  },
+  {
+    "title": "Semiconductor Logic Designer",
+    "description": "Develop 2nm process node logic libraries.",
+    "companyName": "Samsung Electronics",
+    "experience": 5,
+    "salary": 190000,
+    "hours": 45,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "C++",
+      "Vala",
+      "Eiffel",
+      "Go"
+    ],
+    "technologies": [
+      "TestNG",
+      "Flutter",
+      "Babel"
+    ]
+  },
+  {
+    "title": "Autopilot Perception Engineer",
+    "description": "Improve vision-based obstacle detection for FSD version 14.",
+    "companyName": "Tesla",
+    "experience": 6,
+    "salary": 310000,
+    "hours": 50,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "Forth",
+      "Elixir",
+      "RPG",
+      "Crystal"
+    ],
+    "technologies": [
+      "MySQL",
+      "Blazor",
+      "Chaos Mesh",
+      "Jaeger",
+      "Nginx"
+    ]
+  },
+  {
+    "title": "Staff ML Engineer - Llama 4",
+    "description": "Lead the scaling of foundational models for the Metaverse ecosystem.",
+    "companyName": "Meta",
+    "experience": 10,
+    "salary": 485000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "Raku",
+      "Erlang",
+      "Awk",
+      "Simula",
+      "Racket"
+    ],
+    "technologies": [
+      "Zustand",
+      "Kibana",
+      "WordPress",
+      "Power BI",
+      "Gin"
+    ]
+  },
+  {
+    "title": "EUV Process Engineer",
+    "description": "Maintain and optimize Extreme Ultraviolet lithography machines.",
+    "companyName": "TSMC",
+    "experience": 3,
+    "salary": 145000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "Ballerina",
+      "Python",
+      "Racket",
+      "Snap!"
+    ],
+    "technologies": [
+      "Postman",
+      "Django",
+      "TypeORM",
+      "ASP.NET Core"
+    ]
+  },
+  {
+    "title": "CUDA Performance Engineer",
+    "description": "Optimize GPU kernels for generative AI workloads on Blackwell chips.",
+    "companyName": "NVIDIA",
+    "experience": 7,
+    "salary": 380000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Rust",
+      "Powershell",
+      "Dart"
+    ],
+    "technologies": [
+      "Spring Boot",
+      "Next.js",
+      "Databricks",
+      "Jaeger"
+    ]
+  },
+  {
+    "title": "Video Streaming Intern",
+    "description": "Optimize adaptive bitrate encoding for low-latency streaming.",
+    "companyName": "Netflix",
+    "experience": 0,
+    "salary": 92000,
+    "hours": 40,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "Ring",
+      "Awk",
+      "RPG",
+      "Lua"
+    ],
+    "technologies": [
+      "Laravel",
+      "Vercel",
+      "Storybook",
+      "ESLint",
+      "Istio"
+    ]
+  },
+  {
+    "title": "Senior Fullstack Developer",
+    "description": "Build data-rich dashboards for the Einstein AI CRM platform.",
+    "companyName": "Salesforce",
+    "experience": 6,
+    "salary": 295000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "C#",
+      "Natural",
+      "SAS",
+      "Clojure",
+      "Logo"
+    ],
+    "technologies": [
+      "Grafana",
+      "Emotion",
+      "ZeroMQ"
+    ]
+  },
+  {
+    "title": "Hardware Verification Intern",
+    "description": "Design test benches for custom silicon power management units.",
+    "companyName": "Apple",
+    "experience": 0,
+    "salary": 45000,
+    "hours": 20,
+    "employment": "Internship",
+    "location": "In-office",
+    "languages": [
+      "PostScript",
+      "C",
+      "OCaml"
+    ],
+    "technologies": [
+      "Gradle",
+      "Pug",
+      "Ansible",
+      "Jupyter"
+    ]
+  },
+  {
+    "title": "Cybersecurity Lead (L6)",
+    "description": "Architect zero-trust security for Windows 12 Enterprise.",
+    "companyName": "Microsoft",
+    "experience": 12,
+    "salary": 410000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "Alice",
+      "D",
+      "PHP",
+      "Swift"
+    ],
+    "technologies": [
+      "Jest",
+      "Alpine.js",
+      "MinIO",
+      "Auth0",
+      "EJS"
+    ]
+  },
+  {
+    "title": "Supply Chain Data Scientist",
+    "description": "Develop ML models to predict global shipping delays.",
+    "companyName": "Amazon",
+    "experience": 3,
+    "salary": 210000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Alice",
+      "Ring",
+      "Inform"
+    ],
+    "technologies": [
+      "Vault",
+      "Django",
+      "Spring Boot",
+      "Linux"
+    ]
+  },
+  {
+    "title": "Display Tech Researcher",
+    "description": "Next-gen MicroLED development for mobile devices.",
+    "companyName": "Samsung Electronics",
+    "experience": 10,
+    "salary": 280000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Remote",
+    "languages": [
+      "ActionScript",
+      "Vala",
+      "Assembly"
+    ],
+    "technologies": [
+      "Bootstrap",
+      "Apollo Client",
+      "GameMaker",
+      "Hugging Face Transformers",
+      "pnpm"
+    ]
+  },
+  {
+    "title": "Battery Management Systems Intern",
+    "description": "Firmware development for thermal cooling of battery packs.",
+    "companyName": "Tesla",
+    "experience": 0,
+    "salary": 75000,
+    "hours": 40,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "Ladder Logic",
+      "Scheme",
+      "Julia",
+      "Forth"
+    ],
+    "technologies": [
+      "TypeORM",
+      "GraphQL",
+      "Airflow",
+      "Handlebars",
+      "MySQL"
+    ]
+  },
+  {
+    "title": "Backend Engineer (L4) - Ads",
+    "description": "Scaling distributed ad-bidding systems for Instagram.",
+    "companyName": "Meta",
+    "experience": 4,
+    "salary": 280000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Delphi/Object Pascal",
+      "Alice",
+      "Swift"
+    ],
+    "technologies": [
+      "MySQL",
+      "Godot",
+      "Entity Framework",
+      "Airflow",
+      "Consul"
+    ]
+  },
+  {
+    "title": "ASIC Design Intern",
+    "description": "Assist in the front-end design of 3nm semiconductor chips.",
+    "companyName": "TSMC",
+    "experience": 0,
+    "salary": 35000,
+    "hours": 25,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "Delphi/Object Pascal",
+      "FoxPro",
+      "Assembly",
+      "Awk"
+    ],
+    "technologies": [
+      "LlamaIndex",
+      "Babel",
+      "Angular"
+    ]
+  },
+  {
+    "title": "Senior AI Infrastructure Lead",
+    "description": "Architect the interconnect fabric for next-gen data centers.",
+    "companyName": "NVIDIA",
+    "experience": 15,
+    "salary": 520000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "Awk",
+      "Racket",
+      "Eiffel",
+      "PureBasic",
+      "Scheme"
+    ],
+    "technologies": [
+      "ESLint",
+      "Maven",
+      "Xamarin",
+      "Okta"
+    ]
+  },
+  {
+    "title": "Frontend Engineer - UI Frameworks",
+    "description": "Contribute to React and internal design systems.",
+    "companyName": "Netflix",
+    "experience": 5,
+    "salary": 350000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Clojure",
+      "VHDL",
+      "PostScript",
+      "SQL"
+    ],
+    "technologies": [
+      "Vite",
+      "Expo",
+      "Unity",
+      "Pytest",
+      "Linkerd"
+    ]
+  },
+  {
+    "title": "DevOps Engineer (L3)",
+    "description": "Manage global deployments for Slack infrastructure.",
+    "companyName": "Salesforce",
+    "experience": 2,
+    "salary": 175000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "C#",
+      "OCaml",
+      "Clojure"
+    ],
+    "technologies": [
+      "Etcd",
+      "Husky",
+      "Spring Boot",
+      "Logstash",
+      "Hadoop"
+    ]
+  },
+  {
+    "title": "SwiftUI Specialist (L5)",
+    "description": "Lead UI development for the visionOS ecosystem.",
+    "companyName": "Apple",
+    "experience": 8,
+    "salary": 345000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "D",
+      "Snap!",
+      "FoxPro",
+      "Ballerina"
+    ],
+    "technologies": [
+      "iOS SDK",
+      "Flask",
+      "Lucene",
+      "IntelliJ IDEA",
+      "WordPress"
+    ]
+  },
+  {
+    "title": "Generative AI Intern",
+    "description": "Research fine-tuning techniques for Copilot models.",
+    "companyName": "Microsoft",
+    "experience": 0,
+    "salary": 98000,
+    "hours": 40,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "Ballerina",
+      "Racket",
+      "XSLT",
+      "GAMS"
+    ],
+    "technologies": [
+      "MinIO",
+      "Django",
+      "SolidJS",
+      "npm"
+    ]
+  },
+  {
+    "title": "AWS Solutions Architect",
+    "description": "Help enterprise clients scale serverless architectures.",
+    "companyName": "Amazon",
+    "experience": 7,
+    "salary": 315000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "Awk",
+      "Scheme",
+      "Ladder Logic"
+    ],
+    "technologies": [
+      "Homebrew",
+      "Capacitor",
+      "CakePHP",
+      "Cargo"
+    ]
+  },
+  {
+    "title": "Kernel Developer - Tizen OS",
+    "description": "Optimize low-level performance for Smart TVs.",
+    "companyName": "Samsung Electronics",
+    "experience": 5,
+    "salary": 165000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "Go",
+      "RPG",
+      "Delphi/Object Pascal",
+      "Snap!",
+      "Transact-SQL"
+    ],
+    "technologies": [
+      "Prometheus",
+      "Electron",
+      "LangChain",
+      "Linux"
+    ]
+  },
+  {
+    "title": "Charging Infrastructure Intern",
+    "description": "Analyze Supercharger load balance and reliability.",
+    "companyName": "Tesla",
+    "experience": 0,
+    "salary": 40000,
+    "hours": 20,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "Transact-SQL",
+      "GAMS",
+      "Lisp",
+      "Standard ML",
+      "C++"
+    ],
+    "technologies": [
+      "Gatsby",
+      "Istio",
+      "Cassandra",
+      "GitLab CI"
+    ]
+  },
+  {
+    "title": "VR Graphics Engineer",
+    "description": "Real-time rendering optimization for Quest 4 hardware.",
+    "companyName": "Meta",
+    "experience": 6,
+    "salary": 330000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Scheme",
+      "FoxPro",
+      "B4X"
+    ],
+    "technologies": [
+      "ZooKeeper",
+      "Neo4j",
+      "Azure"
+    ]
+  },
+  {
+    "title": "Cleanroom Operations Lead",
+    "description": "Directing manufacturing yields for high-performance computing chips.",
+    "companyName": "TSMC",
+    "experience": 12,
+    "salary": 260000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "ColdFusion",
+      "PL/SQL",
+      "OCaml",
+      "B4X",
+      "RPG"
+    ],
+    "technologies": [
+      "Tailwind CSS",
+      "Mongoose",
+      "OpenTelemetry"
+    ]
+  },
+  {
+    "title": "Deep Learning Compiler Intern",
+    "description": "Implement new operators in the TensorRT compiler.",
+    "companyName": "NVIDIA",
+    "experience": 0,
+    "salary": 105000,
+    "hours": 40,
+    "employment": "Internship",
+    "location": "In-office",
+    "languages": [
+      "TypeScript",
+      "Ruby",
+      "VBScript"
+    ],
+    "technologies": [
+      "Jetpack Compose",
+      "Terraform",
+      "NestJS"
+    ]
+  },
+  {
+    "title": "Content Delivery Network (CDN) Lead",
+    "description": "Scaling Open Connect infrastructure globally.",
+    "companyName": "Netflix",
+    "experience": 10,
+    "salary": 550000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "VHDL",
+      "TypeScript",
+      "Elixir",
+      "Delphi/Object Pascal",
+      "Hack"
+    ],
+    "technologies": [
+      "xUnit",
+      "Homebrew",
+      "Consul",
+      "NUnit",
+      "Next.js"
+    ]
+  },
+  {
+    "title": "Security Engineer - Identity",
+    "description": "Secure MFA and SSO flows for over 150,000 corporate clients.",
+    "companyName": "Salesforce",
+    "experience": 5,
+    "salary": 240000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "Kotlin",
+      "VHDL",
+      "Objective-C",
+      "X++"
+    ],
+    "technologies": [
+      "iOS SDK",
+      "OpenCV",
+      "Alpine.js"
+    ]
+  },
+  {
+    "title": "Embedded Firmware Intern",
+    "description": "Code low-level drivers for AirPods audio processing.",
+    "companyName": "Apple",
+    "experience": 0,
+    "salary": 48000,
+    "hours": 20,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "ColdFusion",
+      "RPG",
+      "TypeScript"
+    ],
+    "technologies": [
+      "PostgreSQL",
+      "NuGet",
+      "Node.js",
+      "Tauri",
+      "Entity Framework"
+    ]
+  },
+  {
+    "title": "Staff Engineer - LinkedIn Feed",
+    "description": "Rethink the relevance algorithms for the main professional feed.",
+    "companyName": "Microsoft",
+    "experience": 11,
+    "salary": 440000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Haskell",
+      "Matlab",
+      "Dart",
+      "Haxe",
+      "Perl"
+    ],
+    "technologies": [
+      "Chaos Mesh",
+      "Istio",
+      "Astro"
+    ]
+  },
+  {
+    "title": "Operations Tech Intern",
+    "description": "Assist in the maintenance of AWS data center hardware.",
+    "companyName": "Amazon",
+    "experience": 0,
+    "salary": 38000,
+    "hours": 25,
+    "employment": "Internship",
+    "location": "In-office",
+    "languages": [
+      "C#",
+      "RPG",
+      "Java",
+      "Objective-C",
+      "Raku"
+    ],
+    "technologies": [
+      "Selenium",
+      "Airflow",
+      "Cypress",
+      "Jupyter"
+    ]
+  },
+  {
+    "title": "Senior Android Dev - Galaxy",
+    "description": "Customizing OneUI for next-gen foldable devices.",
+    "companyName": "Samsung Electronics",
+    "experience": 8,
+    "salary": 220000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Ruby",
+      "XSLT",
+      "OCaml"
+    ],
+    "technologies": [
+      "CakePHP",
+      "Swagger/OpenAPI",
+      "Karma"
+    ]
+  },
+  {
+    "title": "Manufacturing QA Lead",
+    "description": "Oversee automated optical inspection for Cybertruck panels.",
+    "companyName": "Tesla",
+    "experience": 7,
+    "salary": 250000,
+    "hours": 45,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "ColdFusion",
+      "Haskell",
+      "PL/SQL"
+    ],
+    "technologies": [
+      "SolidJS",
+      "WordPress",
+      "LlamaIndex",
+      "Rollup",
+      "Zipkin"
+    ]
+  },
+  {
+    "title": "Privacy Engineer (L5)",
+    "description": "Implement differential privacy for user data processing.",
+    "companyName": "Meta",
+    "experience": 6,
+    "salary": 315000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Modula-2",
+      "Haskell",
+      "J",
+      "PHP",
+      "Haxe"
+    ],
+    "technologies": [
+      "Zipkin",
+      "Jinja2",
+      "Firebase",
+      "Blazor",
+      "Etcd"
+    ]
+  },
+  {
+    "title": "Packaging Tech Intern",
+    "description": "Researching 3D chip stacking and thermal dissipation.",
+    "companyName": "TSMC",
+    "experience": 0,
+    "salary": 65000,
+    "hours": 40,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "VHDL",
+      "Rust",
+      "Kotlin",
+      "PostScript"
+    ],
+    "technologies": [
+      "PostgreSQL",
+      "MinIO",
+      "Sass",
+      "MariaDB"
+    ]
+  },
+  {
+    "title": "Cloud Gaming Intern",
+    "description": "Optimizing frame latency for GeForce NOW.",
+    "companyName": "NVIDIA",
+    "experience": 0,
+    "salary": 46000,
+    "hours": 20,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "Ruby",
+      "ColdFusion",
+      "PowerBuilder",
+      "Standard ML"
+    ],
+    "technologies": [
+      "Ansible",
+      "Recoil",
+      "GitHub Actions",
+      "TestNG"
+    ]
+  },
+  {
+    "title": "Studio Tech Engineer",
+    "description": "Building cloud-based rendering pipelines for Netflix Animation.",
+    "companyName": "Netflix",
+    "experience": 4,
+    "salary": 280000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "Scratch",
+      "Delphi/Object Pascal",
+      "Prolog",
+      "Logo"
+    ],
+    "technologies": [
+      "Handlebars",
+      "MongoDB",
+      "Snowflake",
+      "Webpack",
+      "Flask"
+    ]
+  },
+  {
+    "title": "Product Manager - AI Cloud",
+    "description": "Define the roadmap for GenAI integration in Slack.",
+    "companyName": "Salesforce",
+    "experience": 5,
+    "salary": 230000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Hack",
+      "FoxPro",
+      "Modula-2",
+      "Eiffel",
+      "PureBasic"
+    ],
+    "technologies": [
+      "Protocol Buffers",
+      "NestJS",
+      "Tailwind CSS",
+      "Go Modules",
+      "Microsoft SQL Server"
+    ]
+  },
+  {
+    "title": "Site Reliability Intern",
+    "description": "Automating server recovery for iCloud storage nodes.",
+    "companyName": "Apple",
+    "experience": 0,
+    "salary": 88000,
+    "hours": 40,
+    "employment": "Internship",
+    "location": "In-office",
+    "languages": [
+      "Swift",
+      "Lisp",
+      "Visual Basic",
+      "Scratch"
+    ],
+    "technologies": [
+      "SwiftUI",
+      "Playwright",
+      "SonarQube"
+    ]
+  },
+  {
+    "title": "Staff SRE - Azure Billing",
+    "description": "Architect the global real-time billing engine for Cloud.",
+    "companyName": "Microsoft",
+    "experience": 10,
+    "salary": 420000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Remote",
+    "languages": [
+      "TypeScript",
+      "Haskell",
+      "D",
+      "Eiffel",
+      "Dart"
+    ],
+    "technologies": [
+      "Styled-components",
+      "Shopify",
+      "OpenTelemetry"
+    ]
+  },
+  {
+    "title": "Software Development Manager",
+    "description": "Lead a team of 15 backend engineers in Prime Video.",
+    "companyName": "Amazon",
+    "experience": 12,
+    "salary": 460000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Remote",
+    "languages": [
+      "Erlang",
+      "Dart",
+      "SAS",
+      "LabVIEW",
+      "Rust"
+    ],
+    "technologies": [
+      "Go Modules",
+      "ZooKeeper",
+      "Protocol Buffers"
+    ]
+  },
+  {
+    "title": "VLSI Design Intern",
+    "description": "Assist in physical design and layout for mobile SoCs.",
+    "companyName": "Samsung Electronics",
+    "experience": 0,
+    "salary": 60000,
+    "hours": 40,
+    "employment": "Internship",
+    "location": "In-office",
+    "languages": [
+      "PureBasic",
+      "VBScript",
+      "ColdFusion"
+    ],
+    "technologies": [
+      "Redux",
+      "Chocolatey",
+      "Apollo Client"
+    ]
+  },
+  {
+    "title": "Senior Fullstack Engineer",
+    "description": "Developing the internal factory management software (MOS).",
+    "companyName": "Tesla",
+    "experience": 8,
+    "salary": 275000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Hack",
+      "Scheme",
+      "Natural",
+      "Haxe",
+      "Scala"
+    ],
+    "technologies": [
+      "Jetpack Compose",
+      "PostgreSQL",
+      "Jaeger"
+    ]
+  },
+  {
+    "title": "Data Engineer (L3)",
+    "description": "Building telemetry pipelines for WhatsApp messaging.",
+    "companyName": "Meta",
+    "experience": 1,
+    "salary": 185000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "R",
+      "Matlab",
+      "FoxPro"
+    ],
+    "technologies": [
+      "Astro",
+      "Prettier",
+      "GraphQL",
+      "Symfony"
+    ]
+  },
+  {
+    "title": "Yield Enhancement Engineer",
+    "description": "Applying AI to detect defects in 3nm wafer production.",
+    "companyName": "TSMC",
+    "experience": 5,
+    "salary": 170000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "F#",
+      "Simula",
+      "Lisp",
+      "Ruby"
+    ],
+    "technologies": [
+      "Cypress",
+      "Solr",
+      "gRPC",
+      "Vault",
+      "MobX"
+    ]
+  },
+  {
+    "title": "Senior Software Engineer - DL",
+    "description": "Develop PyTorch optimizations for NVIDIA hardware.",
+    "companyName": "NVIDIA",
+    "experience": 6,
+    "salary": 320000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "Hybrid",
+    "languages": [
+      "C",
+      "Julia",
+      "PowerBuilder",
+      "Ladder Logic",
+      "ColdFusion"
+    ],
+    "technologies": [
+      "ZooKeeper",
+      "Prisma",
+      "Jaeger",
+      "Power BI",
+      "TensorFlow"
+    ]
+  },
+  {
+    "title": "Cybersecurity Specialist",
+    "description": "Protecting content distribution against piracy and leaks.",
+    "companyName": "Netflix",
+    "experience": 7,
+    "salary": 420000,
+    "hours": 40,
+    "employment": "Full-time",
+    "location": "In-office",
+    "languages": [
+      "Lua",
+      "R",
+      "Elixir"
+    ],
+    "technologies": [
+      "AWS",
+      "Zipkin",
+      "Mongoose"
+    ]
+  },
+  {
+    "title": "Platform Engineer Intern",
+    "description": "Developing reusable Go libraries for the Mulesoft ecosystem.",
+    "companyName": "Salesforce",
+    "experience": 0,
+    "salary": 40000,
+    "hours": 20,
+    "employment": "Internship",
+    "location": "Hybrid",
+    "languages": [
+      "Hack",
+      "Visual Basic",
+      "Prolog",
+      "COBOL"
+    ],
+    "technologies": [
+      "ZooKeeper",
+      "Jinja2",
+      "Pip",
+      "Vercel"
+    ]
+  }
+]

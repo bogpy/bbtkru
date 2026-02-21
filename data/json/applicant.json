@@ -1,0 +1,1138 @@
+[
+  {
+    "name": "Carol Davis",
+    "experience": 0,
+    "university": "HSE",
+    "level": "Intern",
+    "graduated": false,
+    "education": "Bachelor",
+    "specialty": "Fullstack",
+    "dateOfBirth": "2006-04-17T00:00:00Z",
+    "workHistory": "No prior experience",
+    "languages": [
+      "PL/SQL",
+      "Eiffel",
+      "PostScript",
+      "Erlang",
+      "Scratch"
+    ],
+    "technologies": [
+      "Bootstrap",
+      "Node.js",
+      "Docker",
+      "Ansible",
+      "ZeroMQ"
+    ]
+  },
+  {
+    "name": "Jordan Smith",
+    "experience": 2,
+    "university": "MIT",
+    "level": "Junior",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Fullstack",
+    "dateOfBirth": "2002-10-19T00:00:00Z",
+    "workHistory": "StartUp Inc - 2024 - 2026 - Developer",
+    "languages": [
+      "Nim",
+      "Elixir",
+      "Forth"
+    ],
+    "technologies": [
+      "jQuery",
+      "Keycloak",
+      "DigitalOcean",
+      "Pytest"
+    ]
+  },
+  {
+    "name": "Akari Tanaka",
+    "experience": 7,
+    "university": "University of Tokyo",
+    "level": "Middle",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "DevOps",
+    "dateOfBirth": "1997-12-07T00:00:00Z",
+    "workHistory": "Sony - 2019 - 2022 - Senior Engineer; Rakuten - 2022 - 2026 - Senior Engineer",
+    "languages": [
+      "RPG",
+      "Ring",
+      "Swift"
+    ],
+    "technologies": [
+      "Emotion",
+      "Git",
+      "Gradle"
+    ]
+  },
+  {
+    "name": "Liam O'Connor",
+    "experience": 12,
+    "university": "Oxford",
+    "level": "Senior",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "Backend",
+    "dateOfBirth": "1991-07-22T00:00:00Z",
+    "workHistory": "DeepMind - 2014 - 2020 - Senior Engineer; Arm - 2020 - 2026 - Senior Engineer",
+    "languages": [
+      "Delphi/Object Pascal",
+      "TypeScript",
+      "Bash/Shell",
+      "Natural",
+      "Classic Visual Basic"
+    ],
+    "technologies": [
+      "EJS",
+      "LocalStack",
+      "Shopify"
+    ]
+  },
+  {
+    "name": "Elena Petrova",
+    "experience": 20,
+    "university": "MSU",
+    "level": "Lead",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Backend",
+    "dateOfBirth": "1984-06-25T00:00:00Z",
+    "workHistory": "Yandex - 2006 - 2012 - Senior Engineer; Telegram - 2012 - 2018 - Senior Engineer; JetBrains - 2018 - 2026 - Senior Engineer",
+    "languages": [
+      "Racket",
+      "PL/SQL",
+      "Vala",
+      "Raku",
+      "Assembly"
+    ],
+    "technologies": [
+      "Linux",
+      "Alpine.js",
+      "WPF"
+    ]
+  },
+  {
+    "name": "Chen Wei",
+    "experience": 1,
+    "university": "Tsinghua",
+    "level": "Intern",
+    "graduated": false,
+    "education": "Master",
+    "specialty": "DevOps",
+    "dateOfBirth": "2005-03-17T00:00:00Z",
+    "workHistory": "Baidu Intern - 2025 - 2026 - Junior Developer",
+    "languages": [
+      "Scratch",
+      "Lua",
+      "J",
+      "Io"
+    ],
+    "technologies": [
+      "Shopify",
+      "Htmx",
+      "Jaeger"
+    ]
+  },
+  {
+    "name": "Sarah Jenkins",
+    "experience": 4,
+    "university": "Stanford",
+    "level": "Junior",
+    "graduated": true,
+    "education": "Bachelor",
+    "specialty": "Data Engineer",
+    "dateOfBirth": "2000-04-22T00:00:00Z",
+    "workHistory": "DoorDash - 2022 - 2026 - Developer",
+    "languages": [
+      "X++",
+      "Crystal",
+      "Haskell"
+    ],
+    "technologies": [
+      "Husky",
+      "Spring Boot",
+      "Power BI",
+      "Terraform"
+    ]
+  },
+  {
+    "name": "Mateo Garcia",
+    "experience": 9,
+    "university": "UNAM",
+    "level": "Middle",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "Frontend",
+    "dateOfBirth": "1995-02-05T00:00:00Z",
+    "workHistory": "Mercado Libre - 2017 - 2021 - Senior Engineer; Nubank - 2021 - 2026 - Senior Engineer",
+    "languages": [
+      "Scratch",
+      "LabVIEW",
+      "Simula",
+      "GAMS",
+      "JavaScript"
+    ],
+    "technologies": [
+      "Chai",
+      "Oracle Database",
+      "Godot",
+      "MongoDB"
+    ]
+  },
+  {
+    "name": "Aisha Khan",
+    "experience": 0,
+    "university": "NUS",
+    "level": "Intern",
+    "graduated": false,
+    "education": "Master",
+    "specialty": "Frontend",
+    "dateOfBirth": "2003-09-12T00:00:00Z",
+    "workHistory": "No prior experience",
+    "languages": [
+      "Q",
+      "Haskell",
+      "Bash/Shell",
+      "Go"
+    ],
+    "technologies": [
+      "Htmx",
+      "Jenkins",
+      "Supabase",
+      "New Relic",
+      "Keras"
+    ]
+  },
+  {
+    "name": "Lars Nielsen",
+    "experience": 15,
+    "university": "ETH Zurich",
+    "level": "Senior",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Backend",
+    "dateOfBirth": "1988-04-20T00:00:00Z",
+    "workHistory": "Logitech - 2011 - 2018 - Senior Engineer; CERN - 2018 - 2026 - Senior Engineer",
+    "languages": [
+      "Classic Visual Basic",
+      "Hack",
+      "COBOL",
+      "Ballerina"
+    ],
+    "technologies": [
+      "ZeroMQ",
+      "Anaconda",
+      "Jira",
+      "Thymeleaf"
+    ]
+  },
+  {
+    "name": "Sofia Rossi",
+    "experience": 1,
+    "university": "Politecnico di Milano",
+    "level": "Intern",
+    "graduated": true,
+    "education": "Bachelor",
+    "specialty": "Fullstack",
+    "dateOfBirth": "2004-08-09T00:00:00Z",
+    "workHistory": "Local Agency - 2025 - 2026 - Junior Developer",
+    "languages": [
+      "ABAP",
+      "C#",
+      "Awk"
+    ],
+    "technologies": [
+      "Capacitor",
+      "Pug",
+      "TestNG",
+      "Cucumber"
+    ]
+  },
+  {
+    "name": "David Miller",
+    "experience": 5,
+    "university": "Georgia Tech",
+    "level": "Junior",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Fullstack",
+    "dateOfBirth": "1998-11-29T00:00:00Z",
+    "workHistory": "IBM - 2021 - 2026 - Developer",
+    "languages": [
+      "Prolog",
+      "Smalltalk",
+      "Verilog",
+      "Swift"
+    ],
+    "technologies": [
+      "Phoenix",
+      "Hugging Face Transformers",
+      "Unity",
+      "Heroku"
+    ]
+  },
+  {
+    "name": "Priya Sharma",
+    "experience": 10,
+    "university": "IIT Bombay",
+    "level": "Middle",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "Fullstack",
+    "dateOfBirth": "1993-09-30T00:00:00Z",
+    "workHistory": "Infosys - 2016 - 2021 - Senior Engineer; Zomato - 2021 - 2026 - Senior Engineer",
+    "languages": [
+      "Objective-C",
+      "Ladder Logic",
+      "Z Shell"
+    ],
+    "technologies": [
+      "Firebase",
+      "AWS",
+      "Logstash"
+    ]
+  },
+  {
+    "name": "Hans Weber",
+    "experience": 22,
+    "university": "TU Munich",
+    "level": "Lead",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Data Engineer",
+    "dateOfBirth": "1981-05-29T00:00:00Z",
+    "workHistory": "SAP - 2004 - 2015 - Senior Engineer; Siemens - 2015 - 2026 - Senior Engineer",
+    "languages": [
+      "Modula-2",
+      "Erlang",
+      "Dart",
+      "Eiffel",
+      "Lisp"
+    ],
+    "technologies": [
+      "Jira",
+      "Docker",
+      "Maven"
+    ]
+  },
+  {
+    "name": "Chloe Lebrun",
+    "experience": 3,
+    "university": "Sorbonne",
+    "level": "Junior",
+    "graduated": true,
+    "education": "Bachelor",
+    "specialty": "DevOps",
+    "dateOfBirth": "2001-02-24T00:00:00Z",
+    "workHistory": "Ubisoft - 2023 - 2026 - Developer",
+    "languages": [
+      "Nim",
+      "OpenEdge ABL",
+      "JavaScript",
+      "C++",
+      "REXX"
+    ],
+    "technologies": [
+      "Traefik",
+      "TanStack Query",
+      "iOS SDK"
+    ]
+  },
+  {
+    "name": "Omar Gaddafi",
+    "experience": 0,
+    "university": "Cairo University",
+    "level": "Intern",
+    "graduated": false,
+    "education": "PhD",
+    "specialty": "Fullstack",
+    "dateOfBirth": "2006-04-03T00:00:00Z",
+    "workHistory": "No prior experience",
+    "languages": [
+      "PureBasic",
+      "Visual Basic",
+      "Nim"
+    ],
+    "technologies": [
+      "iOS SDK",
+      "ESLint",
+      "Chocolatey"
+    ]
+  },
+  {
+    "name": "Yuki Sato",
+    "experience": 8,
+    "university": "Kyoto University",
+    "level": "Middle",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Data Engineer",
+    "dateOfBirth": "1996-09-10T00:00:00Z",
+    "workHistory": "Nintendo - 2018 - 2026 - Senior Engineer",
+    "languages": [
+      "Kotlin",
+      "Transact-SQL",
+      "Matlab"
+    ],
+    "technologies": [
+      "Hadoop",
+      "Jasmine",
+      "Firebase"
+    ]
+  },
+  {
+    "name": "Isabella Santos",
+    "experience": 4,
+    "university": "University of Sao Paulo",
+    "level": "Junior",
+    "graduated": true,
+    "education": "Bachelor",
+    "specialty": "DevOps",
+    "dateOfBirth": "1999-07-23T00:00:00Z",
+    "workHistory": "iFood - 2022 - 2026 - Developer",
+    "languages": [
+      "Red",
+      "VHDL",
+      "Standard ML",
+      "Go",
+      "Hack"
+    ],
+    "technologies": [
+      "Flutter",
+      "Gin",
+      "Capacitor"
+    ]
+  },
+  {
+    "name": "Kim Ji-hoon",
+    "experience": 11,
+    "university": "KAIST",
+    "level": "Senior",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "DevOps",
+    "dateOfBirth": "1992-07-14T00:00:00Z",
+    "workHistory": "Samsung - 2015 - 2020 - Senior Engineer; Naver - 2020 - 2026 - Senior Engineer",
+    "languages": [
+      "Lisp",
+      "Haskell",
+      "AutoLISP",
+      "Rust",
+      "Swift"
+    ],
+    "technologies": [
+      "WPF",
+      "Azure",
+      "Cargo"
+    ]
+  },
+  {
+    "name": "Emma Watson",
+    "experience": 1,
+    "university": "Cambridge",
+    "level": "Intern",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Frontend",
+    "dateOfBirth": "2003-12-12T00:00:00Z",
+    "workHistory": "HealthTech - 2025 - 2026 - Junior Developer",
+    "languages": [
+      "Powershell",
+      "PL/I",
+      "Logo",
+      "FoxPro"
+    ],
+    "technologies": [
+      "Jest",
+      "Kibana",
+      "Prometheus",
+      "Appium",
+      "Okta"
+    ]
+  },
+  {
+    "name": "Lucas Silva",
+    "experience": 14,
+    "university": "Federal University of Rio",
+    "level": "Senior",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "Backend",
+    "dateOfBirth": "1990-05-08T00:00:00Z",
+    "workHistory": "Petrobras - 2012 - 2019 - Senior Engineer; Stone - 2019 - 2026 - Senior Engineer",
+    "languages": [
+      "Zig",
+      "COBOL",
+      "J"
+    ],
+    "technologies": [
+      "Svelte",
+      "Material UI",
+      "Kubernetes",
+      "ESLint",
+      "Terraform"
+    ]
+  },
+  {
+    "name": "Nadia Volkova",
+    "experience": 0,
+    "university": "ITMO",
+    "level": "Intern",
+    "graduated": false,
+    "education": "Master",
+    "specialty": "Fullstack",
+    "dateOfBirth": "2005-03-30T00:00:00Z",
+    "workHistory": "No prior experience",
+    "languages": [
+      "Powershell",
+      "Scheme",
+      "Visual Basic"
+    ],
+    "technologies": [
+      "MongoDB",
+      "WordPress",
+      "Traefik",
+      "Snowflake",
+      "LocalStack"
+    ]
+  },
+  {
+    "name": "Ryan Cooper",
+    "experience": 6,
+    "university": "UC Berkeley",
+    "level": "Middle",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "Fullstack",
+    "dateOfBirth": "1997-08-08T00:00:00Z",
+    "workHistory": "Slack - 2020 - 2023 - Senior Engineer; Twitter - 2023 - 2026 - Senior Engineer",
+    "languages": [
+      "Awk",
+      "XSLT",
+      "OpenEdge ABL"
+    ],
+    "technologies": [
+      "Vue.js",
+      "SwiftUI",
+      "Firebase",
+      "Okta",
+      "Jinja2"
+    ]
+  },
+  {
+    "name": "Fatima Zahra",
+    "experience": 2,
+    "university": "Al-Akhawayn",
+    "level": "Intern",
+    "graduated": true,
+    "education": "Bachelor",
+    "specialty": "Fullstack",
+    "dateOfBirth": "2002-06-30T00:00:00Z",
+    "workHistory": "TechStartup - 2024 - 2026 - Developer",
+    "languages": [
+      "Nim",
+      "Kotlin",
+      "Matlab",
+      "Z Shell",
+      "Mumps"
+    ],
+    "technologies": [
+      "RxJS",
+      "Istio",
+      "Logstash"
+    ]
+  },
+  {
+    "name": "Arjun Nair",
+    "experience": 18,
+    "university": "IIT Delhi",
+    "level": "Lead",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Backend",
+    "dateOfBirth": "1986-01-07T00:00:00Z",
+    "workHistory": "Google - 2008 - 2017 - Senior Engineer; Meta - 2017 - 2026 - Senior Engineer",
+    "languages": [
+      "Assembly",
+      "Awk",
+      "Scratch"
+    ],
+    "technologies": [
+      "Envoy",
+      "Puppeteer",
+      "Jenkins",
+      "GameMaker"
+    ]
+  },
+  {
+    "name": "Sophie Muller",
+    "experience": 0,
+    "university": "HSE",
+    "level": "Intern",
+    "graduated": false,
+    "education": "Bachelor",
+    "specialty": "Fullstack",
+    "dateOfBirth": "2004-09-25T00:00:00Z",
+    "workHistory": "No prior experience",
+    "languages": [
+      "FoxPro",
+      "Ada",
+      "Smalltalk",
+      "Wolfram",
+      "Solidity"
+    ],
+    "technologies": [
+      "ASP.NET Core",
+      "Laravel",
+      "PyTorch"
+    ]
+  },
+  {
+    "name": "James Bond",
+    "experience": 9,
+    "university": "Edinburgh",
+    "level": "Middle",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Frontend",
+    "dateOfBirth": "1994-10-23T00:00:00Z",
+    "workHistory": "MI6 Tech - 2017 - 2026 - Senior Engineer",
+    "languages": [
+      "SQL",
+      "Nim",
+      "Eiffel",
+      "ABAP",
+      "Lisp"
+    ],
+    "technologies": [
+      "Cassandra",
+      "xUnit",
+      "Tailwind CSS",
+      "Jinja2"
+    ]
+  },
+  {
+    "name": "Li Na",
+    "experience": 3,
+    "university": "Peking University",
+    "level": "Junior",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "DevOps",
+    "dateOfBirth": "2001-06-21T00:00:00Z",
+    "workHistory": "Tencent - 2023 - 2026 - Developer",
+    "languages": [
+      "Crystal",
+      "Bash/Shell",
+      "PowerBuilder"
+    ],
+    "technologies": [
+      "MySQL",
+      "Tailwind CSS",
+      "ESBuild",
+      "NumPy"
+    ]
+  },
+  {
+    "name": "Carlos Ruiz",
+    "experience": 5,
+    "university": "UPV",
+    "level": "Junior",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Fullstack",
+    "dateOfBirth": "1998-06-20T00:00:00Z",
+    "workHistory": "Inditex - 2021 - 2026 - Developer",
+    "languages": [
+      "Inform",
+      "GAMS",
+      "Transact-SQL",
+      "Crystal"
+    ],
+    "technologies": [
+      "NW.js",
+      "Pandas",
+      "Pytest",
+      "Snowflake"
+    ]
+  },
+  {
+    "name": "Amelie Dubois",
+    "experience": 13,
+    "university": "Ecole Polytechnique",
+    "level": "Senior",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Backend",
+    "dateOfBirth": "1989-07-30T00:00:00Z",
+    "workHistory": "Dassault - 2013 - 2019 - Senior Engineer; Thales - 2019 - 2026 - Senior Engineer",
+    "languages": [
+      "Powershell",
+      "Ruby",
+      "Logo"
+    ],
+    "technologies": [
+      "EJS",
+      "Echo",
+      "NW.js",
+      "Hibernate",
+      "VS Code"
+    ]
+  },
+  {
+    "name": "Viktor Sokolov",
+    "experience": 0,
+    "university": "MIPT",
+    "level": "Intern",
+    "graduated": false,
+    "education": "Master",
+    "specialty": "Frontend",
+    "dateOfBirth": "2005-11-21T00:00:00Z",
+    "workHistory": "No prior experience",
+    "languages": [
+      "R",
+      "Elixir",
+      "Bash/Shell"
+    ],
+    "technologies": [
+      "Handlebars",
+      "Puppeteer",
+      "Babel"
+    ]
+  },
+  {
+    "name": "Grace Hopper",
+    "experience": 25,
+    "university": "Yale",
+    "level": "Lead",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Fullstack",
+    "dateOfBirth": "1978-10-16T00:00:00Z",
+    "workHistory": "Navy Tech - 2001 - 2013 - Senior Engineer; COBOL Labs - 2013 - 2026 - Senior Engineer",
+    "languages": [
+      "Vala",
+      "PostScript",
+      "Awk",
+      "TypeScript",
+      "Java"
+    ],
+    "technologies": [
+      "SWC",
+      "Sequelize",
+      "Tauri",
+      "Prometheus",
+      "Sass"
+    ]
+  },
+  {
+    "name": "Noah Williams",
+    "experience": 1,
+    "university": "University of Waterloo",
+    "level": "Intern",
+    "graduated": true,
+    "education": "Bachelor",
+    "specialty": "DevOps",
+    "dateOfBirth": "2003-03-07T00:00:00Z",
+    "workHistory": "Shopify Intern - 2025 - 2026 - Junior Developer",
+    "languages": [
+      "OCaml",
+      "Visual Basic",
+      "Haxe",
+      "Modula-2"
+    ],
+    "technologies": [
+      "WPF",
+      "Unreal Engine",
+      "Jupyter"
+    ]
+  },
+  {
+    "name": "Svetlana Ivanova",
+    "experience": 8,
+    "university": "SPbU",
+    "level": "Middle",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "Fullstack",
+    "dateOfBirth": "1996-08-03T00:00:00Z",
+    "workHistory": "Vkontakte - 2018 - 2026 - Senior Engineer",
+    "languages": [
+      "B4X",
+      "Ring",
+      "Java",
+      "Scratch"
+    ],
+    "technologies": [
+      "Apollo Client",
+      "Jinja2",
+      "Apache HTTP Server",
+      "SwiftUI",
+      "npm"
+    ]
+  },
+  {
+    "name": "Mohammed Al-Fayed",
+    "experience": 3,
+    "university": "KFUPM",
+    "level": "Junior",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Backend",
+    "dateOfBirth": "2000-07-03T00:00:00Z",
+    "workHistory": "Aramco - 2023 - 2026 - Developer",
+    "languages": [
+      "Natural",
+      "Alice",
+      "Forth"
+    ],
+    "technologies": [
+      "Nuxt.js",
+      "Azure",
+      "Bootstrap",
+      "GlusterFS",
+      "VMware"
+    ]
+  },
+  {
+    "name": "Jessica Taylor",
+    "experience": 11,
+    "university": "University of Sydney",
+    "level": "Senior",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "Fullstack",
+    "dateOfBirth": "1992-09-26T00:00:00Z",
+    "workHistory": "Atlassian - 2015 - 2020 - Senior Engineer; Canva - 2020 - 2026 - Senior Engineer",
+    "languages": [
+      "PHP",
+      "Forth",
+      "Haskell"
+    ],
+    "technologies": [
+      "Puppeteer",
+      "SonarQube",
+      "SwiftUI",
+      "Okta"
+    ]
+  },
+  {
+    "name": "Ivan Drago",
+    "experience": 2,
+    "university": "Bauman MSTU",
+    "level": "Intern",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Frontend",
+    "dateOfBirth": "2002-06-01T00:00:00Z",
+    "workHistory": "CyberSoft - 2024 - 2026 - Developer",
+    "languages": [
+      "Eiffel",
+      "Haskell",
+      "D"
+    ],
+    "technologies": [
+      "Tauri",
+      "CakePHP",
+      "Chaos Mesh",
+      "Redis"
+    ]
+  },
+  {
+    "name": "Hina Khan",
+    "experience": 0,
+    "university": "HSE",
+    "level": "Intern",
+    "graduated": false,
+    "education": "Bachelor",
+    "specialty": "Fullstack",
+    "dateOfBirth": "2007-01-10T00:00:00Z",
+    "workHistory": "No prior experience",
+    "languages": [
+      "Kotlin",
+      "Classic Visual Basic",
+      "TypeScript"
+    ],
+    "technologies": [
+      "Firebase",
+      "Linkerd",
+      "Lucene"
+    ]
+  },
+  {
+    "name": "Alex Rivers",
+    "experience": 9,
+    "university": "NYU",
+    "level": "Middle",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Data Engineer",
+    "dateOfBirth": "1995-02-13T00:00:00Z",
+    "workHistory": "Spotify - 2017 - 2026 - Senior Engineer",
+    "languages": [
+      "SAS",
+      "Dart",
+      "Clojure"
+    ],
+    "technologies": [
+      "WebAssembly",
+      "GlusterFS",
+      "Redis",
+      "Ionic"
+    ]
+  },
+  {
+    "name": "Dmitry Kozlov",
+    "experience": 6,
+    "university": "Innopolis",
+    "level": "Junior",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "Data Engineer",
+    "dateOfBirth": "1998-11-05T00:00:00Z",
+    "workHistory": "Acronis - 2020 - 2026 - Senior Engineer",
+    "languages": [
+      "Java",
+      "Racket",
+      "Q",
+      "Wolfram",
+      "ColdFusion"
+    ],
+    "technologies": [
+      "ZooKeeper",
+      "Visual Studio",
+      "gRPC",
+      "Laravel"
+    ]
+  },
+  {
+    "name": "Lara Croft",
+    "experience": 16,
+    "university": "UCL",
+    "level": "Lead",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "DevOps",
+    "dateOfBirth": "1987-02-04T00:00:00Z",
+    "workHistory": "Eidos - 2010 - 2018 - Senior Engineer; Crystal Dynamics - 2018 - 2026 - Senior Engineer",
+    "languages": [
+      "Snap!",
+      "Rust",
+      "PHP",
+      "Solidity"
+    ],
+    "technologies": [
+      "Anaconda",
+      "Android SDK",
+      "Expo",
+      "Astro",
+      "Homebrew"
+    ]
+  },
+  {
+    "name": "Zhang Yong",
+    "experience": 1,
+    "university": "Shanghai Jiao Tong",
+    "level": "Intern",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "DevOps",
+    "dateOfBirth": "2004-02-26T00:00:00Z",
+    "workHistory": "Alibaba - 2025 - 2026 - Junior Developer",
+    "languages": [
+      "Tcl",
+      "Nim",
+      "VBScript"
+    ],
+    "technologies": [
+      "Husky",
+      "NumPy",
+      "MongoDB",
+      "Scikit-learn",
+      "NuGet"
+    ]
+  },
+  {
+    "name": "Olivia Brown",
+    "experience": 2,
+    "university": "University of Toronto",
+    "level": "Intern",
+    "graduated": true,
+    "education": "Bachelor",
+    "specialty": "DevOps",
+    "dateOfBirth": "2001-06-05T00:00:00Z",
+    "workHistory": "Wealthsimple - 2024 - 2026 - Developer",
+    "languages": [
+      "F#",
+      "SAS",
+      "Java",
+      "PostScript"
+    ],
+    "technologies": [
+      "NativeScript",
+      "Less",
+      "npm"
+    ]
+  },
+  {
+    "name": "Pavel Durov",
+    "experience": 19,
+    "university": "SPbU",
+    "level": "Lead",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Fullstack",
+    "dateOfBirth": "1985-06-15T00:00:00Z",
+    "workHistory": "VK - 2007 - 2016 - Senior Engineer; Telegram - 2016 - 2026 - Senior Engineer",
+    "languages": [
+      "Prolog",
+      "ActionScript",
+      "Ada",
+      "Objective-C",
+      "X++"
+    ],
+    "technologies": [
+      "Playwright",
+      "Unity",
+      "Sequelize"
+    ]
+  },
+  {
+    "name": "Sofia Martinez",
+    "experience": 0,
+    "university": "UBA",
+    "level": "Intern",
+    "graduated": false,
+    "education": "PhD",
+    "specialty": "Fullstack",
+    "dateOfBirth": "2006-05-05T00:00:00Z",
+    "workHistory": "No prior experience",
+    "languages": [
+      "Io",
+      "Modula-2",
+      "Natural"
+    ],
+    "technologies": [
+      "TanStack Query",
+      "Puppeteer",
+      "Grafana"
+    ]
+  },
+  {
+    "name": "Thomas Edison",
+    "experience": 12,
+    "university": "Caltech",
+    "level": "Senior",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Backend",
+    "dateOfBirth": "1991-08-28T00:00:00Z",
+    "workHistory": "General Electric - 2014 - 2026 - Senior Engineer",
+    "languages": [
+      "Logo",
+      "R",
+      "Objective-C",
+      "Julia"
+    ],
+    "technologies": [
+      "Nginx",
+      "Thymeleaf",
+      "Cordova",
+      "Husky"
+    ]
+  },
+  {
+    "name": "Anna Karenina",
+    "experience": 4,
+    "university": "HSE",
+    "level": "Junior",
+    "graduated": true,
+    "education": "Bachelor",
+    "specialty": "Frontend",
+    "dateOfBirth": "1999-07-07T00:00:00Z",
+    "workHistory": "Ozon - 2022 - 2026 - Developer",
+    "languages": [
+      "Apex",
+      "Delphi/Object Pascal",
+      "Matlab",
+      "Elixir",
+      "Go"
+    ],
+    "technologies": [
+      "OpenStack",
+      "Capacitor",
+      "MinIO",
+      "Parcel"
+    ]
+  },
+  {
+    "name": "Ben Parker",
+    "experience": 10,
+    "university": "Columbia",
+    "level": "Middle",
+    "graduated": true,
+    "education": "PhD",
+    "specialty": "Frontend",
+    "dateOfBirth": "1993-02-07T00:00:00Z",
+    "workHistory": "Daily Bugle Tech - 2016 - 2026 - Senior Engineer",
+    "languages": [
+      "PL/I",
+      "PostScript",
+      "Scala"
+    ],
+    "technologies": [
+      "Less",
+      "Phoenix",
+      "Razor",
+      "Envoy"
+    ]
+  },
+  {
+    "name": "Linda Lovelace",
+    "experience": 21,
+    "university": "Imperial College",
+    "level": "Lead",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Backend",
+    "dateOfBirth": "1982-12-08T00:00:00Z",
+    "workHistory": "Analytical Engine Corp - 2005 - 2026 - Senior Engineer",
+    "languages": [
+      "Forth",
+      "OpenEdge ABL",
+      "SQL"
+    ],
+    "technologies": [
+      "Angular",
+      "PyTorch",
+      "Gin",
+      "Databricks"
+    ]
+  },
+  {
+    "name": "Steve Rogers",
+    "experience": 2,
+    "university": "Brooklyn College",
+    "level": "Intern",
+    "graduated": true,
+    "education": "Master",
+    "specialty": "Backend",
+    "dateOfBirth": "2002-09-27T00:00:00Z",
+    "workHistory": "Shield Tech - 2024 - 2026 - Developer",
+    "languages": [
+      "AutoLISP",
+      "J",
+      "C++",
+      "C#"
+    ],
+    "technologies": [
+      "Neo4j",
+      "Ceph",
+      "ActiveMQ",
+      "Vite",
+      "OpenCV"
+    ]
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Apple",
+    "country": "USA",
+    "yearFound": 1976,
+    "employeeCount": 166000
+  },
+  {
+    "name": "Microsoft",
+    "country": "USA",
+    "yearFound": 1975,
+    "employeeCount": 228000
+  },
+  {
+    "name": "Amazon",
+    "country": "USA",
+    "yearFound": 1994,
+    "employeeCount": 1560000
+  },
+  {
+    "name": "Samsung Electronics",
+    "country": "South Korea",
+    "yearFound": 1969,
+    "employeeCount": 267000
+  },
+  {
+    "name": "Tesla",
+    "country": "USA",
+    "yearFound": 2003,
+    "employeeCount": 125665
+  },
+  {
+    "name": "Meta",
+    "country": "USA",
+    "yearFound": 2004,
+    "employeeCount": 78450
+  },
+  {
+    "name": "TSMC",
+    "country": "Taiwan",
+    "yearFound": 1987,
+    "employeeCount": 83825
+  },
+  {
+    "name": "NVIDIA",
+    "country": "USA",
+    "yearFound": 1993,
+    "employeeCount": 36000
+  },
+  {
+    "name": "Netflix",
+    "country": "USA",
+    "yearFound": 1997,
+    "employeeCount": 14000
+  },
+  {
+    "name": "Salesforce",
+    "country": "USA",
+    "yearFound": 1999,
+    "employeeCount": 72000
+  }
+]
