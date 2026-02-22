@@ -58,7 +58,7 @@ func (x *Applicant) GetID() int64 {
 	return x.ID
 }
 
-func (x *Applicant) GetLanguages() []Language{
+func (x *Applicant) GetLanguages() []Language {
 	return x.Languages
 }
 
@@ -84,9 +84,9 @@ const (
 	TechWeight   = 10
 )
 
-func (x *Applicant) CalcScore(r RequestForApplicant) {
-	x.Score = 0
-	x.Score += x.Experience * ExpWeight
+func (x Applicant) CalcScore(r RequestForApplicant) int {
+	score := 0
+	score += x.Experience * ExpWeight
 
 	if r.LanguagesOptional != nil {
 		var cnt = 0
@@ -99,7 +99,7 @@ func (x *Applicant) CalcScore(r RequestForApplicant) {
 				cnt++
 			}
 		}
-		x.Score += cnt * LangWeight
+		score += cnt * LangWeight
 	}
 	if r.TechnologiesOptional != nil {
 		var cnt = 0
@@ -112,8 +112,9 @@ func (x *Applicant) CalcScore(r RequestForApplicant) {
 				cnt++
 			}
 		}
-		x.Score += cnt * TechWeight
+		score += cnt * TechWeight
 	}
+	return score
 }
 
 func SortIntern(s []Applicant, r RequestForApplicant) {

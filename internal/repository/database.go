@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
@@ -11,20 +10,24 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type IdSetter interface {
-	SetID(int64)
-}
+func NamedExecWrapper [T IdSetter] (db *sqlx.DB, query string, arr []T) error {
+	tx := db.MustBegin()
+	res, err := tx.NamedExec(query, arr)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	id, err := res.LastInsertId()
+	if err != nil {
+		return err
+	}
 
-type IdGetter interface {
-	GetID() int64
-}
-
-type LanguageGetter interface {
-	GetLanguages() []models.Language
-}
-
-type TechnologyGetter interface {
-	GetTechnologies() []models.Technology
+	for _, ent := range arr {
+		ent.SetID(id)
+		id += 1
+	}
+	return nil
 }
 
 func ConnectDB() *sqlx.DB {
@@ -149,7 +152,8 @@ func PopulateDB(db *sqlx.DB) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := BulkInsertSql(db, languages); err != nil {
+	lr := NewLanguageRepository(db)
+	if err := lr.BulkInsert(languages); err != nil {
 		log.Fatal(err)
 	}
 
@@ -162,7 +166,8 @@ func PopulateDB(db *sqlx.DB) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := BulkInsertSql(db, technologies); err != nil {
+	tr := NewTechnologyRepository(db)
+	if err := tr.BulkInsert(technologies); err != nil {
 		log.Fatal(err)
 	}
 
@@ -175,7 +180,8 @@ func PopulateDB(db *sqlx.DB) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := BulkInsertSql(db, companies); err != nil {
+	cr := NewCompanyRepository(db)
+	if err := cr.BulkInsert(companies); err != nil {
 		log.Fatal(err)
 	}
 
@@ -188,11 +194,12 @@ func PopulateDB(db *sqlx.DB) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := BulkInsertSql(db, applicants); err != nil {
+	ar := NewApplicantRepository(db)
+	if err := ar.BulkInsert(applicants); err != nil {
 		log.Fatal(err)
 	}
 
-	if err := InsertJunction(db, applicants, language_ids, technology_ids); err != nil {
+	if err := ar.InsertJunction(applicants, language_ids, technology_ids); err != nil {
 		log.Fatal(err)
 	}
 
@@ -208,175 +215,16 @@ func PopulateDB(db *sqlx.DB) {
 			vacancy.CompanyID = compID
 			good_vacancies = append(good_vacancies, vacancy)
 		} else {
-			log.Printf("Vacancy %v doesnt have company", vacancy.Title)
+			log.Printf("Vacancy %v doesn't have company", vacancy.Title)
 		}
 	}
-
-	if err := BulkInsertSql(db, good_vacancies); err != nil {
+	vr := NewVacancytRepository(db)
+	if err := vr.BulkInsert(good_vacancies); err != nil {
 		log.Fatal(err)
 	}
 
-	if err := InsertJunction(db, good_vacancies, language_ids, technology_ids); err != nil {
+	if err := vr.InsertJunction(good_vacancies, language_ids, technology_ids); err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Success!")
-}
-
-type Custom interface {
-	IdGetter
-	LanguageGetter
-	TechnologyGetter
-}
-
-func InsertJunction[T Custom](db *sqlx.DB, arr []T, language_ids map[string]int64, technology_ids map[string]int64) error {
-	var query1, query2 string
-	var el T
-	switch any(el).(type) {
-	default:
-		return fmt.Errorf(
-			"SQL insert not supported for %T: %w",
-			el,
-			models.ErrNotSupported,
-		)
-	case *models.Applicant:
-		query1 = `INSERT INTO applicant_language al
-				 (applicant_id, language_id)
-				 VALUES (?, ?)
-				`
-		query2 = `INSERT INTO applicant_technology at
-					(applicant_id, technology_id)
-					VALUES (?, ?)
-				`
-	case *models.Vacancy:
-		query1 = `INSERT INTO vacancy_language cl
-				 (vacancy_id, language_id)
-					VALUES (?, ?)
-				`
-		query2 = `INSERT INTO vacancy_technology vt
-				 (vacancy_id, technology_id)
-				  VALUES (?, ?)
-				`
-	}
-
-	var args []
-	for _, ent := range arr {
-		for _, lang := range ent.GetLanguages(){
-			args = append(args, [2]int64{ent.GetID(), language_ids[lang.Name]})
-		}
-		for _, tech := range ent.GetTechnologies(){
-			args = append(args, [2]int64{ent.GetID(), technology_ids[tech.Name]})
-		}
-	}
-
-	tx := db.MustBegin()
-	_, err := tx.Exec(query1, args)
-	if err != nil {
-		tx.Rollback()
-		return err
-	}
-	_, err = tx.Exec(query2, args)
-	if err != nil {
-		tx.Rollback()
-		return err
-	}
-	return nil
-}
-
-// INSERT INTO applicant_technology (applicant_id, technology_id) VALUES (?, ?)
-
-// TODO: rewrite similar to bulkInsertSql
-func InsertSql[T any](db *sqlx.DB, ent *T) (int64, error) {
-	var result sql.Result
-	var err error
-	switch v := any(*ent).(type) {
-	default:
-		log.Fatal("Not supported")
-	case models.Company:
-		fmt.Printf("Company: %v\n", v.Name)
-		result, err = db.Exec(
-			`INSERT INTO company
-			(Name, Country, YearFound, EmployeeCount)
-			VALUES (?, ?, ?, ?, ?)`,
-			v.Name, v.Country, v.YearFound, v.EmployeeCount,
-		)
-	case models.Applicant:
-		result, err = db.Exec(
-			`INSERT INTO applicant
-			(Name, Education, University, Graduated, Specialty, Level, Experience, WorkHistory)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-			v.Name, v.Education, v.University, v.Graduated,
-			v.Specialty, v.Level, v.Experience, v.WorkHistory,
-		)
-	case models.Vacancy:
-		result, err = db.Exec(
-			`INSERT INTO vacancy
-			(Title, Description, CompanyID, Experience, Salary,
-			Hours, Employment, Location) 
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-			v.Title, v.Description, v.CompanyID, v.Experience, v.Salary,
-			v.Hours, v.Employment, v.Location,
-		)
-	case models.Language:
-		result, err = db.Exec("INSERT INTO language (Name) VALUES (?)", v.Name)
-	case models.Technology:
-		result, err = db.Exec("INSERT INTO technology (Name) VALUES (?)", v.Name)
-	}
-	if err != nil {
-		return 0, fmt.Errorf("insertSql: %v", err)
-	}
-	id, err := result.LastInsertId()
-	if err != nil {
-		return 0, fmt.Errorf("insertSql: %v", err)
-	}
-	return id, nil
-}
-
-func BulkInsertSql[T IdSetter](db *sqlx.DB, arr []T) error {
-	var query string
-	var el T
-	switch any(el).(type) {
-	default:
-		return fmt.Errorf(
-			"SQL insert not supported for %T: %w",
-			el,
-			models.ErrNotSupported,
-		)
-	case *models.Company:
-		query = `INSERT INTO company
-			(name, country, yearFound, employeeCount)
-			VALUES (:name, :country, :yearFound, :employeeCount)`
-	case *models.Applicant:
-		query = `INSERT INTO applicant
-			(name, dateOfBirth, education, university, graduated, specialty, level, experience, workHistory)
-			VALUES (:name, :dateOfBirth, :education, :university, :graduated, :specialty, :level, :experience, :workHistory)`
-	case *models.Vacancy:
-		query = `INSERT INTO vacancy
-			(title, description, companyID, experience, salary, hours, employment, location) 
-			VALUES (:title, :description, :companyID, :experience, :salary, :hours, :employment, :location)`
-	case *models.Language:
-		query = `INSERT INTO language (name) VALUES (:name)`
-	case *models.Technology:
-		query = `INSERT INTO technology (name) VALUES (:name)`
-	}
-	// query, args, err := sqlx.In(query, arr)
-	// if err != nil {
-	// 	fmt.Errorf("bulkInsertSql: %v", err)
-	// }
-	tx := db.MustBegin()
-	res, err := tx.NamedExec(query, arr)
-	if err != nil {
-		tx.Rollback()
-		return err
-	}
-	tx.Commit()
-	id, err := res.LastInsertId()
-	if err != nil {
-		return err
-	}
-
-	for _, ent := range arr {
-		ent.SetID(id)
-		id += 1
-	}
-	return nil
 }

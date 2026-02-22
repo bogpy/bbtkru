@@ -2,11 +2,8 @@ package models
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 )
-
-var ErrNotSupported = errors.New("Operation not supported")
 
 type Language struct {
 	ID   int64  `db:"id" json:"id"`
@@ -42,24 +39,4 @@ func (x *Technology) UnmarshalJSON(data []byte) error {
 	}
 	x.Name = name
 	return nil
-}
-
-type ApplicantLanguage struct {
-	ApplicantID int64 `db:"applicant_id"`
-	LanguageID int64 `db:"language_id"`
-}
-
-type ApplicantTechnology struct {
-	ApplicantID int64 `db:"applicant_id"`
-	TechnologyID int64 `db:"techonology_id"`
-}
-
-type VacancyLanguage struct {
-	VacancyID int64 `db:"vacancy_id"`
-	LanguageID int64 `db:"language_id"`
-}
-
-type VacancyTechnology struct {
-	VacancyID int64 `db:"vacancy_id"`
-	TechnologyID int64 `db:"techonology_id"`
 }
