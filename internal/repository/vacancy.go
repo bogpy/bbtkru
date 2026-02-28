@@ -16,7 +16,7 @@ func NewVacancytRepository(db *sqlx.DB) *VacancyRepository {
 	return &VacancyRepository{DB: db}
 }
 
-func (r VacancyRepository) getVacancies(request models.RequestForVacancy) ([]models.Vacancy, error) {
+func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]models.Vacancy, error) {
 	var queryBuilder strings.Builder
 	queryBuilder.WriteString("SELECT * FROM vacancy WHERE 1=1")
 	var args []interface{}
@@ -48,16 +48,16 @@ func (r VacancyRepository) getVacancies(request models.RequestForVacancy) ([]mod
 		return nil, err
 	}
 
-	// for _, vacancy := range vacancies {
-	// 	err := vacancy.GetLanguages(db)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// 	err := vacancy.GetTechnologies(db)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// }
+	for i, vacancy := range vacancies {
+		vacancies[i].Languages, err = r.GetLanguages(vacancy.ID)
+		if err != nil {
+			return nil, err
+		}
+		vacancies[i].Technologies, err = r.GetTechnologies(vacancy.ID)
+		if err != nil {
+			return nil, err
+		}
+	}
 
 	return vacancies, nil
 }
@@ -95,13 +95,11 @@ func (r VacancyRepository) InsertJunction(vacancies []*models.Vacancy, language_
 		}
 	}
 	tx := r.DB.MustBegin()
-	res, err := tx.NamedExec(query, args1)
+	_, err := tx.NamedExec(query, args1)
 	if err != nil {
 		tx.Rollback()
 		return err
 	}
-	fmt.Println(res.RowsAffected())
-		
 	query = `INSERT INTO vacancy_technology
 				(vacancy_id, technology_id)
 				VALUES (:vacancy_id, :technology_id)
@@ -121,5 +119,53 @@ func (r VacancyRepository) InsertJunction(vacancies []*models.Vacancy, language_
 		tx.Rollback()
 		return err
 	}
+	tx.Commit()
 	return nil
+}
+
+func (r VacancyRepository) GetLanguages(id int64) ([]models.Language, error) {
+	query := `SELECT l.id, l.name
+	 		  FROM language l
+			  JOIN vacancy_language vl ON l.id = vl.language_id
+			  WHERE vl.vacancy_id = ?
+			  `
+	var languages []models.Language
+	err := r.DB.Select(&languages, query, id)
+	if err != nil {
+		return nil, err
+	}
+	return languages, err
+}
+
+func (r VacancyRepository) GetTechnologies(id int64) ([]models.Technology, error) {
+	query := `SELECT t.id, t.name
+	 		  FROM technology t
+			  JOIN vacancy_technology vt ON t.id = vt.technology_id
+			  WHERE vt.applicant_id = ?
+			  `
+	var technologies []models.Technology
+	err := r.DB.Select(&technologies, query, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return technologies, nil
+}
+
+func (r VacancyRepository) GetVacancyByID(id *int64) (*models.Vacancy, error) {
+	var vacancy models.Vacancy
+	var err error
+	if id != nil {
+		err = r.DB.Get(
+			&vacancy,
+			"SELECT * FROM vacancy WHERE (id) = (?)",
+			*id,
+		)
+	}
+	if err != nil {
+		return nil, err
+	}
+	vacancy.Languages, err = r.GetLanguages(vacancy.ID)
+	vacancy.Technologies, err = r.GetTechnologies(vacancy.ID)
+	return &vacancy, err
 }

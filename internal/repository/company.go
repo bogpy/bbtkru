@@ -16,27 +16,24 @@ func NewCompanyRepository(db *sqlx.DB) *CompanyRepository {
 	return &CompanyRepository{DB: db}
 }
 
-func (r CompanyRepository) getCompany(name *string, id *int) (models.Company, error) {
+func (r CompanyRepository) GetCompanyByID(id int) (*models.Company, error) {
 	var company models.Company
-	var err error
-	if name != nil {
-		err = r.DB.Get(
-			&company,
-			"SELECT * FROM company WHERE (name) = (?)",
-			*name,
-		)
-	} else if id != nil {
-		err = r.DB.Get(
-			&company,
-			"SELECT * FROM company WHERE (id) = (?)",
-			*id,
-		)
+	err := r.DB.Get(
+		&company,
+		"SELECT * FROM company WHERE (id) = (?)",
+		id,
+	)
+	if err != nil {
+		return nil, err
 	}
-
-	return company, err
+	company.Vacancies, err = r.GetVacancies(company.ID)
+	if err != nil {
+		return nil, err
+	}
+	return &company, err
 }
 
-func (r CompanyRepository) getCompanies(request models.RequestForCompany) ([]models.Company, error) {
+func (r CompanyRepository) GetCompanies(request models.RequestForCompany) ([]models.Company, error) {
 	var queryBuilder strings.Builder
 	queryBuilder.WriteString("SELECT * FROM company WHERE 1=1")
 	var args []interface{}
@@ -69,7 +66,7 @@ func (r CompanyRepository) getCompanies(request models.RequestForCompany) ([]mod
 	return companies, rows.Err()
 }
 
-func (r CompanyRepository) deleteCompany(id int) error {
+func (r CompanyRepository) DeleteCompany(id int) error {
 	result, err := r.DB.Exec("DELETE FROM company WHERE id = ?", id)
 	if err != nil {
 		return err
@@ -101,7 +98,14 @@ func (r CompanyRepository) BulkInsert(companies []*models.Company) error {
 	return NamedExecWrapper(r.DB, query, companies)
 }
 
-//TODO:
 func (r CompanyRepository) GetVacancies(id int64) ([]models.Vacancy, error) {
-	return nil, nil
+	query := `SELECT * FROM vacancy v
+			  WHERE v.companyID = ?
+			  `
+	var vacancies []models.Vacancy
+	err := r.DB.Select(&vacancies, query, id)
+	if err != nil {
+		return nil, err
+	}
+	return vacancies, err
 }

@@ -6,6 +6,7 @@ type Company struct {
 	Country       string `db:"country" json:"country"`
 	YearFound     int    `db:"yearFound" json:"yearFound"`
 	EmployeeCount int    `db:"employeeCount" json:"employeeCount"`
+	Vacancies     []Vacancy 
 	Score         int
 }
 

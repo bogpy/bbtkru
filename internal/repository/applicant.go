@@ -24,9 +24,9 @@ func (r ApplicantRepository) BulkInsert(applicants []*models.Applicant) error {
 }
 
 func (r ApplicantRepository) GetLanguages(id int64) ([]models.Language, error) {
-	query := `SELECT l.ID, l.Name
+	query := `SELECT l.id, l.name
 	 		  FROM language l
-			  JOIN applicant_language al ON l.ID = al.language_id
+			  JOIN applicant_language al ON l.id = al.language_id
 			  WHERE al.applicant_id = ?
 			  `
 	var languages []models.Language
@@ -38,9 +38,9 @@ func (r ApplicantRepository) GetLanguages(id int64) ([]models.Language, error) {
 }
 
 func (r ApplicantRepository) GetTechnologies(id int64) ([]models.Technology, error) {
-	query := `SELECT t.ID, t.Name
+	query := `SELECT t.id, t.name
 	 		  FROM technology t
-			  JOIN applicant_technology at ON t.Id = at.technology_id
+			  JOIN applicant_technology at ON t.id = at.technology_id
 			  WHERE at.applicant_id = ?
 			  `
 	var technologies []models.Technology
@@ -198,5 +198,28 @@ func (r ApplicantRepository) InsertJunction(applicants []*models.Applicant, lang
 		tx.Rollback()
 		return err
 	}
+	tx.Commit()
 	return nil
+}
+
+func (r ApplicantRepository) GetApplicantByID(id int64) (*models.Applicant, error) {
+	var applicant models.Applicant
+	var err error
+	err = r.DB.Get(
+		&applicant,
+		"SELECT * FROM applicant WHERE (id) = (?)",
+		id,
+	)
+	if err != nil {
+		return nil, err
+	}
+	applicant.Languages, err = r.GetLanguages(applicant.ID)
+	if err != nil {
+		return nil, err
+	}
+	applicant.Technologies, err = r.GetTechnologies(applicant.ID)
+	if err != nil {
+		return nil, err
+	}
+	return &applicant, nil
 }

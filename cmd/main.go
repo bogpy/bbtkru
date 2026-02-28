@@ -23,11 +23,11 @@ func main() {
 	repository.PopulateDB(db)
 
 	router := gin.Default()
+	
+	router.GET("/applicants/:id", getApplicantByID)
 
-	// Routes
 	// router.GET("/applicants", getApplicants)
 	// router.POST("/vacancies", insertVacancy)
-	// router.GET("/applicants/:id", getApplicantByID)
 	// router.DELETE("/vacancies/:id", deleteVacancyByID)
 
 	router.Run()
