@@ -16,7 +16,7 @@ func NewCompanyRepository(db *sqlx.DB) *CompanyRepository {
 	return &CompanyRepository{DB: db}
 }
 
-func (r CompanyRepository) GetCompanyByID(id int) (*models.Company, error) {
+func (r CompanyRepository) GetCompanyByID(id int64) (*models.Company, error) {
 	var company models.Company
 	err := r.DB.Get(
 		&company,

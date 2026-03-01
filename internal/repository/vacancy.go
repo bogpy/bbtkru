@@ -12,7 +12,7 @@ type VacancyRepository struct {
 	DB *sqlx.DB
 }
 
-func NewVacancytRepository(db *sqlx.DB) *VacancyRepository {
+func NewVacancyRepository(db *sqlx.DB) *VacancyRepository {
 	return &VacancyRepository{DB: db}
 }
 
@@ -152,16 +152,14 @@ func (r VacancyRepository) GetTechnologies(id int64) ([]models.Technology, error
 	return technologies, nil
 }
 
-func (r VacancyRepository) GetVacancyByID(id *int64) (*models.Vacancy, error) {
+func (r VacancyRepository) GetVacancyByID(id int64) (*models.Vacancy, error) {
 	var vacancy models.Vacancy
 	var err error
-	if id != nil {
-		err = r.DB.Get(
-			&vacancy,
-			"SELECT * FROM vacancy WHERE (id) = (?)",
-			*id,
-		)
-	}
+	err = r.DB.Get(
+		&vacancy,
+		"SELECT * FROM vacancy WHERE (id) = (?)",
+		id,
+	)
 	if err != nil {
 		return nil, err
 	}

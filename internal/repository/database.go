@@ -218,7 +218,7 @@ func PopulateDB(db *sqlx.DB) {
 			log.Printf("Vacancy %v doesn't have company", vacancy.Title)
 		}
 	}
-	vr := NewVacancytRepository(db)
+	vr := NewVacancyRepository(db)
 	if err := vr.BulkInsert(good_vacancies); err != nil {
 		log.Fatal(err)
 	}

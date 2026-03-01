@@ -38,3 +38,18 @@ func (e Env) GetApplicants(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, applicants)
 }
+
+func (e Env) InsesrtApplicants(c *gin.Context) {
+	var applicants []*models.Applicant
+	if err := c.ShouldBindJSON(&applicants); err != nil{
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	r := repository.NewApplicantRepository(e.db)
+	err := r.BulkInsert(applicants)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Applicants not added"})
+		return
+	}
+	c.JSON(http.StatusOK, nil)
+}
