@@ -39,7 +39,7 @@ func (e Env) GetVacancies(c *gin.Context) {
 	c.JSON(http.StatusOK, vacancies)
 }
 
-func (e Env) InsesrtVacancies(c *gin.Context) {
+func (e Env) InsertVacancies(c *gin.Context) {
 	var vacancies []*models.Vacancy
 	if err := c.ShouldBindJSON(&vacancies); err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

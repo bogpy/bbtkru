@@ -39,7 +39,7 @@ func (e Env) GetCompanies(c *gin.Context) {
 	c.JSON(http.StatusOK, companies)
 }
 
-func (e Env) InsesrtCompanies(c *gin.Context) {
+func (e Env) InsertCompanies(c *gin.Context) {
 	var companies []*models.Company
 	if err := c.ShouldBindJSON(&companies); err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

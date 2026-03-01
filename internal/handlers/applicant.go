@@ -39,7 +39,7 @@ func (e Env) GetApplicants(c *gin.Context) {
 	c.JSON(http.StatusOK, applicants)
 }
 
-func (e Env) InsesrtApplicants(c *gin.Context) {
+func (e Env) InsertApplicants(c *gin.Context) {
 	var applicants []*models.Applicant
 	if err := c.ShouldBindJSON(&applicants); err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

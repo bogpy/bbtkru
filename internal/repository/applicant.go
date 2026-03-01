@@ -3,6 +3,7 @@ package repository
 import (
 	"fmt"
 	"strings"
+	"log"
 
 	"github.com/bogpy/bbtkru/internal/models"
 	"github.com/jmoiron/sqlx"
@@ -21,6 +22,28 @@ func (r ApplicantRepository) BulkInsert(applicants []*models.Applicant) error {
 		(name, dateOfBirth, education, university, graduated, specialty, level, experience, workHistory)
 		VALUES (:name, :dateOfBirth, :education, :university, :graduated, :specialty, :level, :experience, :workHistory)`
 	return NamedExecWrapper(r.DB, query, applicants)
+}
+
+func (r ApplicantRepository) GetLanguagesIds(languages []models.Language) ([]int64, error) {
+	query := `SELECT l.id FROM language l
+			  WHERE l.name IN (?)`
+	
+	language_names := make([]string, len(languages))
+	for i, lang := range languages {
+		language_names[i] = lang.Name
+	}
+	query, args, err := sqlx.In(query, language_names)
+	if err != nil {
+		return nil, err
+	}
+	var languages_ids []int64
+	query = r.DB.Rebind(query)
+	err = r.DB.Select(&languages_ids, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return languages_ids, nil
 }
 
 func (r ApplicantRepository) GetLanguages(id int64) ([]models.Language, error) {
@@ -58,42 +81,42 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 	var args []interface{}
 
 	if request.Experience != nil {
-		queryBuilder.WriteString("AND experience >= ?")
+		queryBuilder.WriteString(" AND experience >= ?")
 		args = append(args, *request.Experience)
 	}
 
 	if request.Level != nil {
-		queryBuilder.WriteString("AND level = ?")
+		queryBuilder.WriteString(" AND level = ?")
 		args = append(args, *request.Level)
 	}
 
 	if request.Graduated != nil {
-		queryBuilder.WriteString("AND graduted = ?")
+		queryBuilder.WriteString(" AND graduted = ?")
 		args = append(args, *request.Graduated)
 	}
 
 	if request.Education_type != nil {
-		queryBuilder.WriteString("AND education = ?")
+		queryBuilder.WriteString(" AND education = ?")
 		args = append(args, *request.Education_type)
 	}
 
 	if request.Specialty != nil {
-		queryBuilder.WriteString("AND specialty = ?")
+		queryBuilder.WriteString(" AND specialty = ?")
 		args = append(args, *request.Specialty)
 	}
 
 	if len(request.LanguagesRequired) > 0 {
 		queryBuilder.WriteString(
-			`AND EXISTS (
+			` AND EXISTS (
 				SELECT 1 FROM applicant_language al
 				WHERE al.applicant_id = a.id AND al.language_id IN (?)
 				GROUP BY al.applicant_id
 				HAVING COUNT(DISTINCT al.applicant_id) = ?
 			)`,
 		)
-		languages_ids := make([]int64, len(request.LanguagesRequired))
-		for i, language := range request.LanguagesRequired {
-			languages_ids[i] = language.ID
+		languages_ids, err := r.GetLanguagesIds(request.LanguagesRequired)
+		if err != nil {
+			return nil, err
 		}
 		args = append(
 			args,
@@ -104,7 +127,7 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 
 	if len(request.TechnologiesRequired) > 0 {
 		queryBuilder.WriteString(
-			`AND EXISTS (
+			` AND EXISTS (
 				SELECT 1 FROM applicant_technology at
 				WHERE at.applicant_id = a.id AND at.technology_id IN (?)
 				GROUP BY at.applicant_id
@@ -123,9 +146,19 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 	}
 
 	query := queryBuilder.String()
-	var applicants []models.Applicant
-	err := r.DB.Select(&applicants, query, args...)
+	query, args, err := sqlx.In(query, args...)
 	if err != nil {
+		log.Printf(`Query expansion failure: %v
+			Query: %v
+			Args: %v
+		`, err, query, args)
+		return nil, err
+	}
+	query = r.DB.Rebind(query)
+	var applicants []models.Applicant
+	err = r.DB.Select(&applicants, query, args...)
+	if err != nil {
+		log.Printf("Select failure: %v\nQuery: %v\n", err, query)
 		return nil, err
 	}
 
@@ -133,6 +166,7 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 		var err error
 		applicants[i].Languages, err = r.GetLanguages(applicant.ID)
 		if err != nil {
+			log.Printf("Error %v no gotten lang", err)
 			return nil, err
 		}
 		applicants[i].Technologies, err = r.GetTechnologies(applicant.ID)
@@ -144,7 +178,6 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 	for i, applicant := range applicants {
 		applicants[i].Score = applicant.CalcScore(request)
 	}
-
 	return applicants, err
 }
 
