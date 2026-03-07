@@ -109,3 +109,21 @@ func (r CompanyRepository) GetVacancies(id int64) ([]models.Vacancy, error) {
 	}
 	return vacancies, err
 }
+
+func (r CompanyRepository) InsertComapny(c models.Company) (int64, error) {
+	query := `INSERT INTO company
+		(name, country, yearFound, employeeCount)
+		VALUES (:name, :country, :yearFound, :employeeCount)`
+	tx := r.DB.MustBegin()
+	res, err := tx.NamedExec(query, c)
+	if err != nil {
+		tx.Rollback()
+		return 0, err
+	}
+	tx.Commit()
+	id, err := res.LastInsertId()
+    if err != nil {
+        return 0, fmt.Errorf("addCompany: %v", err)
+    }
+    return id, nil
+}

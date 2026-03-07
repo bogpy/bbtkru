@@ -256,3 +256,21 @@ func (r ApplicantRepository) GetApplicantByID(id int64) (*models.Applicant, erro
 	}
 	return &applicant, nil
 }
+
+func (r ApplicantRepository) InsertApplicant(a models.Applicant) (int64, error) {
+	query := `INSERT INTO applicant
+		(name, dateOfBirth, education, university, graduated, specialty, level, experience, workHistory)
+		VALUES (:name, :dateOfBirth, :education, :university, :graduated, :specialty, :level, :experience, :workHistory)`
+	tx := r.DB.MustBegin()
+	res, err := tx.NamedExec(query, a)
+	if err != nil {
+		tx.Rollback()
+		return 0, err
+	}
+	tx.Commit()
+	id, err := res.LastInsertId()
+    if err != nil {
+        return 0, fmt.Errorf("addApplicant: %v", err)
+    }
+    return id, nil
+}

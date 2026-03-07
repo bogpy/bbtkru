@@ -167,3 +167,21 @@ func (r VacancyRepository) GetVacancyByID(id int64) (*models.Vacancy, error) {
 	vacancy.Technologies, err = r.GetTechnologies(vacancy.ID)
 	return &vacancy, err
 }
+
+func (r VacancyRepository) InsertVacancy(v models.Vacancy) (int64, error) {
+	query := `INSERT INTO vacancy
+		(title, description, companyID, experience, salary, hours, employment, location) 
+		VALUES (:title, :description, :companyID, :experience, :salary, :hours, :employment, :location)`
+	tx := r.DB.MustBegin()
+	res, err := tx.NamedExec(query, v)
+	if err != nil {
+		tx.Rollback()
+		return 0, err
+	}
+	tx.Commit()
+	id, err := res.LastInsertId()
+    if err != nil {
+        return 0, fmt.Errorf("addVacancy: %v", err)
+    }
+    return id, nil
+}
