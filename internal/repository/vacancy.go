@@ -168,20 +168,35 @@ func (r VacancyRepository) GetVacancyByID(id int64) (*models.Vacancy, error) {
 	return &vacancy, err
 }
 
-func (r VacancyRepository) InsertVacancy(v models.Vacancy) (int64, error) {
+func (r VacancyRepository) InsertVacancy(v *models.Vacancy) error {
 	query := `INSERT INTO vacancy
 		(title, description, companyID, experience, salary, hours, employment, location) 
 		VALUES (:title, :description, :companyID, :experience, :salary, :hours, :employment, :location)`
-	tx := r.DB.MustBegin()
-	res, err := tx.NamedExec(query, v)
+
+	res, err := r.DB.NamedExec(query, v)
 	if err != nil {
-		tx.Rollback()
-		return 0, err
+		return err
 	}
-	tx.Commit()
 	id, err := res.LastInsertId()
     if err != nil {
-        return 0, fmt.Errorf("addVacancy: %v", err)
+        return fmt.Errorf("addVacancy: %v", err)
     }
-    return id, nil
+	v.ID = id
+    return nil
+}
+
+func (r VacancyRepository) DeleteVacancy(id int64) error {
+	result, err := r.DB.Exec("DELETE FROM vacancy WHERE id = ?", id)
+	if err != nil {
+		return err
+	}
+	count, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if count == 0{
+		return fmt.Errorf("Not found vacancy with id: %v", id)
+	}
+
+	return nil
 }

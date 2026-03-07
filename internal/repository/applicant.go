@@ -257,20 +257,34 @@ func (r ApplicantRepository) GetApplicantByID(id int64) (*models.Applicant, erro
 	return &applicant, nil
 }
 
-func (r ApplicantRepository) InsertApplicant(a models.Applicant) (int64, error) {
+func (r ApplicantRepository) InsertApplicant(a *models.Applicant) error {
 	query := `INSERT INTO applicant
 		(name, dateOfBirth, education, university, graduated, specialty, level, experience, workHistory)
 		VALUES (:name, :dateOfBirth, :education, :university, :graduated, :specialty, :level, :experience, :workHistory)`
-	tx := r.DB.MustBegin()
-	res, err := tx.NamedExec(query, a)
+	res, err := r.DB.NamedExec(query, a)
 	if err != nil {
-		tx.Rollback()
-		return 0, err
+		return err
 	}
-	tx.Commit()
 	id, err := res.LastInsertId()
     if err != nil {
-        return 0, fmt.Errorf("addApplicant: %v", err)
+        return fmt.Errorf("addApplicant: %v", err)
     }
-    return id, nil
+	a.ID = id
+    return nil
+}
+
+func (r ApplicantRepository) DeleteApplicant(id int64) error {
+	result, err := r.DB.Exec("DELETE FROM applicant WHERE id = ?", id)
+	if err != nil {
+		return err
+	}
+	count, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if count == 0{
+		return fmt.Errorf("Not found applicant with id: %v", id)
+	}
+
+	return nil
 }

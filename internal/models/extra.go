@@ -23,6 +23,15 @@ func (x *Language) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x *Language) MarshalJSON() ([]byte, error) {
+	var ans []byte
+	var err error
+	if ans, err = json.Marshal(x.Name); err != nil {
+		return nil, fmt.Errorf("Invalid language name %v: %w", x.Name, err)
+	}
+	return ans, nil
+}
+
 type Technology struct {
 	ID   int64  `db:"id" json:"id"`
 	Name string `db:"name" json:"name"`
@@ -39,4 +48,13 @@ func (x *Technology) UnmarshalJSON(data []byte) error {
 	}
 	x.Name = name
 	return nil
+}
+
+func (x *Technology) MarshalJSON() ([]byte, error) {
+	var ans []byte
+	var err error
+	if ans, err = json.Marshal(x.Name); err != nil {
+		return nil, fmt.Errorf("Invalid technology name %v: %w", x.Name, err)
+	}
+	return ans, nil
 }

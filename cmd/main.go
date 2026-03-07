@@ -35,9 +35,18 @@ func main() {
 	
 	router.GET("/applicants/:id", env.GetApplicantByID)
 	router.GET("/applicants", env.GetApplicants)
+	router.GET("/companies", env.GetCompanies)
+	router.GET("/companies/:id", env.GetCompanyByID)
+	router.GET("/vacancies", env.GetVacancies)
+	router.GET("/vacancies/:id", env.GetVacancyByID)
 
-	// router.POST("/vacancies", insertVacancy)
-	// router.DELETE("/vacancies/:id", deleteVacancyByID)
+	router.POST("/vacancies", env.InsertVacancy)
+	router.POST("/applicants", env.InsertApplicant)
+	router.POST("/companies", env.InsertCompany)
+	
+	router.DELETE("/companies/:id", env.DeleteCompanyByID)
+	router.DELETE("/vacancies/:id", env.DeleteVacancyByID)
+	router.DELETE("/applicants/:id", env.DeleteApplicantByID)
 
 	router.Run()
 }

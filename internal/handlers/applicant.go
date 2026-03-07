@@ -53,3 +53,33 @@ func (e Env) InsertApplicants(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, nil)
 }
+
+func (e Env) InsertApplicant(c *gin.Context) {
+	var applicant *models.Applicant
+	if err := c.ShouldBindJSON(&applicant); err != nil{
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	r := repository.NewApplicantRepository(e.db)
+	err := r.InsertApplicant(applicant)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Applicant not added"})
+		return
+	}
+	c.JSON(http.StatusOK, nil)
+}
+
+func (e Env) DeleteApplicantByID(c *gin.Context) { 
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+	r := repository.NewApplicantRepository(e.db)
+	err = r.DeleteApplicant(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Applicant not deleted"})
+		return
+	}
+	c.JSON(http.StatusOK, nil)
+}

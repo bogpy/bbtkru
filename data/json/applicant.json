@@ -1,30 +1,5 @@
 [
   {
-    "name": "Carol Davis",
-    "experience": 0,
-    "university": "HSE",
-    "level": "Intern",
-    "graduated": false,
-    "education": "Bachelor",
-    "specialty": "Fullstack",
-    "dateOfBirth": "2006-04-17T00:00:00Z",
-    "workHistory": "No prior experience",
-    "languages": [
-      "PL/SQL",
-      "Eiffel",
-      "PostScript",
-      "Erlang",
-      "Scratch"
-    ],
-    "technologies": [
-      "Bootstrap",
-      "Node.js",
-      "Docker",
-      "Ansible",
-      "ZeroMQ"
-    ]
-  },
-  {
     "name": "Jordan Smith",
     "experience": 2,
     "university": "MIT",

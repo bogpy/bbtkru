@@ -67,15 +67,15 @@ func (x *Applicant) GetTechnologies() []Technology {
 }
 
 type RequestForApplicant struct {
-	Experience           *int
-	Level                *LevelType
-	Graduated            *bool
-	Education_type       *EducationType
-	Specialty            *SpecialtyType
-	LanguagesRequired    []Language
-	LanguagesOptional    []Language
-	TechnologiesRequired []Technology
-	TechnologiesOptional []Technology
+	Experience           *int `json:"experience"`
+	Level                *LevelType `json:"level"`
+	Graduated            *bool `json:"graduated"`
+	Education_type       *EducationType `json:"education"`
+	Specialty            *SpecialtyType `json:"specialty"`
+	LanguagesRequired    []Language `json:"languages_required"`
+	LanguagesOptional    []Language `json:"languages_optional"`
+	TechnologiesRequired []Technology `json:"technologies_required"`
+	TechnologiesOptional []Technology `json:"technologies_optional"`
 }
 
 const (

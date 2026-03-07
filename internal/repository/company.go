@@ -66,8 +66,13 @@ func (r CompanyRepository) GetCompanies(request models.RequestForCompany) ([]mod
 	return companies, rows.Err()
 }
 
-func (r CompanyRepository) DeleteCompany(id int) error {
-	result, err := r.DB.Exec("DELETE FROM company WHERE id = ?", id)
+func (r CompanyRepository) DeleteCompany(id int64) error {
+	result, err := r.DB.Exec("DELETE FROM vacancy WHERE CompanyID = ?", id)
+	if err != nil {
+		return err
+	}
+
+	result, err = r.DB.Exec("DELETE FROM company WHERE id = ?", id)
 	if err != nil {
 		return err
 	}
@@ -75,17 +80,8 @@ func (r CompanyRepository) DeleteCompany(id int) error {
 	if err != nil {
 		return err
 	}
-	if count == 0 {
-		return fmt.Errorf("Company with id %d not found", id)
-	}
-
-	result, err = r.DB.Exec("DELETE FROM vacancy WHERE CompanyID = ?", id)
-	if err != nil {
-		return err
-	}
-	count, err = result.RowsAffected()
-	if err != nil {
-		return err
+	if count == 0{
+		return fmt.Errorf("Not found company with id: %v", id)
 	}
 
 	return nil
@@ -110,20 +106,18 @@ func (r CompanyRepository) GetVacancies(id int64) ([]models.Vacancy, error) {
 	return vacancies, err
 }
 
-func (r CompanyRepository) InsertComapny(c models.Company) (int64, error) {
+func (r CompanyRepository) InsertCompany(c *models.Company) error {
 	query := `INSERT INTO company
 		(name, country, yearFound, employeeCount)
 		VALUES (:name, :country, :yearFound, :employeeCount)`
-	tx := r.DB.MustBegin()
-	res, err := tx.NamedExec(query, c)
+	res, err := r.DB.NamedExec(query, c)
 	if err != nil {
-		tx.Rollback()
-		return 0, err
+		return err
 	}
-	tx.Commit()
 	id, err := res.LastInsertId()
     if err != nil {
-        return 0, fmt.Errorf("addCompany: %v", err)
+        return fmt.Errorf("addCompany: %v", err)
     }
-    return id, nil
+	c.ID = id
+    return nil
 }
