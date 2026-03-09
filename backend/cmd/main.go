@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"time"
+	"fmt"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
@@ -34,6 +35,10 @@ func main() {
 	env := handlers.NewEnv(db)
 
 	router := gin.Default()
+	router.Use(func(c *gin.Context) {
+		fmt.Printf("Inbound Request - IP: %s | Origin: %s\n", c.ClientIP(), c.GetHeader("Origin"))
+		c.Next()
+	})
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:5000", "http://213.87.161.97", "http://61.90.31.54"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
