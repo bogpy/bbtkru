@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
@@ -10,6 +11,7 @@ import (
 	"github.com/bogpy/bbtkru/internal/handlers"
 	"github.com/bogpy/bbtkru/internal/repository"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 )
 
 func main() {
@@ -32,6 +34,14 @@ func main() {
 	env := handlers.NewEnv(db)
 
 	router := gin.Default()
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5000", "http://213.87.161.97", "http://61.90.31.54"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 	
 	router.GET("/applicants/:id", env.GetApplicantByID)
 	router.GET("/applicants", env.GetApplicants)
@@ -48,5 +58,5 @@ func main() {
 	router.DELETE("/vacancies/:id", env.DeleteVacancyByID)
 	router.DELETE("/applicants/:id", env.DeleteApplicantByID)
 
-	router.Run()
+	router.Run(":8080")
 }
