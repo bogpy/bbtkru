@@ -455,3 +455,280 @@ abstract class _Vacancy implements Vacancy {
   _$$VacancyImplCopyWith<_$VacancyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RequestForVacancy _$RequestForVacancyFromJson(Map<String, dynamic> json) {
+  return _RequestForVacancy.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RequestForVacancy {
+  int? get experience => throw _privateConstructorUsedError;
+  int? get salary => throw _privateConstructorUsedError;
+  EmploymentType? get employment => throw _privateConstructorUsedError;
+  LocationType? get location => throw _privateConstructorUsedError;
+  String? get country => throw _privateConstructorUsedError;
+  int? get hours => throw _privateConstructorUsedError;
+
+  /// Serializes this RequestForVacancy to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RequestForVacancy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RequestForVacancyCopyWith<RequestForVacancy> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RequestForVacancyCopyWith<$Res> {
+  factory $RequestForVacancyCopyWith(
+    RequestForVacancy value,
+    $Res Function(RequestForVacancy) then,
+  ) = _$RequestForVacancyCopyWithImpl<$Res, RequestForVacancy>;
+  @useResult
+  $Res call({
+    int? experience,
+    int? salary,
+    EmploymentType? employment,
+    LocationType? location,
+    String? country,
+    int? hours,
+  });
+}
+
+/// @nodoc
+class _$RequestForVacancyCopyWithImpl<$Res, $Val extends RequestForVacancy>
+    implements $RequestForVacancyCopyWith<$Res> {
+  _$RequestForVacancyCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RequestForVacancy
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? experience = freezed,
+    Object? salary = freezed,
+    Object? employment = freezed,
+    Object? location = freezed,
+    Object? country = freezed,
+    Object? hours = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            experience: freezed == experience
+                ? _value.experience
+                : experience // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            salary: freezed == salary
+                ? _value.salary
+                : salary // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            employment: freezed == employment
+                ? _value.employment
+                : employment // ignore: cast_nullable_to_non_nullable
+                      as EmploymentType?,
+            location: freezed == location
+                ? _value.location
+                : location // ignore: cast_nullable_to_non_nullable
+                      as LocationType?,
+            country: freezed == country
+                ? _value.country
+                : country // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            hours: freezed == hours
+                ? _value.hours
+                : hours // ignore: cast_nullable_to_non_nullable
+                      as int?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$RequestForVacancyImplCopyWith<$Res>
+    implements $RequestForVacancyCopyWith<$Res> {
+  factory _$$RequestForVacancyImplCopyWith(
+    _$RequestForVacancyImpl value,
+    $Res Function(_$RequestForVacancyImpl) then,
+  ) = __$$RequestForVacancyImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    int? experience,
+    int? salary,
+    EmploymentType? employment,
+    LocationType? location,
+    String? country,
+    int? hours,
+  });
+}
+
+/// @nodoc
+class __$$RequestForVacancyImplCopyWithImpl<$Res>
+    extends _$RequestForVacancyCopyWithImpl<$Res, _$RequestForVacancyImpl>
+    implements _$$RequestForVacancyImplCopyWith<$Res> {
+  __$$RequestForVacancyImplCopyWithImpl(
+    _$RequestForVacancyImpl _value,
+    $Res Function(_$RequestForVacancyImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RequestForVacancy
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? experience = freezed,
+    Object? salary = freezed,
+    Object? employment = freezed,
+    Object? location = freezed,
+    Object? country = freezed,
+    Object? hours = freezed,
+  }) {
+    return _then(
+      _$RequestForVacancyImpl(
+        experience: freezed == experience
+            ? _value.experience
+            : experience // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        salary: freezed == salary
+            ? _value.salary
+            : salary // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        employment: freezed == employment
+            ? _value.employment
+            : employment // ignore: cast_nullable_to_non_nullable
+                  as EmploymentType?,
+        location: freezed == location
+            ? _value.location
+            : location // ignore: cast_nullable_to_non_nullable
+                  as LocationType?,
+        country: freezed == country
+            ? _value.country
+            : country // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        hours: freezed == hours
+            ? _value.hours
+            : hours // ignore: cast_nullable_to_non_nullable
+                  as int?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RequestForVacancyImpl implements _RequestForVacancy {
+  const _$RequestForVacancyImpl({
+    this.experience,
+    this.salary,
+    this.employment,
+    this.location,
+    this.country,
+    this.hours,
+  });
+
+  factory _$RequestForVacancyImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RequestForVacancyImplFromJson(json);
+
+  @override
+  final int? experience;
+  @override
+  final int? salary;
+  @override
+  final EmploymentType? employment;
+  @override
+  final LocationType? location;
+  @override
+  final String? country;
+  @override
+  final int? hours;
+
+  @override
+  String toString() {
+    return 'RequestForVacancy(experience: $experience, salary: $salary, employment: $employment, location: $location, country: $country, hours: $hours)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RequestForVacancyImpl &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
+            (identical(other.salary, salary) || other.salary == salary) &&
+            (identical(other.employment, employment) ||
+                other.employment == employment) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.hours, hours) || other.hours == hours));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    experience,
+    salary,
+    employment,
+    location,
+    country,
+    hours,
+  );
+
+  /// Create a copy of RequestForVacancy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RequestForVacancyImplCopyWith<_$RequestForVacancyImpl> get copyWith =>
+      __$$RequestForVacancyImplCopyWithImpl<_$RequestForVacancyImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RequestForVacancyImplToJson(this);
+  }
+}
+
+abstract class _RequestForVacancy implements RequestForVacancy {
+  const factory _RequestForVacancy({
+    final int? experience,
+    final int? salary,
+    final EmploymentType? employment,
+    final LocationType? location,
+    final String? country,
+    final int? hours,
+  }) = _$RequestForVacancyImpl;
+
+  factory _RequestForVacancy.fromJson(Map<String, dynamic> json) =
+      _$RequestForVacancyImpl.fromJson;
+
+  @override
+  int? get experience;
+  @override
+  int? get salary;
+  @override
+  EmploymentType? get employment;
+  @override
+  LocationType? get location;
+  @override
+  String? get country;
+  @override
+  int? get hours;
+
+  /// Create a copy of RequestForVacancy
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RequestForVacancyImplCopyWith<_$RequestForVacancyImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -314,3 +314,175 @@ abstract class _Company implements Company {
   _$$CompanyImplCopyWith<_$CompanyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RequestForCompany _$RequestForCompanyFromJson(Map<String, dynamic> json) {
+  return _RequestForCompany.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RequestForCompany {
+  String? get country => throw _privateConstructorUsedError;
+  int? get employeeCount => throw _privateConstructorUsedError;
+
+  /// Serializes this RequestForCompany to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RequestForCompany
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RequestForCompanyCopyWith<RequestForCompany> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RequestForCompanyCopyWith<$Res> {
+  factory $RequestForCompanyCopyWith(
+    RequestForCompany value,
+    $Res Function(RequestForCompany) then,
+  ) = _$RequestForCompanyCopyWithImpl<$Res, RequestForCompany>;
+  @useResult
+  $Res call({String? country, int? employeeCount});
+}
+
+/// @nodoc
+class _$RequestForCompanyCopyWithImpl<$Res, $Val extends RequestForCompany>
+    implements $RequestForCompanyCopyWith<$Res> {
+  _$RequestForCompanyCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RequestForCompany
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? country = freezed, Object? employeeCount = freezed}) {
+    return _then(
+      _value.copyWith(
+            country: freezed == country
+                ? _value.country
+                : country // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            employeeCount: freezed == employeeCount
+                ? _value.employeeCount
+                : employeeCount // ignore: cast_nullable_to_non_nullable
+                      as int?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$RequestForCompanyImplCopyWith<$Res>
+    implements $RequestForCompanyCopyWith<$Res> {
+  factory _$$RequestForCompanyImplCopyWith(
+    _$RequestForCompanyImpl value,
+    $Res Function(_$RequestForCompanyImpl) then,
+  ) = __$$RequestForCompanyImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? country, int? employeeCount});
+}
+
+/// @nodoc
+class __$$RequestForCompanyImplCopyWithImpl<$Res>
+    extends _$RequestForCompanyCopyWithImpl<$Res, _$RequestForCompanyImpl>
+    implements _$$RequestForCompanyImplCopyWith<$Res> {
+  __$$RequestForCompanyImplCopyWithImpl(
+    _$RequestForCompanyImpl _value,
+    $Res Function(_$RequestForCompanyImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RequestForCompany
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? country = freezed, Object? employeeCount = freezed}) {
+    return _then(
+      _$RequestForCompanyImpl(
+        country: freezed == country
+            ? _value.country
+            : country // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        employeeCount: freezed == employeeCount
+            ? _value.employeeCount
+            : employeeCount // ignore: cast_nullable_to_non_nullable
+                  as int?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RequestForCompanyImpl implements _RequestForCompany {
+  const _$RequestForCompanyImpl({this.country, this.employeeCount});
+
+  factory _$RequestForCompanyImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RequestForCompanyImplFromJson(json);
+
+  @override
+  final String? country;
+  @override
+  final int? employeeCount;
+
+  @override
+  String toString() {
+    return 'RequestForCompany(country: $country, employeeCount: $employeeCount)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RequestForCompanyImpl &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.employeeCount, employeeCount) ||
+                other.employeeCount == employeeCount));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, country, employeeCount);
+
+  /// Create a copy of RequestForCompany
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RequestForCompanyImplCopyWith<_$RequestForCompanyImpl> get copyWith =>
+      __$$RequestForCompanyImplCopyWithImpl<_$RequestForCompanyImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RequestForCompanyImplToJson(this);
+  }
+}
+
+abstract class _RequestForCompany implements RequestForCompany {
+  const factory _RequestForCompany({
+    final String? country,
+    final int? employeeCount,
+  }) = _$RequestForCompanyImpl;
+
+  factory _RequestForCompany.fromJson(Map<String, dynamic> json) =
+      _$RequestForCompanyImpl.fromJson;
+
+  @override
+  String? get country;
+  @override
+  int? get employeeCount;
+
+  /// Create a copy of RequestForCompany
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RequestForCompanyImplCopyWith<_$RequestForCompanyImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

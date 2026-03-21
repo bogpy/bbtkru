@@ -460,3 +460,390 @@ abstract class _Applicant implements Applicant {
   _$$ApplicantImplCopyWith<_$ApplicantImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RequestForApplicant _$RequestForApplicantFromJson(Map<String, dynamic> json) {
+  return _RequestForApplicant.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RequestForApplicant {
+  int? get experience => throw _privateConstructorUsedError;
+  LevelType? get level => throw _privateConstructorUsedError;
+  bool? get graduated => throw _privateConstructorUsedError;
+  EducationType? get education => throw _privateConstructorUsedError;
+  SpecialtyType? get specialty => throw _privateConstructorUsedError;
+  List<String> get languagesRequired => throw _privateConstructorUsedError;
+  List<String> get languagesOptional => throw _privateConstructorUsedError;
+  List<String> get technologiesRequired => throw _privateConstructorUsedError;
+  List<String> get technologiesOptional => throw _privateConstructorUsedError;
+
+  /// Serializes this RequestForApplicant to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of RequestForApplicant
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RequestForApplicantCopyWith<RequestForApplicant> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RequestForApplicantCopyWith<$Res> {
+  factory $RequestForApplicantCopyWith(
+    RequestForApplicant value,
+    $Res Function(RequestForApplicant) then,
+  ) = _$RequestForApplicantCopyWithImpl<$Res, RequestForApplicant>;
+  @useResult
+  $Res call({
+    int? experience,
+    LevelType? level,
+    bool? graduated,
+    EducationType? education,
+    SpecialtyType? specialty,
+    List<String> languagesRequired,
+    List<String> languagesOptional,
+    List<String> technologiesRequired,
+    List<String> technologiesOptional,
+  });
+}
+
+/// @nodoc
+class _$RequestForApplicantCopyWithImpl<$Res, $Val extends RequestForApplicant>
+    implements $RequestForApplicantCopyWith<$Res> {
+  _$RequestForApplicantCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RequestForApplicant
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? experience = freezed,
+    Object? level = freezed,
+    Object? graduated = freezed,
+    Object? education = freezed,
+    Object? specialty = freezed,
+    Object? languagesRequired = null,
+    Object? languagesOptional = null,
+    Object? technologiesRequired = null,
+    Object? technologiesOptional = null,
+  }) {
+    return _then(
+      _value.copyWith(
+            experience: freezed == experience
+                ? _value.experience
+                : experience // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            level: freezed == level
+                ? _value.level
+                : level // ignore: cast_nullable_to_non_nullable
+                      as LevelType?,
+            graduated: freezed == graduated
+                ? _value.graduated
+                : graduated // ignore: cast_nullable_to_non_nullable
+                      as bool?,
+            education: freezed == education
+                ? _value.education
+                : education // ignore: cast_nullable_to_non_nullable
+                      as EducationType?,
+            specialty: freezed == specialty
+                ? _value.specialty
+                : specialty // ignore: cast_nullable_to_non_nullable
+                      as SpecialtyType?,
+            languagesRequired: null == languagesRequired
+                ? _value.languagesRequired
+                : languagesRequired // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            languagesOptional: null == languagesOptional
+                ? _value.languagesOptional
+                : languagesOptional // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            technologiesRequired: null == technologiesRequired
+                ? _value.technologiesRequired
+                : technologiesRequired // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            technologiesOptional: null == technologiesOptional
+                ? _value.technologiesOptional
+                : technologiesOptional // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$RequestForApplicantImplCopyWith<$Res>
+    implements $RequestForApplicantCopyWith<$Res> {
+  factory _$$RequestForApplicantImplCopyWith(
+    _$RequestForApplicantImpl value,
+    $Res Function(_$RequestForApplicantImpl) then,
+  ) = __$$RequestForApplicantImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    int? experience,
+    LevelType? level,
+    bool? graduated,
+    EducationType? education,
+    SpecialtyType? specialty,
+    List<String> languagesRequired,
+    List<String> languagesOptional,
+    List<String> technologiesRequired,
+    List<String> technologiesOptional,
+  });
+}
+
+/// @nodoc
+class __$$RequestForApplicantImplCopyWithImpl<$Res>
+    extends _$RequestForApplicantCopyWithImpl<$Res, _$RequestForApplicantImpl>
+    implements _$$RequestForApplicantImplCopyWith<$Res> {
+  __$$RequestForApplicantImplCopyWithImpl(
+    _$RequestForApplicantImpl _value,
+    $Res Function(_$RequestForApplicantImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RequestForApplicant
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? experience = freezed,
+    Object? level = freezed,
+    Object? graduated = freezed,
+    Object? education = freezed,
+    Object? specialty = freezed,
+    Object? languagesRequired = null,
+    Object? languagesOptional = null,
+    Object? technologiesRequired = null,
+    Object? technologiesOptional = null,
+  }) {
+    return _then(
+      _$RequestForApplicantImpl(
+        experience: freezed == experience
+            ? _value.experience
+            : experience // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        level: freezed == level
+            ? _value.level
+            : level // ignore: cast_nullable_to_non_nullable
+                  as LevelType?,
+        graduated: freezed == graduated
+            ? _value.graduated
+            : graduated // ignore: cast_nullable_to_non_nullable
+                  as bool?,
+        education: freezed == education
+            ? _value.education
+            : education // ignore: cast_nullable_to_non_nullable
+                  as EducationType?,
+        specialty: freezed == specialty
+            ? _value.specialty
+            : specialty // ignore: cast_nullable_to_non_nullable
+                  as SpecialtyType?,
+        languagesRequired: null == languagesRequired
+            ? _value._languagesRequired
+            : languagesRequired // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        languagesOptional: null == languagesOptional
+            ? _value._languagesOptional
+            : languagesOptional // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        technologiesRequired: null == technologiesRequired
+            ? _value._technologiesRequired
+            : technologiesRequired // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        technologiesOptional: null == technologiesOptional
+            ? _value._technologiesOptional
+            : technologiesOptional // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RequestForApplicantImpl implements _RequestForApplicant {
+  const _$RequestForApplicantImpl({
+    this.experience,
+    this.level,
+    this.graduated,
+    this.education,
+    this.specialty,
+    final List<String> languagesRequired = const [],
+    final List<String> languagesOptional = const [],
+    final List<String> technologiesRequired = const [],
+    final List<String> technologiesOptional = const [],
+  }) : _languagesRequired = languagesRequired,
+       _languagesOptional = languagesOptional,
+       _technologiesRequired = technologiesRequired,
+       _technologiesOptional = technologiesOptional;
+
+  factory _$RequestForApplicantImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RequestForApplicantImplFromJson(json);
+
+  @override
+  final int? experience;
+  @override
+  final LevelType? level;
+  @override
+  final bool? graduated;
+  @override
+  final EducationType? education;
+  @override
+  final SpecialtyType? specialty;
+  final List<String> _languagesRequired;
+  @override
+  @JsonKey()
+  List<String> get languagesRequired {
+    if (_languagesRequired is EqualUnmodifiableListView)
+      return _languagesRequired;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_languagesRequired);
+  }
+
+  final List<String> _languagesOptional;
+  @override
+  @JsonKey()
+  List<String> get languagesOptional {
+    if (_languagesOptional is EqualUnmodifiableListView)
+      return _languagesOptional;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_languagesOptional);
+  }
+
+  final List<String> _technologiesRequired;
+  @override
+  @JsonKey()
+  List<String> get technologiesRequired {
+    if (_technologiesRequired is EqualUnmodifiableListView)
+      return _technologiesRequired;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_technologiesRequired);
+  }
+
+  final List<String> _technologiesOptional;
+  @override
+  @JsonKey()
+  List<String> get technologiesOptional {
+    if (_technologiesOptional is EqualUnmodifiableListView)
+      return _technologiesOptional;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_technologiesOptional);
+  }
+
+  @override
+  String toString() {
+    return 'RequestForApplicant(experience: $experience, level: $level, graduated: $graduated, education: $education, specialty: $specialty, languagesRequired: $languagesRequired, languagesOptional: $languagesOptional, technologiesRequired: $technologiesRequired, technologiesOptional: $technologiesOptional)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RequestForApplicantImpl &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
+            (identical(other.level, level) || other.level == level) &&
+            (identical(other.graduated, graduated) ||
+                other.graduated == graduated) &&
+            (identical(other.education, education) ||
+                other.education == education) &&
+            (identical(other.specialty, specialty) ||
+                other.specialty == specialty) &&
+            const DeepCollectionEquality().equals(
+              other._languagesRequired,
+              _languagesRequired,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._languagesOptional,
+              _languagesOptional,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._technologiesRequired,
+              _technologiesRequired,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._technologiesOptional,
+              _technologiesOptional,
+            ));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    experience,
+    level,
+    graduated,
+    education,
+    specialty,
+    const DeepCollectionEquality().hash(_languagesRequired),
+    const DeepCollectionEquality().hash(_languagesOptional),
+    const DeepCollectionEquality().hash(_technologiesRequired),
+    const DeepCollectionEquality().hash(_technologiesOptional),
+  );
+
+  /// Create a copy of RequestForApplicant
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RequestForApplicantImplCopyWith<_$RequestForApplicantImpl> get copyWith =>
+      __$$RequestForApplicantImplCopyWithImpl<_$RequestForApplicantImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RequestForApplicantImplToJson(this);
+  }
+}
+
+abstract class _RequestForApplicant implements RequestForApplicant {
+  const factory _RequestForApplicant({
+    final int? experience,
+    final LevelType? level,
+    final bool? graduated,
+    final EducationType? education,
+    final SpecialtyType? specialty,
+    final List<String> languagesRequired,
+    final List<String> languagesOptional,
+    final List<String> technologiesRequired,
+    final List<String> technologiesOptional,
+  }) = _$RequestForApplicantImpl;
+
+  factory _RequestForApplicant.fromJson(Map<String, dynamic> json) =
+      _$RequestForApplicantImpl.fromJson;
+
+  @override
+  int? get experience;
+  @override
+  LevelType? get level;
+  @override
+  bool? get graduated;
+  @override
+  EducationType? get education;
+  @override
+  SpecialtyType? get specialty;
+  @override
+  List<String> get languagesRequired;
+  @override
+  List<String> get languagesOptional;
+  @override
+  List<String> get technologiesRequired;
+  @override
+  List<String> get technologiesOptional;
+
+  /// Create a copy of RequestForApplicant
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RequestForApplicantImplCopyWith<_$RequestForApplicantImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

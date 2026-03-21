@@ -43,9 +43,21 @@ class ApiService {
       throw _handleError(e);
     }
   }
-  Future<List<Vacancy>> getCompanies() async {
+  Future<List<Company>> getCompanies(RequestForCompany request) async {
     try {
-      final response = await _dio.get('/vacancies');
+      final response = await _dio.get('/companies', queryParameters: request.toJson());
+      if (response.statusCode == 200) {
+        final List data = response.data;
+        return data.map((json) => Company.fromJson(json)).toList();
+      }
+      throw Exception('Failed to load companies');
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+  Future<List<Vacancy>> getVacancies(RequestForVacancy request) async {
+    try {
+      final response = await _dio.get('/vacancies', queryParameters: request.toJson());
       if (response.statusCode == 200) {
         final List data = response.data;
         return data.map((json) => Vacancy.fromJson(json)).toList();
@@ -55,24 +67,12 @@ class ApiService {
       throw _handleError(e);
     }
   }
-  Future<List<Vacancy>> getVacancies() async {
+  Future<List<Applicant>> getApplicants(RequestForApplicant request) async {
     try {
-      final response = await _dio.get('/vacancies');
+      final response = await _dio.get('/applicants', queryParameters: request.toJson());
       if (response.statusCode == 200) {
         final List data = response.data;
-        return data.map((json) => Vacancy.fromJson(json)).toList();
-      }
-      throw Exception('Failed to load vacancies');
-    } on DioException catch (e) {
-      throw _handleError(e);
-    }
-  }
-  Future<List<Vacancy>> getApplicants() async {
-    try {
-      final response = await _dio.get('/vacancies');
-      if (response.statusCode == 200) {
-        final List data = response.data;
-        return data.map((json) => Vacancy.fromJson(json)).toList();
+        return data.map((json) => Applicant.fromJson(json)).toList();
       }
       throw Exception('Failed to load vacancies');
     } on DioException catch (e) {

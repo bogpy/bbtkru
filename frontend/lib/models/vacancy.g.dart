@@ -59,3 +59,25 @@ const _$LocationTypeEnumMap = {
   LocationType.hybrid: 'Hybrid',
   LocationType.inOffice: 'In-office',
 };
+
+_$RequestForVacancyImpl _$$RequestForVacancyImplFromJson(
+  Map<String, dynamic> json,
+) => _$RequestForVacancyImpl(
+  experience: (json['experience'] as num?)?.toInt(),
+  salary: (json['salary'] as num?)?.toInt(),
+  employment: $enumDecodeNullable(_$EmploymentTypeEnumMap, json['employment']),
+  location: $enumDecodeNullable(_$LocationTypeEnumMap, json['location']),
+  country: json['country'] as String?,
+  hours: (json['hours'] as num?)?.toInt(),
+);
+
+Map<String, dynamic> _$$RequestForVacancyImplToJson(
+  _$RequestForVacancyImpl instance,
+) => <String, dynamic>{
+  'experience': instance.experience,
+  'salary': instance.salary,
+  'employment': _$EmploymentTypeEnumMap[instance.employment],
+  'location': _$LocationTypeEnumMap[instance.location],
+  'country': instance.country,
+  'hours': instance.hours,
+};

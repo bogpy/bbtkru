@@ -44,7 +44,9 @@ class RequestForVacancy with _$RequestForVacancy {
   const factory RequestForVacancy({
     int? experience,
     int? salary,
-    int? type,
+    EmploymentType? employment,
+    LocationType? location,
+    String? country,
     int? hours,
   }) = _RequestForVacancy;
 

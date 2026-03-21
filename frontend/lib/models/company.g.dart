@@ -31,3 +31,17 @@ Map<String, dynamic> _$$CompanyImplToJson(_$CompanyImpl instance) =>
       'vacancies': instance.vacancies,
       'score': instance.score,
     };
+
+_$RequestForCompanyImpl _$$RequestForCompanyImplFromJson(
+  Map<String, dynamic> json,
+) => _$RequestForCompanyImpl(
+  country: json['country'] as String?,
+  employeeCount: (json['employeeCount'] as num?)?.toInt(),
+);
+
+Map<String, dynamic> _$$RequestForCompanyImplToJson(
+  _$RequestForCompanyImpl instance,
+) => <String, dynamic>{
+  'country': instance.country,
+  'employeeCount': instance.employeeCount,
+};
