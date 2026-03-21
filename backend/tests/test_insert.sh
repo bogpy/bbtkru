@@ -1,6 +1,6 @@
-#!/usr/bin/bash
+#!/usr/bin/env zsh
 
-curl -X POST http://localhost:8080/applicants \
+curl -X POST http://158.160.175.91:8080/applicants \
     -H "Content-Type: application/json" \
     -d '{"name": "Carol Davis",
     "experience": 0,

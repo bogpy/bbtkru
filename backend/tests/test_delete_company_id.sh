@@ -1,5 +1,5 @@
-#!/usr/bin/bash
+#!/usr/bin/env zsh
 
-curl -X DELETE http://localhost:8080/companies/5
-curl -X DELETE http://localhost:8080/applicants/5
-curl -X DELETE http://localhost:8080/vacancies/10
+curl -X DELETE http://158.160.175.91:8080/companies/5
+curl -X DELETE http://158.160.175.91:8080/applicants/5
+curl -X DELETE http://158.160.175.91:8080/vacancies/10
