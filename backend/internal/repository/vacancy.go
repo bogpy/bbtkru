@@ -18,27 +18,37 @@ func NewVacancyRepository(db *sqlx.DB) *VacancyRepository {
 
 func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]models.Vacancy, error) {
 	var queryBuilder strings.Builder
-	queryBuilder.WriteString("SELECT * FROM vacancy WHERE 1=1")
+	queryBuilder.WriteString("SELECT * FROM vacancy v WHERE 1=1")
 	var args []interface{}
 
 	if request.Experience != nil {
-		queryBuilder.WriteString("AND experience <= ?")
+		queryBuilder.WriteString(" AND experience <= ?")
 		args = append(args, *request.Experience)
 	}
 
 	if request.Salary != nil {
-		queryBuilder.WriteString("AND salary >= ?")
+		queryBuilder.WriteString(" AND salary >= ?")
 		args = append(args, *request.Salary)
 	}
 
-	if request.Type != nil {
-		queryBuilder.WriteString("AND type = ?")
-		args = append(args, *request.Type)
+	if request.Employment != nil {
+		queryBuilder.WriteString(" AND type = ?")
+		args = append(args, *request.Employment)
 	}
 
 	if request.Hours != nil {
-		queryBuilder.WriteString("AND hours <= ?")
+		queryBuilder.WriteString(" AND hours <= ?")
 		args = append(args, *request.Hours)
+	}
+
+	if request.Location != nil {
+		queryBuilder.WriteString(" AND location = ?")
+		args = append(args, *request.Location)
+	}
+
+	if request.Country != nil {
+		queryBuilder.WriteString(" AND (SELECT c.country FROM company c WHERE c.id = v.compID) = ?")
+		args = append(args, *request.Country)
 	}
 
 	query := queryBuilder.String()
@@ -70,12 +80,12 @@ func (r VacancyRepository) BulkInsert(vacancies []*models.Vacancy) error {
 }
 
 type VacancyLanguage struct {
-	VacancyID int64 `db:"vacancy_id"`
+	VacancyID  int64 `db:"vacancy_id"`
 	LanguageID int64 `db:"language_id"`
 }
 
 type VacancyTechnology struct {
-	VacancyID int64 `db:"vacancy_id"`
+	VacancyID    int64 `db:"vacancy_id"`
 	TechnologyID int64 `db:"technology_id"`
 }
 
@@ -141,7 +151,7 @@ func (r VacancyRepository) GetTechnologies(id int64) ([]models.Technology, error
 	query := `SELECT t.id, t.name
 	 		  FROM technology t
 			  JOIN vacancy_technology vt ON t.id = vt.technology_id
-			  WHERE vt.applicant_id = ?
+			  WHERE vt.vacancy_id = ?
 			  `
 	var technologies []models.Technology
 	err := r.DB.Select(&technologies, query, id)
@@ -164,8 +174,14 @@ func (r VacancyRepository) GetVacancyByID(id int64) (*models.Vacancy, error) {
 		return nil, err
 	}
 	vacancy.Languages, err = r.GetLanguages(vacancy.ID)
+	if err != nil {
+		return nil, err
+	}
 	vacancy.Technologies, err = r.GetTechnologies(vacancy.ID)
-	return &vacancy, err
+	if err != nil {
+		return nil, err
+	}
+	return &vacancy, nil
 }
 
 func (r VacancyRepository) InsertVacancy(v *models.Vacancy) error {
@@ -178,11 +194,11 @@ func (r VacancyRepository) InsertVacancy(v *models.Vacancy) error {
 		return err
 	}
 	id, err := res.LastInsertId()
-    if err != nil {
-        return fmt.Errorf("addVacancy: %v", err)
-    }
+	if err != nil {
+		return fmt.Errorf("addVacancy: %v", err)
+	}
 	v.ID = id
-    return nil
+	return nil
 }
 
 func (r VacancyRepository) DeleteVacancy(id int64) error {
@@ -194,7 +210,7 @@ func (r VacancyRepository) DeleteVacancy(id int64) error {
 	if err != nil {
 		return err
 	}
-	if count == 0{
+	if count == 0 {
 		return fmt.Errorf("Not found vacancy with id: %v", id)
 	}
 
