@@ -39,8 +39,9 @@ func main() {
 		fmt.Printf("Inbound Request - IP: %s | Origin: %s\n", c.ClientIP(), c.GetHeader("Origin"))
 		c.Next()
 	})
+	router.SetTrustedProxies([]string{"127.0.0.1"})
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5000", "http://213.87.161.97", "http://61.90.31.54"},
+		AllowOrigins:     []string{"http://localhost:5000"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
