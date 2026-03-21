@@ -45,7 +45,7 @@ class ApiService {
   }
   Future<List<Company>> getCompanies(RequestForCompany request) async {
     try {
-      final response = await _dio.get('/companies', queryParameters: request.toJson());
+      final response = await _dio.get('/companies', data: request.toJson());
       if (response.statusCode == 200) {
         final List data = response.data;
         return data.map((json) => Company.fromJson(json)).toList();
@@ -57,7 +57,7 @@ class ApiService {
   }
   Future<List<Vacancy>> getVacancies(RequestForVacancy request) async {
     try {
-      final response = await _dio.get('/vacancies', queryParameters: request.toJson());
+      final response = await _dio.get('/vacancies', data: request.toJson());
       if (response.statusCode == 200) {
         final List data = response.data;
         return data.map((json) => Vacancy.fromJson(json)).toList();
@@ -69,7 +69,7 @@ class ApiService {
   }
   Future<List<Applicant>> getApplicants(RequestForApplicant request) async {
     try {
-      final response = await _dio.get('/applicants', queryParameters: request.toJson());
+      final response = await _dio.get('/applicants', data: request.toJson());
       if (response.statusCode == 200) {
         final List data = response.data;
         return data.map((json) => Applicant.fromJson(json)).toList();
