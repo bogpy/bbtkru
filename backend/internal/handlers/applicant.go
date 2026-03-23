@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"strconv"
+	"log"
 
 	"github.com/bogpy/bbtkru/internal/repository"
 	"github.com/bogpy/bbtkru/internal/models"
@@ -28,6 +29,7 @@ func (e Env) GetApplicants(c *gin.Context) {
 	var request models.RequestForApplicant
 	if err := c.ShouldBindQuery(&request); err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		log.Printf("Error binding query: %v", err)
 		return
 	}
 	r := repository.NewApplicantRepository(e.db)

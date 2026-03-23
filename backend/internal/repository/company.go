@@ -37,33 +37,23 @@ func (r CompanyRepository) GetCompanies(request models.RequestForCompany) ([]mod
 	var queryBuilder strings.Builder
 	queryBuilder.WriteString("SELECT * FROM company WHERE 1=1")
 	var args []interface{}
-
 	if request.EmployeeCount != nil {
-		queryBuilder.WriteString("AND employeeCount >= ?")
+		queryBuilder.WriteString(" AND employeeCount >= ?")
 		args = append(args, *request.EmployeeCount)
 	}
 
 	if request.Country != nil {
-		queryBuilder.WriteString("AND country = ?")
+		queryBuilder.WriteString(" AND country = ?")
 		args = append(args, *request.Country)
 	}
 
+	var companies []models.Company
 	query := queryBuilder.String()
-	rows, err := r.DB.Query(query, args...)
+	err := r.DB.Select(&companies, query, args...)
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
-
-	var companies []models.Company
-	for rows.Next() {
-		var c models.Company
-		if err := rows.Scan(&c.Name, &c.Country, &c.YearFound, &c.EmployeeCount); err != nil {
-			return nil, err
-		}
-		companies = append(companies, c)
-	}
-	return companies, rows.Err()
+	return companies, nil
 }
 
 func (r CompanyRepository) DeleteCompany(id int64) error {

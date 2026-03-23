@@ -8,7 +8,7 @@ import (
 type EducationType string
 
 const (
-	HighSchool EducationType = "High School"
+	HighSchool EducationType = "HighSchool"
 	Bachelor   EducationType = "Bachelor"
 	Master     EducationType = "Master"
 	PhD        EducationType = "PhD"
@@ -67,15 +67,15 @@ func (x *Applicant) GetTechnologies() []Technology {
 }
 
 type RequestForApplicant struct {
-	Experience           *int `json:"experience"`
-	Level                *LevelType `json:"level"`
-	Graduated            *bool `json:"graduated"`
-	Education_type       *EducationType `json:"education"`
-	Specialty            *SpecialtyType `json:"specialty"`
-	LanguagesRequired    []Language `json:"languages_required"`
-	LanguagesOptional    []Language `json:"languages_optional"`
-	TechnologiesRequired []Technology `json:"technologies_required"`
-	TechnologiesOptional []Technology `json:"technologies_optional"`
+	Experience           *int `form:"experience"`
+	Level                *LevelType `form:"level" binding:"oneof=Intern Junior Middle Senior Lead"`
+	Graduated            *bool `form:"graduated"`
+	Education_type       *EducationType `form:"education" binding:"oneof=HighSchool Bachelor Master PhD"`
+	Specialty            *SpecialtyType `form:"specialty" binding:"oneof=Frontend Backend Fullstack DataEngineer DevOps"`
+	LanguagesRequired    []Language `form:"languages_required"`
+	LanguagesOptional    []Language `form:"languages_optional"`
+	TechnologiesRequired []Technology `form:"technologies_required"`
+	TechnologiesOptional []Technology `form:"technologies_optional"`
 }
 
 const (
