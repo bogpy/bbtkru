@@ -26,7 +26,7 @@ func (e Env) GetApplicantByID(c *gin.Context) {
 
 func (e Env) GetApplicants(c *gin.Context) {
 	var request models.RequestForApplicant
-	if err := c.ShouldBindJSON(&request); err != nil{
+	if err := c.ShouldBindQuery(&request); err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

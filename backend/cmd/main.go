@@ -4,7 +4,6 @@ import (
 	"log"
 	"os"
 	"time"
-	"fmt"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
@@ -36,7 +35,7 @@ func main() {
 
 	router := gin.Default()
 	router.Use(func(c *gin.Context) {
-		fmt.Printf("Inbound Request - IP: %s | Origin: %s\n", c.ClientIP(), c.GetHeader("Origin"))
+		log.Printf("Inbound Request - IP: %s | Origin: %s\n", c.ClientIP(), c.GetHeader("Origin"))
 		c.Next()
 	})
 	router.SetTrustedProxies([]string{"127.0.0.1"})
