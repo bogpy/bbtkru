@@ -49,7 +49,7 @@ Map<String, dynamic> _$$ApplicantImplToJson(_$ApplicantImpl instance) =>
     };
 
 const _$EducationTypeEnumMap = {
-  EducationType.highSchool: 'High School',
+  EducationType.highSchool: 'HighSchool',
   EducationType.bachelor: 'Bachelor',
   EducationType.master: 'Master',
   EducationType.phD: 'PhD',

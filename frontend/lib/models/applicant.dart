@@ -4,7 +4,7 @@ part 'applicant.freezed.dart';
 part 'applicant.g.dart';
 
 enum EducationType {
-  @JsonValue("High School") highSchool,
+  @JsonValue("HighSchool") highSchool,
   @JsonValue("Bachelor") bachelor,
   @JsonValue("Master") master,
   @JsonValue("PhD") phD;
