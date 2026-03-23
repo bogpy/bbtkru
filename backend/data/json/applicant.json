@@ -117,7 +117,7 @@
     "level": "Junior",
     "graduated": true,
     "education": "Bachelor",
-    "specialty": "Data Engineer",
+    "specialty": "DataEngineer",
     "dateOfBirth": "2000-04-22T00:00:00Z",
     "workHistory": "DoorDash - 2022 - 2026 - Developer",
     "languages": [
@@ -276,7 +276,7 @@
     "level": "Lead",
     "graduated": true,
     "education": "Master",
-    "specialty": "Data Engineer",
+    "specialty": "DataEngineer",
     "dateOfBirth": "1981-05-29T00:00:00Z",
     "workHistory": "SAP - 2004 - 2015 - Senior Engineer; Siemens - 2015 - 2026 - Senior Engineer",
     "languages": [
@@ -343,7 +343,7 @@
     "level": "Middle",
     "graduated": true,
     "education": "Master",
-    "specialty": "Data Engineer",
+    "specialty": "DataEngineer",
     "dateOfBirth": "1996-09-10T00:00:00Z",
     "workHistory": "Nintendo - 2018 - 2026 - Senior Engineer",
     "languages": [
@@ -843,7 +843,7 @@
     "level": "Middle",
     "graduated": true,
     "education": "Master",
-    "specialty": "Data Engineer",
+    "specialty": "DataEngineer",
     "dateOfBirth": "1995-02-13T00:00:00Z",
     "workHistory": "Spotify - 2017 - 2026 - Senior Engineer",
     "languages": [
@@ -865,7 +865,7 @@
     "level": "Junior",
     "graduated": true,
     "education": "PhD",
-    "specialty": "Data Engineer",
+    "specialty": "DataEngineer",
     "dateOfBirth": "1998-11-05T00:00:00Z",
     "workHistory": "Acronis - 2020 - 2026 - Senior Engineer",
     "languages": [

@@ -77,6 +77,7 @@ func (r ApplicantRepository) GetTechnologies(id int64) ([]models.Technology, err
 
 func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) ([]models.Applicant, error) {
 	var queryBuilder strings.Builder
+	fmt.Printf("Request: %+v\n", request)
 	queryBuilder.WriteString("SELECT * FROM applicant a WHERE 1=1")
 	var args []interface{}
 

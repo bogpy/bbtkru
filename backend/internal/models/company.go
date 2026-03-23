@@ -15,8 +15,8 @@ func (x *Company) SetID(id int64) {
 }
 
 type RequestForCompany struct {
-	Country       *string
-	EmployeeCount *int
+	Country       *string `form:"country"`
+	EmployeeCount *int `form:"employeeCount"`
 }
 
 const (

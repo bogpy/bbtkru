@@ -49,12 +49,12 @@ func (x *Vacancy) GetTechnologies() []Technology {
 }
 
 type RequestForVacancy struct {
-	Experience *int		`json:"experience"`
-	Salary     *int		`json:"salary"`
-	Employment *EmploymentType		`json:"employment"`
-	Location   *LocationType		`json:"location"`
-	Hours      *int		`json:"hours"`
-	Country    *string	`json:"country"`
+	Experience *int		`form:"experience"`
+	Salary     *int		`form:"salary"`
+	Employment *EmploymentType		`form:"employment" binding:"oneof=Internship Full-time Part-time"`
+	Location   *LocationType		`form:"location" binding:"oneof=Remote Hybrid In-office"`
+	Hours      *int		`form:"hours"`
+	Country    *string	`form:"country"`
 }
 
 const (
