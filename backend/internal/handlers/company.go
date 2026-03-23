@@ -26,7 +26,7 @@ func (e Env) GetCompanyByID(c *gin.Context) {
 
 func (e Env) GetCompanies(c *gin.Context) {
 	var request models.RequestForCompany
-	if err := c.ShouldBindJSON(&request); err != nil{
+	if err := c.ShouldBindQuery(&request); err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

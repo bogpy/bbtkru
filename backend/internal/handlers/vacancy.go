@@ -26,7 +26,7 @@ func (e Env) GetVacancyByID(c *gin.Context) {
 
 func (e Env) GetVacancies(c *gin.Context) {
 	var request models.RequestForVacancy
-	if err := c.ShouldBindJSON(&request); err != nil{
+	if err := c.ShouldBindQuery(&request); err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
