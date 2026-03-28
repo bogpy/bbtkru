@@ -68,10 +68,10 @@ func (x *Applicant) GetTechnologies() []Technology {
 
 type RequestForApplicant struct {
 	Experience           *int `form:"experience"`
-	Level                *LevelType `form:"level" binding:"oneof=Intern Junior Middle Senior Lead"`
+	Level                *LevelType `form:"level" binding:"omitempty,oneof=Intern Junior Middle Senior Lead"`
 	Graduated            *bool `form:"graduated"`
-	Education_type       *EducationType `form:"education" binding:"oneof=HighSchool Bachelor Master PhD"`
-	Specialty            *SpecialtyType `form:"specialty" binding:"oneof=Frontend Backend Fullstack DataEngineer DevOps"`
+	Education_type       *EducationType `form:"education" binding:"omitempty,oneof=HighSchool Bachelor Master PhD"`
+	Specialty            *SpecialtyType `form:"specialty" binding:"omitempty,oneof=Frontend Backend Fullstack DataEngineer DevOps"`
 	LanguagesRequired    []Language `form:"languages_required"`
 	LanguagesOptional    []Language `form:"languages_optional"`
 	TechnologiesRequired []Technology `form:"technologies_required"`
