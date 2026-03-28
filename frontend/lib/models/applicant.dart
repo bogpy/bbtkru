@@ -49,6 +49,7 @@ class Applicant with _$Applicant {
 
 @freezed
 class RequestForApplicant with _$RequestForApplicant {
+  @JsonSerializable(includeIfNull: false)
   const factory RequestForApplicant({
     int? experience,
     LevelType? level,
@@ -62,4 +63,5 @@ class RequestForApplicant with _$RequestForApplicant {
   }) = _RequestForApplicant;
 
   factory RequestForApplicant.fromJson(Map<String, dynamic> json) => _$RequestForApplicantFromJson(json);
+  
 }

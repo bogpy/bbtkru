@@ -21,6 +21,7 @@ class Company with _$Company {
 
 @freezed
 class RequestForCompany with _$RequestForCompany {
+  @JsonSerializable(includeIfNull: false)
   const factory RequestForCompany({
     String? country,
     int? employeeCount,

@@ -666,7 +666,8 @@ class __$$RequestForApplicantImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(includeIfNull: false)
 class _$RequestForApplicantImpl implements _RequestForApplicant {
   const _$RequestForApplicantImpl({
     this.experience,

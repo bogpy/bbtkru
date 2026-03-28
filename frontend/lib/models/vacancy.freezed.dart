@@ -622,7 +622,8 @@ class __$$RequestForVacancyImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(includeIfNull: false)
 class _$RequestForVacancyImpl implements _RequestForVacancy {
   const _$RequestForVacancyImpl({
     this.experience,

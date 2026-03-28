@@ -41,6 +41,7 @@ class Vacancy with _$Vacancy {
 
 @freezed
 class RequestForVacancy with _$RequestForVacancy {
+  @JsonSerializable(includeIfNull: false)
   const factory RequestForVacancy({
     int? experience,
     int? salary,
