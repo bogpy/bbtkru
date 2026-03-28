@@ -470,11 +470,10 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
 
   Widget _buildVacancyResults() {
     final request = RequestForVacancy(
-      country: "USA",
       salary: 100000,
       location: LocationType.remote,
       employment: EmploymentType.fullTime,
-      experience: 2,
+      experience: 15,
     );
     return FutureBuilder<List<Vacancy>>(
       future: ApiService().getVacancies(request),
@@ -530,8 +529,9 @@ class _SearchPageState extends State<SearchPage> with SingleTickerProviderStateM
   Widget _buildApplicantResults() {
     final request = RequestForApplicant(
       specialty: SpecialtyType.backend,
-      level: LevelType.middle,
-      experience: 2,
+      level: LevelType.senior,
+      experience: 13,
+      education: EducationType.master,
     );
     return FutureBuilder<List<Applicant>>(
       future: ApiService().getApplicants(request),

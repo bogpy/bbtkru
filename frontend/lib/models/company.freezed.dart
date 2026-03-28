@@ -417,7 +417,8 @@ class __$$RequestForCompanyImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(includeIfNull: false)
 class _$RequestForCompanyImpl implements _RequestForCompany {
   const _$RequestForCompanyImpl({this.country, this.employeeCount});
 

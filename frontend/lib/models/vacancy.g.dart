@@ -74,10 +74,12 @@ _$RequestForVacancyImpl _$$RequestForVacancyImplFromJson(
 Map<String, dynamic> _$$RequestForVacancyImplToJson(
   _$RequestForVacancyImpl instance,
 ) => <String, dynamic>{
-  'experience': instance.experience,
-  'salary': instance.salary,
-  'employment': _$EmploymentTypeEnumMap[instance.employment],
-  'location': _$LocationTypeEnumMap[instance.location],
-  'country': instance.country,
-  'hours': instance.hours,
+  if (instance.experience case final value?) 'experience': value,
+  if (instance.salary case final value?) 'salary': value,
+  if (_$EmploymentTypeEnumMap[instance.employment] case final value?)
+    'employment': value,
+  if (_$LocationTypeEnumMap[instance.location] case final value?)
+    'location': value,
+  if (instance.country case final value?) 'country': value,
+  if (instance.hours case final value?) 'hours': value,
 };

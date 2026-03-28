@@ -42,6 +42,6 @@ _$RequestForCompanyImpl _$$RequestForCompanyImplFromJson(
 Map<String, dynamic> _$$RequestForCompanyImplToJson(
   _$RequestForCompanyImpl instance,
 ) => <String, dynamic>{
-  'country': instance.country,
-  'employeeCount': instance.employeeCount,
+  if (instance.country case final value?) 'country': value,
+  if (instance.employeeCount case final value?) 'employeeCount': value,
 };

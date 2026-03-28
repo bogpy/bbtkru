@@ -104,11 +104,13 @@ _$RequestForApplicantImpl _$$RequestForApplicantImplFromJson(
 Map<String, dynamic> _$$RequestForApplicantImplToJson(
   _$RequestForApplicantImpl instance,
 ) => <String, dynamic>{
-  'experience': instance.experience,
-  'level': _$LevelTypeEnumMap[instance.level],
-  'graduated': instance.graduated,
-  'education': _$EducationTypeEnumMap[instance.education],
-  'specialty': _$SpecialtyTypeEnumMap[instance.specialty],
+  if (instance.experience case final value?) 'experience': value,
+  if (_$LevelTypeEnumMap[instance.level] case final value?) 'level': value,
+  if (instance.graduated case final value?) 'graduated': value,
+  if (_$EducationTypeEnumMap[instance.education] case final value?)
+    'education': value,
+  if (_$SpecialtyTypeEnumMap[instance.specialty] case final value?)
+    'specialty': value,
   'languagesRequired': instance.languagesRequired,
   'languagesOptional': instance.languagesOptional,
   'technologiesRequired': instance.technologiesRequired,
