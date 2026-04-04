@@ -47,3 +47,26 @@ func (r TechnologyRepository) BulkInsert(technologies []*models.Technology) erro
 	query := `INSERT INTO technology (name) VALUES (:name)`
 	return NamedExecWrapper(r.DB, query, technologies)
 }
+
+func (r LanguageRepository) GetAll() ([]models.Language, error) {
+	query := `SELECT * FROM language`
+
+	var languages []models.Language
+	err := r.DB.Select(&languages, query)
+	if err != nil {
+		return nil, err
+	}
+	return languages, nil
+}
+
+
+func (r TechnologyRepository) GetAll() ([]models.Technology, error) {
+	query := `SELECT * FROM technology`
+
+	var technolgies []models.Technology
+	err := r.DB.Select(&technolgies, query)
+	if err != nil {
+		return nil, err
+	}
+	return technolgies, nil
+}

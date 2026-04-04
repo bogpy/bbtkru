@@ -54,6 +54,8 @@ func main() {
 	router.GET("/companies/:id", env.GetCompanyByID)
 	router.GET("/vacancies", env.GetVacancies)
 	router.GET("/vacancies/:id", env.GetVacancyByID)
+	router.GET("/languages", env.GetAllLanguages)
+	router.GET("/technologies", env.GetAllTechnologies)
 
 	router.POST("/vacancies", env.InsertVacancy)
 	router.POST("/applicants", env.InsertApplicant)
