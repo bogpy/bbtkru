@@ -47,7 +47,7 @@ func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]mod
 	}
 
 	if request.Country != nil {
-		queryBuilder.WriteString(" AND (SELECT c.country FROM company c WHERE c.id = v.compID) = ?")
+		queryBuilder.WriteString(" AND (SELECT c.country FROM company c WHERE c.id = v.companyID) = ?")
 		args = append(args, *request.Country)
 	}
 
