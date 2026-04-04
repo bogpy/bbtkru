@@ -6,32 +6,29 @@ part of 'applicant.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ApplicantImpl _$$ApplicantImplFromJson(Map<String, dynamic> json) =>
-    _$ApplicantImpl(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      dateOfBirth: DateTime.parse(json['dateOfBirth'] as String),
-      education: $enumDecode(_$EducationTypeEnumMap, json['education']),
-      university: json['university'] as String,
-      graduated: json['graduated'] as bool,
-      specialty: $enumDecode(_$SpecialtyTypeEnumMap, json['specialty']),
-      level: $enumDecode(_$LevelTypeEnumMap, json['level']),
-      experience: (json['experience'] as num).toInt(),
-      workHistory: json['workHistory'] as String? ?? "",
-      languages:
-          (json['languages'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      technologies:
-          (json['technologies'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      score: (json['score'] as num?)?.toInt() ?? 0,
-    );
+_Applicant _$ApplicantFromJson(Map<String, dynamic> json) => _Applicant(
+  id: (json['id'] as num).toInt(),
+  name: json['name'] as String,
+  dateOfBirth: DateTime.parse(json['dateOfBirth'] as String),
+  education: $enumDecode(_$EducationTypeEnumMap, json['education']),
+  university: json['university'] as String,
+  graduated: json['graduated'] as bool,
+  specialty: $enumDecode(_$SpecialtyTypeEnumMap, json['specialty']),
+  level: $enumDecode(_$LevelTypeEnumMap, json['level']),
+  experience: (json['experience'] as num).toInt(),
+  workHistory: json['workHistory'] as String? ?? "",
+  languages:
+      (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
+  technologies:
+      (json['technologies'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const [],
+  score: (json['score'] as num?)?.toInt() ?? 0,
+);
 
-Map<String, dynamic> _$$ApplicantImplToJson(_$ApplicantImpl instance) =>
+Map<String, dynamic> _$ApplicantToJson(_Applicant instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -71,46 +68,43 @@ const _$LevelTypeEnumMap = {
   LevelType.lead: 'Lead',
 };
 
-_$RequestForApplicantImpl _$$RequestForApplicantImplFromJson(
-  Map<String, dynamic> json,
-) => _$RequestForApplicantImpl(
-  experience: (json['experience'] as num?)?.toInt(),
-  level: $enumDecodeNullable(_$LevelTypeEnumMap, json['level']),
-  graduated: json['graduated'] as bool?,
-  education: $enumDecodeNullable(_$EducationTypeEnumMap, json['education']),
-  specialty: $enumDecodeNullable(_$SpecialtyTypeEnumMap, json['specialty']),
-  languagesRequired:
-      (json['languagesRequired'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const [],
-  languagesOptional:
-      (json['languagesOptional'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const [],
-  technologiesRequired:
-      (json['technologiesRequired'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const [],
-  technologiesOptional:
-      (json['technologiesOptional'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      const [],
-);
+_RequestForApplicant _$RequestForApplicantFromJson(Map<String, dynamic> json) =>
+    _RequestForApplicant(
+      experience: (json['experience'] as num?)?.toInt(),
+      level: $enumDecodeNullable(_$LevelTypeEnumMap, json['level']),
+      graduated: json['graduated'] as bool?,
+      education: $enumDecodeNullable(_$EducationTypeEnumMap, json['education']),
+      specialty: $enumDecodeNullable(_$SpecialtyTypeEnumMap, json['specialty']),
+      languagesRequired:
+          (json['languagesRequired'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      languagesOptional:
+          (json['languagesOptional'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      technologiesRequired:
+          (json['technologiesRequired'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      technologiesOptional:
+          (json['technologiesOptional'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+    );
 
-Map<String, dynamic> _$$RequestForApplicantImplToJson(
-  _$RequestForApplicantImpl instance,
+Map<String, dynamic> _$RequestForApplicantToJson(
+  _RequestForApplicant instance,
 ) => <String, dynamic>{
-  if (instance.experience case final value?) 'experience': value,
-  if (_$LevelTypeEnumMap[instance.level] case final value?) 'level': value,
-  if (instance.graduated case final value?) 'graduated': value,
-  if (_$EducationTypeEnumMap[instance.education] case final value?)
-    'education': value,
-  if (_$SpecialtyTypeEnumMap[instance.specialty] case final value?)
-    'specialty': value,
+  'experience': instance.experience,
+  'level': _$LevelTypeEnumMap[instance.level],
+  'graduated': instance.graduated,
+  'education': _$EducationTypeEnumMap[instance.education],
+  'specialty': _$SpecialtyTypeEnumMap[instance.specialty],
   'languagesRequired': instance.languagesRequired,
   'languagesOptional': instance.languagesOptional,
   'technologiesRequired': instance.technologiesRequired,

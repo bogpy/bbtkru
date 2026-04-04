@@ -8,6 +8,15 @@ enum EducationType {
   @JsonValue("Bachelor") bachelor,
   @JsonValue("Master") master,
   @JsonValue("PhD") phD;
+
+  String get displayName {
+    switch (this) {
+      case EducationType.highSchool: return 'High School';
+      case EducationType.bachelor: return 'Bachelor';
+      case EducationType.master: return 'Master';
+      case EducationType.phD: return 'PhD';
+    }
+  }
 }
 
 enum SpecialtyType {
@@ -16,6 +25,16 @@ enum SpecialtyType {
   @JsonValue("Fullstack") fullstack,
   @JsonValue("DataEngineer") dataEngineer,
   @JsonValue("DevOps") devOps;
+
+  String get displayName {
+    switch (this) {
+      case SpecialtyType.frontend: return 'Frontend';
+      case SpecialtyType.backend: return 'Backend';
+      case SpecialtyType.fullstack: return 'Fullstack';
+      case SpecialtyType.dataEngineer: return 'Data Engineer';
+      case SpecialtyType.devOps: return 'DevOps';
+    }
+  }
 }
 
 enum LevelType {
@@ -24,10 +43,20 @@ enum LevelType {
   @JsonValue("Middle") middle,
   @JsonValue("Senior") senior,
   @JsonValue("Lead") lead;
+
+  String get displayName {
+    switch (this) {
+      case LevelType.intern: return 'Intern';
+      case LevelType.junior: return 'Junior';
+      case LevelType.middle: return 'Middle';
+      case LevelType.senior: return 'Senior';
+      case LevelType.lead: return 'Lead';
+    }
+  }
 }
 
 @freezed
-class Applicant with _$Applicant {
+abstract class Applicant with _$Applicant {
   const factory Applicant({
     required int id,
     required String name,
@@ -48,8 +77,7 @@ class Applicant with _$Applicant {
 }
 
 @freezed
-class RequestForApplicant with _$RequestForApplicant {
-  @JsonSerializable(includeIfNull: false)
+abstract class RequestForApplicant with _$RequestForApplicant {
   const factory RequestForApplicant({
     int? experience,
     LevelType? level,

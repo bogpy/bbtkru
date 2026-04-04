@@ -7,16 +7,32 @@ enum EmploymentType {
   @JsonValue("Internship") internship,
   @JsonValue("Full-time") fullTime,
   @JsonValue("Part-time") partTime;
+
+  String get displayName {
+    switch (this) {
+      case EmploymentType.internship: return 'Internship';
+      case EmploymentType.fullTime: return 'Full-time';
+      case EmploymentType.partTime: return 'Part-time';
+    }
+  }
 }
 
 enum LocationType {
   @JsonValue("Remote") remote,
   @JsonValue("Hybrid") hybrid,
   @JsonValue("In-office") inOffice;
+
+  String get displayName {
+    switch (this) {
+      case LocationType.remote: return 'Remote';
+      case LocationType.hybrid: return 'Hybrid';
+      case LocationType.inOffice: return 'In-office';
+    }
+  }
 }
 
 @freezed
-class Vacancy with _$Vacancy {
+abstract class Vacancy with _$Vacancy {
   const factory Vacancy({
     required int id,
     required String title,
@@ -40,8 +56,7 @@ class Vacancy with _$Vacancy {
 }
 
 @freezed
-class RequestForVacancy with _$RequestForVacancy {
-  @JsonSerializable(includeIfNull: false)
+abstract class RequestForVacancy with _$RequestForVacancy {
   const factory RequestForVacancy({
     int? experience,
     int? salary,
@@ -49,6 +64,8 @@ class RequestForVacancy with _$RequestForVacancy {
     LocationType? location,
     String? country,
     int? hours,
+    @Default([]) List<String> languages,
+    @Default([]) List<String> technologies,
   }) = _RequestForVacancy;
 
   factory RequestForVacancy.fromJson(Map<String, dynamic> json) => _$RequestForVacancyFromJson(json);

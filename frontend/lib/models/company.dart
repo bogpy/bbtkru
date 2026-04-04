@@ -5,7 +5,7 @@ part 'company.freezed.dart';
 part 'company.g.dart';
 
 @freezed
-class Company with _$Company {
+abstract class Company with _$Company {
   const factory Company({
     required int id,
     required String name,
@@ -20,8 +20,7 @@ class Company with _$Company {
 }
 
 @freezed
-class RequestForCompany with _$RequestForCompany {
-  @JsonSerializable(includeIfNull: false)
+abstract class RequestForCompany with _$RequestForCompany {
   const factory RequestForCompany({
     String? country,
     int? employeeCount,

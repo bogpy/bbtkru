@@ -80,6 +80,56 @@ class ApiService {
     }
   }
 
+  Future<List<String>> getLanguages() async {
+    try {
+      final response = await _dio.get('/languages');
+      if (response.statusCode == 200) {
+        final List data = response.data;
+        return data.cast<String>();
+      }
+      throw Exception('Failed to load languages');
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<List<String>> getTechnologies() async {
+    try {
+      final response = await _dio.get('/technologies');
+      if (response.statusCode == 200) {
+        final List data = response.data;
+        return data.cast<String>();
+      }
+      throw Exception('Failed to load technologies');
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<void> createApplicant(Applicant applicant) async {
+    try {
+      await _dio.post('/applicants', data: applicant.toJson());
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<void> createCompany(Company company) async {
+    try {
+      await _dio.post('/companies', data: company.toJson());
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<void> createVacancy(Vacancy vacancy) async {
+    try {
+      await _dio.post('/vacancies', data: vacancy.toJson());
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   String _handleError(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout) return "Check your internet.";
     if (e.response?.statusCode == 403) return "IP Not Whitelisted (CORS/IP Error).";
