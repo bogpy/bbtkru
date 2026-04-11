@@ -43,39 +43,42 @@ class ApiService {
       throw _handleError(e);
     }
   }
-  Future<List<Company>> getCompanies(RequestForCompany request) async {
+  Future<List<Company>> getCompanies(RequestForCompany request, {CancelToken? cancelToken}) async {
     try {
-      final response = await _dio.get('/companies', queryParameters: request.toJson());
+      final response = await _dio.get('/companies', queryParameters: request.toJson(), cancelToken: cancelToken);
       if (response.statusCode == 200) {
         final List data = response.data;
         return data.map((json) => Company.fromJson(json)).toList();
       }
       throw Exception('Failed to load companies');
     } on DioException catch (e) {
+      if (CancelToken.isCancel(e)) throw Exception('Cancelled');
       throw _handleError(e);
     }
   }
-  Future<List<Vacancy>> getVacancies(RequestForVacancy request) async {
+  Future<List<Vacancy>> getVacancies(RequestForVacancy request, {CancelToken? cancelToken}) async {
     try {
-      final response = await _dio.get('/vacancies', queryParameters: request.toJson());
+      final response = await _dio.get('/vacancies', queryParameters: request.toJson(), cancelToken: cancelToken);
       if (response.statusCode == 200) {
         final List data = response.data;
         return data.map((json) => Vacancy.fromJson(json)).toList();
       }
       throw Exception('Failed to load vacancies');
     } on DioException catch (e) {
+      if (CancelToken.isCancel(e)) throw Exception('Cancelled');
       throw _handleError(e);
     }
   }
-  Future<List<Applicant>> getApplicants(RequestForApplicant request) async {
+  Future<List<Applicant>> getApplicants(RequestForApplicant request, {CancelToken? cancelToken}) async {
     try {
-      final response = await _dio.get('/applicants', queryParameters: request.toJson());
+      final response = await _dio.get('/applicants', queryParameters: request.toJson(), cancelToken: cancelToken);
       if (response.statusCode == 200) {
         final List data = response.data;
         return data.map((json) => Applicant.fromJson(json)).toList();
       }
       throw Exception('Failed to load vacancies');
     } on DioException catch (e) {
+      if (CancelToken.isCancel(e)) throw Exception('Cancelled');
       throw _handleError(e);
     }
   }

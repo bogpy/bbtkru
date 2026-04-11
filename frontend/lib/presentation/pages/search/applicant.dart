@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:headless_hunter_frontend/core/theme_provider.dart';
 import 'package:headless_hunter_frontend/models/applicant.dart';
-import 'package:headless_hunter_frontend/services/api_service.dart';
 import 'package:headless_hunter_frontend/presentation/widgets/forms.dart';
 import 'package:headless_hunter_frontend/services/data_service.dart';
+import 'package:headless_hunter_frontend/logic/search_providers.dart';
 
 class ApplicantSearchPage extends ConsumerStatefulWidget {
   const ApplicantSearchPage({super.key});
@@ -16,7 +16,12 @@ class ApplicantSearchPage extends ConsumerStatefulWidget {
 class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
   final TextEditingController _searchController = TextEditingController();
   bool? _isPanelExpanded;
-  RequestForApplicant _request = const RequestForApplicant();
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.text = ref.read(applicantSearchTextProvider);
+  }
 
   @override
   void dispose() {
@@ -76,6 +81,8 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
   }
 
   Widget _buildApplicantSearchBar() {
+    final request = ref.watch(applicantRequestProvider);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -88,7 +95,9 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.search),
             ),
-            onChanged: (value) => setState(() {}),
+            onChanged: (value) {
+              ref.read(applicantSearchTextProvider.notifier).update(value);
+            },
           ),
           const SizedBox(height: 20),
           Text("Filters", style: Theme.of(context).textTheme.titleMedium),
@@ -96,51 +105,65 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
           const SizedBox(height: 10),
           NumericTextFormField(
             label: 'Minimum Experience (years)',
-            initialValue: _request.experience,
-            onChanged: (val) => setState(() => _request = _request.copyWith(experience: val)),
+            initialValue: request.experience,
+            onChanged: (val) {
+              ref.read(applicantRequestProvider.notifier).update(request.copyWith(experience: val));
+            },
           ),
           const SizedBox(height: 16),
           SingleChoiceField<LevelType>(
             label: 'Target Level',
-            value: _request.level,
+            value: request.level,
             items: LevelType.values.map((l) => DropdownMenuItem(value: l, child: Text(l.displayName))).toList(),
-            onChanged: (val) => setState(() => _request = _request.copyWith(level: val)),
+            onChanged: (val) {
+              ref.read(applicantRequestProvider.notifier).update(request.copyWith(level: val));
+            },
           ),
           const SizedBox(height: 16),
           SingleChoiceField<SpecialtyType>(
             label: 'Core Specialty',
-            value: _request.specialty,
+            value: request.specialty,
             items: SpecialtyType.values.map((s) => DropdownMenuItem(value: s, child: Text(s.displayName))).toList(),
-            onChanged: (val) => setState(() => _request = _request.copyWith(specialty: val)),
+            onChanged: (val) {
+              ref.read(applicantRequestProvider.notifier).update(request.copyWith(specialty: val));
+            },
           ),
           const SizedBox(height: 16),
           SingleChoiceField<EducationType>(
             label: 'Minimum Education',
-            value: _request.education,
+            value: request.education,
             items: EducationType.values.map((e) => DropdownMenuItem(value: e, child: Text(e.displayName))).toList(),
-            onChanged: (val) => setState(() => _request = _request.copyWith(education: val)),
+            onChanged: (val) {
+              ref.read(applicantRequestProvider.notifier).update(request.copyWith(education: val));
+            },
           ),
           const SizedBox(height: 16),
           SwitchListTile(
             title: const Text("Graduated"),
-            value: _request.graduated ?? false,
-            onChanged: (val) => setState(() => _request = _request.copyWith(graduated: val)),
+            value: request.graduated ?? false,
+            onChanged: (val) {
+              ref.read(applicantRequestProvider.notifier).update(request.copyWith(graduated: val));
+            },
           ),
           const SizedBox(height: 16),
           SearchableMultiChoiceField<String>(
             label: 'Technologies',
             values: DataService.technologies,
-            selectedValues: _request.technologiesRequired,
+            selectedValues: request.technologiesRequired,
             labelBuilder: (s) => s,
-            onChanged: (val) => setState(() => _request = _request.copyWith(technologiesRequired: val)),
+            onChanged: (val) {
+              ref.read(applicantRequestProvider.notifier).update(request.copyWith(technologiesRequired: val));
+            },
           ),
           const SizedBox(height: 16),
           SearchableMultiChoiceField<String>(
             label: 'Languages',
             values: DataService.languages,
-            selectedValues: _request.languagesRequired,
+            selectedValues: request.languagesRequired,
             labelBuilder: (s) => s,
-            onChanged: (val) => setState(() => _request = _request.copyWith(languagesRequired: val)),
+            onChanged: (val) {
+              ref.read(applicantRequestProvider.notifier).update(request.copyWith(languagesRequired: val));
+            },
           ),
         ],
       ),
@@ -148,18 +171,15 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
   }
 
   Widget _buildApplicantResults() {
-    return FutureBuilder<List<Applicant>>(
-      future: ApiService().getApplicants(_request),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        }
-        final items = snapshot.data ?? [];
+    final applicantAsync = ref.watch(applicantsProvider);
+    final searchText = ref.watch(applicantSearchTextProvider);
+
+    return applicantAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text('Error: $error')),
+      data: (items) {
         final filtered = items
-            .where((i) => i.name.toLowerCase().contains(_searchController.text.toLowerCase()))
+            .where((i) => i.name.toLowerCase().contains(searchText.toLowerCase()))
             .toList();
 
         if (filtered.isEmpty) {
@@ -183,3 +203,4 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
     );
   }
 }
+

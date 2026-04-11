@@ -100,11 +100,11 @@ _RequestForApplicant _$RequestForApplicantFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$RequestForApplicantToJson(
   _RequestForApplicant instance,
 ) => <String, dynamic>{
-  'experience': instance.experience,
-  'level': _$LevelTypeEnumMap[instance.level],
-  'graduated': instance.graduated,
-  'education': _$EducationTypeEnumMap[instance.education],
-  'specialty': _$SpecialtyTypeEnumMap[instance.specialty],
+  'experience': ?instance.experience,
+  'level': ?_$LevelTypeEnumMap[instance.level],
+  'graduated': ?instance.graduated,
+  'education': ?_$EducationTypeEnumMap[instance.education],
+  'specialty': ?_$SpecialtyTypeEnumMap[instance.specialty],
   'languagesRequired': instance.languagesRequired,
   'languagesOptional': instance.languagesOptional,
   'technologiesRequired': instance.technologiesRequired,

@@ -6,6 +6,7 @@ part 'company.g.dart';
 
 @freezed
 abstract class Company with _$Company {
+  @JsonSerializable(explicitToJson: true)
   const factory Company({
     required int id,
     required String name,
@@ -21,6 +22,7 @@ abstract class Company with _$Company {
 
 @freezed
 abstract class RequestForCompany with _$RequestForCompany {
+  @JsonSerializable(includeIfNull: false)
   const factory RequestForCompany({
     String? country,
     int? employeeCount,

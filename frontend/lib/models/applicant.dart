@@ -78,6 +78,7 @@ abstract class Applicant with _$Applicant {
 
 @freezed
 abstract class RequestForApplicant with _$RequestForApplicant {
+  @JsonSerializable(includeIfNull: false)
   const factory RequestForApplicant({
     int? experience,
     LevelType? level,
@@ -91,5 +92,4 @@ abstract class RequestForApplicant with _$RequestForApplicant {
   }) = _RequestForApplicant;
 
   factory RequestForApplicant.fromJson(Map<String, dynamic> json) => _$RequestForApplicantFromJson(json);
-  
 }

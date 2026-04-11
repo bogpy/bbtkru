@@ -257,10 +257,19 @@ class _SearchableMultiChoiceFieldState<T> extends State<SearchableMultiChoiceFie
 
   @override
   Widget build(BuildContext context) {
-    final filteredValues = widget.values
-        .where((v) => widget.labelBuilder(v).toLowerCase().contains(_query.toLowerCase()))
-        .toList();
+    final filteredValues = widget.values.where((v) {
+      final matchesQuery = widget.labelBuilder(v).toLowerCase().contains(_query.toLowerCase());
+      final isSelected = widget.selectedValues.contains(v);
+      
+      if (_query.isEmpty) {
+        return isSelected; // Only show selected items when query is empty
+      }
+      return matchesQuery; // Show items matching query (includes selected and unselected)
+    }).toList();
 
+    // Sort to keep selected items at the top if needed, 
+    // or just rely on the filter logic above which already reduces the list significantly.
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

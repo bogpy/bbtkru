@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:headless_hunter_frontend/core/theme_provider.dart';
-import 'package:headless_hunter_frontend/models/company.dart';
-import 'package:headless_hunter_frontend/services/api_service.dart';
 import 'package:headless_hunter_frontend/presentation/widgets/forms.dart';
+import 'package:headless_hunter_frontend/logic/search_providers.dart';
 
 class CompanySearchPage extends ConsumerStatefulWidget {
   const CompanySearchPage({super.key});
@@ -15,7 +14,12 @@ class CompanySearchPage extends ConsumerStatefulWidget {
 class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
   final TextEditingController _searchController = TextEditingController();
   bool? _isPanelExpanded;
-  RequestForCompany _request = const RequestForCompany();
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.text = ref.read(companySearchTextProvider);
+  }
 
   @override
   void dispose() {
@@ -75,6 +79,8 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
   }
 
   Widget _buildCompanySearchBar() {
+    final request = ref.watch(companyRequestProvider);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -87,7 +93,9 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.search),
             ),
-            onChanged: (value) => setState(() {}),
+            onChanged: (value) {
+              ref.read(companySearchTextProvider.notifier).update(value);
+            },
           ),
           const SizedBox(height: 20),
           Text("Filters", style: Theme.of(context).textTheme.titleMedium),
@@ -95,14 +103,18 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
           const SizedBox(height: 10),
           CustomTextFormField(
             label: 'Operating Country',
-            initialValue: _request.country,
-            onChanged: (val) => setState(() => _request = _request.copyWith(country: val)),
+            initialValue: request.country,
+            onChanged: (val) {
+              ref.read(companyRequestProvider.notifier).update(request.copyWith(country: val));
+            },
           ),
           const SizedBox(height: 16),
           NumericTextFormField(
             label: 'Minimum Employee Count',
-            initialValue: _request.employeeCount,
-            onChanged: (val) => setState(() => _request = _request.copyWith(employeeCount: val)),
+            initialValue: request.employeeCount,
+            onChanged: (val) {
+              ref.read(companyRequestProvider.notifier).update(request.copyWith(employeeCount: val));
+            },
           ),
         ],
       ),
@@ -110,18 +122,15 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
   }
 
   Widget _buildCompanyResults() {
-    return FutureBuilder<List<Company>>(
-      future: ApiService().getCompanies(_request),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        }
-        final items = snapshot.data ?? [];
+    final companyAsync = ref.watch(companiesProvider);
+    final searchText = ref.watch(companySearchTextProvider);
+
+    return companyAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text('Error: $error')),
+      data: (items) {
         final filtered = items
-            .where((i) => i.name.toLowerCase().contains(_searchController.text.toLowerCase()))
+            .where((i) => i.name.toLowerCase().contains(searchText.toLowerCase()))
             .toList();
 
         if (filtered.isEmpty) {
@@ -145,3 +154,4 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
     );
   }
 }
+

@@ -212,8 +212,8 @@ return $default(_that.id,_that.name,_that.country,_that.yearFound,_that.employee
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(explicitToJson: true)
 class _Company implements Company {
   const _Company({required this.id, required this.name, required this.country, required this.yearFound, required this.employeeCount, final  List<Vacancy> vacancies = const [], this.score = 0}): _vacancies = vacancies;
   factory _Company.fromJson(Map<String, dynamic> json) => _$CompanyFromJson(json);
@@ -494,8 +494,8 @@ return $default(_that.country,_that.employeeCount);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(includeIfNull: false)
 class _RequestForCompany implements RequestForCompany {
   const _RequestForCompany({this.country, this.employeeCount});
   factory _RequestForCompany.fromJson(Map<String, dynamic> json) => _$RequestForCompanyFromJson(json);

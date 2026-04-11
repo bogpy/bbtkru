@@ -20,7 +20,6 @@ func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]mod
 	var queryBuilder strings.Builder
 	queryBuilder.WriteString("SELECT * FROM vacancy v WHERE 1=1")
 	var args []interface{}
-	fmt.Printf("Request for vacancies: %+v", request)
 	if request.Experience != nil {
 		queryBuilder.WriteString(" AND experience <= ?")
 		args = append(args, *request.Experience)
@@ -53,12 +52,10 @@ func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]mod
 
 	query := queryBuilder.String()
 	var vacancies []models.Vacancy
-	fmt.Printf("Query: %s, args: %v", query, args)
 	err := r.DB.Select(&vacancies, query, args...)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf("Number of vacancies found: %v", len(vacancies))
 
 	for i, vacancy := range vacancies {
 		vacancies[i].Languages, err = r.GetLanguages(vacancy.ID)

@@ -524,8 +524,8 @@ return $default(_that.experience,_that.salary,_that.employment,_that.location,_t
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(includeIfNull: false)
 class _RequestForVacancy implements RequestForVacancy {
   const _RequestForVacancy({this.experience, this.salary, this.employment, this.location, this.country, this.hours, final  List<String> languages = const [], final  List<String> technologies = const []}): _languages = languages,_technologies = technologies;
   factory _RequestForVacancy.fromJson(Map<String, dynamic> json) => _$RequestForVacancyFromJson(json);

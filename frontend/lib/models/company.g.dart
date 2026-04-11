@@ -26,7 +26,7 @@ Map<String, dynamic> _$CompanyToJson(_Company instance) => <String, dynamic>{
   'country': instance.country,
   'yearFound': instance.yearFound,
   'employeeCount': instance.employeeCount,
-  'vacancies': instance.vacancies,
+  'vacancies': instance.vacancies.map((e) => e.toJson()).toList(),
   'score': instance.score,
 };
 
@@ -38,6 +38,6 @@ _RequestForCompany _$RequestForCompanyFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RequestForCompanyToJson(_RequestForCompany instance) =>
     <String, dynamic>{
-      'country': instance.country,
-      'employeeCount': instance.employeeCount,
+      'country': ?instance.country,
+      'employeeCount': ?instance.employeeCount,
     };

@@ -525,8 +525,8 @@ return $default(_that.experience,_that.level,_that.graduated,_that.education,_th
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(includeIfNull: false)
 class _RequestForApplicant implements RequestForApplicant {
   const _RequestForApplicant({this.experience, this.level, this.graduated, this.education, this.specialty, final  List<String> languagesRequired = const [], final  List<String> languagesOptional = const [], final  List<String> technologiesRequired = const [], final  List<String> technologiesOptional = const []}): _languagesRequired = languagesRequired,_languagesOptional = languagesOptional,_technologiesRequired = technologiesRequired,_technologiesOptional = technologiesOptional;
   factory _RequestForApplicant.fromJson(Map<String, dynamic> json) => _$RequestForApplicantFromJson(json);

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:headless_hunter_frontend/core/theme_provider.dart';
 import 'package:headless_hunter_frontend/models/vacancy.dart';
-import 'package:headless_hunter_frontend/services/api_service.dart';
 import 'package:headless_hunter_frontend/presentation/widgets/forms.dart';
 import 'package:headless_hunter_frontend/services/data_service.dart';
+import 'package:headless_hunter_frontend/logic/search_providers.dart';
 
 class VacancySearchPage extends ConsumerStatefulWidget {
   const VacancySearchPage({super.key});
@@ -16,7 +16,12 @@ class VacancySearchPage extends ConsumerStatefulWidget {
 class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
   final TextEditingController _searchController = TextEditingController();
   bool? _isPanelExpanded;
-  RequestForVacancy _request = const RequestForVacancy();
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.text = ref.read(vacancySearchTextProvider);
+  }
 
   @override
   void dispose() {
@@ -76,6 +81,8 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
   }
 
   Widget _buildVacancySearchBar() {
+    final request = ref.watch(vacancyRequestProvider);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -88,7 +95,9 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.search),
             ),
-            onChanged: (value) => setState(() {}),
+            onChanged: (value) {
+              ref.read(vacancySearchTextProvider.notifier).update(value);
+            },
           ),
           const SizedBox(height: 20),
           Text("Filters", style: Theme.of(context).textTheme.titleMedium),
@@ -96,50 +105,64 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
           const SizedBox(height: 10),
           NumericTextFormField(
             label: 'Minimum Experience (years)',
-            initialValue: _request.experience,
-            onChanged: (val) => setState(() => _request = _request.copyWith(experience: val)),
+            initialValue: request.experience,
+            onChanged: (val) {
+              ref.read(vacancyRequestProvider.notifier).update(request.copyWith(experience: val));
+            },
           ),
           const SizedBox(height: 16),
           NumericTextFormField(
             label: 'Minimum Monthly Salary (\$)',
-            initialValue: _request.salary,
-            onChanged: (val) => setState(() => _request = _request.copyWith(salary: val)),
+            initialValue: request.salary,
+            onChanged: (val) {
+              ref.read(vacancyRequestProvider.notifier).update(request.copyWith(salary: val));
+            },
           ),
           const SizedBox(height: 16),
           SingleChoiceField<EmploymentType>(
             label: 'Employment Type',
-            value: _request.employment,
+            value: request.employment,
             items: EmploymentType.values.map((e) => DropdownMenuItem(value: e, child: Text(e.displayName))).toList(),
-            onChanged: (val) => setState(() => _request = _request.copyWith(employment: val)),
+            onChanged: (val) {
+              ref.read(vacancyRequestProvider.notifier).update(request.copyWith(employment: val));
+            },
           ),
           const SizedBox(height: 16),
           SingleChoiceField<LocationType>(
             label: 'Preferred Location',
-            value: _request.location,
+            value: request.location,
             items: LocationType.values.map((l) => DropdownMenuItem(value: l, child: Text(l.displayName))).toList(),
-            onChanged: (val) => setState(() => _request = _request.copyWith(location: val)),
+            onChanged: (val) {
+              ref.read(vacancyRequestProvider.notifier).update(request.copyWith(location: val));
+            },
           ),
           const SizedBox(height: 16),
           CustomTextFormField(
             label: 'Country',
-            initialValue: _request.country,
-            onChanged: (val) => setState(() => _request = _request.copyWith(country: val)),
+            initialValue: request.country,
+            onChanged: (val) {
+              ref.read(vacancyRequestProvider.notifier).update(request.copyWith(country: val));
+            },
           ),
           const SizedBox(height: 16),
           SearchableMultiChoiceField<String>(
             label: 'Technologies',
             values: DataService.technologies,
-            selectedValues: _request.technologies,
+            selectedValues: request.technologies,
             labelBuilder: (s) => s,
-            onChanged: (val) => setState(() => _request = _request.copyWith(technologies: val)),
+            onChanged: (val) {
+              ref.read(vacancyRequestProvider.notifier).update(request.copyWith(technologies: val));
+            },
           ),
           const SizedBox(height: 16),
           SearchableMultiChoiceField<String>(
             label: 'Languages',
             values: DataService.languages,
-            selectedValues: _request.languages,
+            selectedValues: request.languages,
             labelBuilder: (s) => s,
-            onChanged: (val) => setState(() => _request = _request.copyWith(languages: val)),
+            onChanged: (val) {
+              ref.read(vacancyRequestProvider.notifier).update(request.copyWith(languages: val));
+            },
           ),
         ],
       ),
@@ -147,18 +170,15 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
   }
 
   Widget _buildVacancyResults() {
-    return FutureBuilder<List<Vacancy>>(
-      future: ApiService().getVacancies(_request),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        }
-        final items = snapshot.data ?? [];
+    final vacancyAsync = ref.watch(vacanciesProvider);
+    final searchText = ref.watch(vacancySearchTextProvider);
+
+    return vacancyAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text('Error: $error')),
+      data: (items) {
         final filtered = items
-            .where((i) => i.title.toLowerCase().contains(_searchController.text.toLowerCase()))
+            .where((i) => i.title.toLowerCase().contains(searchText.toLowerCase()))
             .toList();
 
         if (filtered.isEmpty) {
@@ -182,3 +202,4 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
     );
   }
 }
+

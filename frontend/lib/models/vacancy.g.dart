@@ -77,12 +77,12 @@ _RequestForVacancy _$RequestForVacancyFromJson(
 
 Map<String, dynamic> _$RequestForVacancyToJson(_RequestForVacancy instance) =>
     <String, dynamic>{
-      'experience': instance.experience,
-      'salary': instance.salary,
-      'employment': _$EmploymentTypeEnumMap[instance.employment],
-      'location': _$LocationTypeEnumMap[instance.location],
-      'country': instance.country,
-      'hours': instance.hours,
+      'experience': ?instance.experience,
+      'salary': ?instance.salary,
+      'employment': ?_$EmploymentTypeEnumMap[instance.employment],
+      'location': ?_$LocationTypeEnumMap[instance.location],
+      'country': ?instance.country,
+      'hours': ?instance.hours,
       'languages': instance.languages,
       'technologies': instance.technologies,
     };
