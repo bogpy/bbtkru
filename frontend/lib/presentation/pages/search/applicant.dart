@@ -86,8 +86,21 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(height: 24),
+          OutlinedButton.icon(
+            onPressed: () {
+              ref.read(applicantRequestProvider.notifier).reset();
+              ref.read(applicantSearchTextProvider.notifier).reset();
+              _searchController.clear();
+            },
+            icon: const Icon(Icons.refresh),
+            label: const Text('Reset Filters'),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+          ),
           TextField(
             controller: _searchController,
             decoration: const InputDecoration(
