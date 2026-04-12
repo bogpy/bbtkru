@@ -1,12 +1,12 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 	"strconv"
-	"log"
 
-	"github.com/bogpy/bbtkru/internal/repository"
 	"github.com/bogpy/bbtkru/internal/models"
+	"github.com/bogpy/bbtkru/internal/repository"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,12 +27,13 @@ func (e Env) GetApplicantByID(c *gin.Context) {
 
 func (e Env) GetApplicants(c *gin.Context) {
 	var request models.RequestForApplicant
-	if err := c.ShouldBindQuery(&request); err != nil{
+	if err := c.ShouldBindQuery(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		log.Printf("Error binding query: %v", err)
 		return
 	}
 	r := repository.NewApplicantRepository(e.db)
+	log.Printf("request for applicant: %+v\n", request)
 	applicants, err := r.GetApplicants(request)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Applicants not found"})
@@ -43,7 +44,7 @@ func (e Env) GetApplicants(c *gin.Context) {
 
 func (e Env) InsertApplicants(c *gin.Context) {
 	var applicants []*models.Applicant
-	if err := c.ShouldBindJSON(&applicants); err != nil{
+	if err := c.ShouldBindJSON(&applicants); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -58,7 +59,7 @@ func (e Env) InsertApplicants(c *gin.Context) {
 
 func (e Env) InsertApplicant(c *gin.Context) {
 	var applicant *models.Applicant
-	if err := c.ShouldBindJSON(&applicant); err != nil{
+	if err := c.ShouldBindJSON(&applicant); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -71,7 +72,7 @@ func (e Env) InsertApplicant(c *gin.Context) {
 	c.JSON(http.StatusOK, nil)
 }
 
-func (e Env) DeleteApplicantByID(c *gin.Context) { 
+func (e Env) DeleteApplicantByID(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
@@ -85,3 +86,4 @@ func (e Env) DeleteApplicantByID(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, nil)
 }
+

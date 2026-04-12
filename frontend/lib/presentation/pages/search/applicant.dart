@@ -86,12 +86,13 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(height: 24),
           TextField(
             controller: _searchController,
             decoration: const InputDecoration(
-              labelText: 'Search by name',
+              labelText: 'Search by title',
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.search),
             ),
@@ -100,7 +101,21 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
             },
           ),
           const SizedBox(height: 20),
-          Text("Filters", style: Theme.of(context).textTheme.titleMedium),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Filters", style: Theme.of(context).textTheme.titleMedium),
+              TextButton.icon(
+                onPressed: () {
+                  ref.read(applicantRequestProvider.notifier).reset();
+                  ref.read(applicantSearchTextProvider.notifier).reset();
+                  _searchController.clear();
+                },
+                icon: const Icon(Icons.refresh, size: 18),
+                label: const Text('Reset'),
+              ),
+            ],
+          ),
           const Divider(),
           const SizedBox(height: 10),
           NumericTextFormField(
@@ -114,7 +129,10 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
           SingleChoiceField<LevelType>(
             label: 'Target Level',
             value: request.level,
-            items: LevelType.values.map((l) => DropdownMenuItem(value: l, child: Text(l.displayName))).toList(),
+            items: [
+              const DropdownMenuItem(value: null, child: Text('None')),
+              ...LevelType.values.map((l) => DropdownMenuItem(value: l, child: Text(l.displayName))),
+            ],
             onChanged: (val) {
               ref.read(applicantRequestProvider.notifier).update(request.copyWith(level: val));
             },
@@ -123,7 +141,10 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
           SingleChoiceField<SpecialtyType>(
             label: 'Core Specialty',
             value: request.specialty,
-            items: SpecialtyType.values.map((s) => DropdownMenuItem(value: s, child: Text(s.displayName))).toList(),
+            items: [
+              const DropdownMenuItem(value: null, child: Text('None')),
+              ...SpecialtyType.values.map((s) => DropdownMenuItem(value: s, child: Text(s.displayName))),
+            ],
             onChanged: (val) {
               ref.read(applicantRequestProvider.notifier).update(request.copyWith(specialty: val));
             },
@@ -132,15 +153,23 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
           SingleChoiceField<EducationType>(
             label: 'Minimum Education',
             value: request.education,
-            items: EducationType.values.map((e) => DropdownMenuItem(value: e, child: Text(e.displayName))).toList(),
+            items: [
+              const DropdownMenuItem(value: null, child: Text('None')),
+              ...EducationType.values.map((e) => DropdownMenuItem(value: e, child: Text(e.displayName))),
+            ],
             onChanged: (val) {
               ref.read(applicantRequestProvider.notifier).update(request.copyWith(education: val));
             },
           ),
           const SizedBox(height: 16),
-          SwitchListTile(
-            title: const Text("Graduated"),
-            value: request.graduated ?? false,
+          SingleChoiceField<bool?>(
+            label: 'Graduated',
+            value: request.graduated,
+            items: const [
+              DropdownMenuItem(value: null, child: Text('None')),
+              DropdownMenuItem(value: false, child: Text('False')),
+              DropdownMenuItem(value: true, child: Text('True')),
+            ],
             onChanged: (val) {
               ref.read(applicantRequestProvider.notifier).update(request.copyWith(graduated: val));
             },

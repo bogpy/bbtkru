@@ -10,12 +10,12 @@ import (
 
 	"github.com/bogpy/bbtkru/internal/handlers"
 	"github.com/bogpy/bbtkru/internal/repository"
-	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	file, err := os.OpenFile("log.txt", os.O_CREATE | os.O_WRONLY | os.O_TRUNC, 0666)
+	file, err := os.OpenFile("log.txt", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 	if err != nil {
 		log.Fatal("Failed to open log file")
 	}
@@ -28,9 +28,11 @@ func main() {
 	var db *sqlx.DB
 	db = repository.ConnectDB()
 	defer db.Close()
-	repository.InitDB(db)
-	repository.PopulateDB(db)
-
+	if os.Getenv("APP_ENV") != "production" && len(os.Args) > 1 && os.Args[1] == "dropdb" {
+		repository.InitDB(db)
+		repository.PopulateDB(db)
+		return
+	}
 	env := handlers.NewEnv(db)
 
 	router := gin.Default()
@@ -47,7 +49,7 @@ func main() {
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
-	
+
 	router.GET("/applicants/:id", env.GetApplicantByID)
 	router.GET("/applicants", env.GetApplicants)
 	router.GET("/companies", env.GetCompanies)
@@ -60,7 +62,7 @@ func main() {
 	router.POST("/vacancies", env.InsertVacancy)
 	router.POST("/applicants", env.InsertApplicant)
 	router.POST("/companies", env.InsertCompany)
-	
+
 	router.DELETE("/companies/:id", env.DeleteCompanyByID)
 	router.DELETE("/vacancies/:id", env.DeleteVacancyByID)
 	router.DELETE("/applicants/:id", env.DeleteApplicantByID)

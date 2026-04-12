@@ -2,8 +2,8 @@ package repository
 
 import (
 	"fmt"
-	"strings"
 	"log"
+	"strings"
 
 	"github.com/bogpy/bbtkru/internal/models"
 	"github.com/jmoiron/sqlx"
@@ -27,7 +27,7 @@ func (r ApplicantRepository) BulkInsert(applicants []*models.Applicant) error {
 func (r ApplicantRepository) GetLanguagesIds(languages []models.Language) ([]int64, error) {
 	query := `SELECT l.id FROM language l
 			  WHERE l.name IN (?)`
-	
+
 	language_names := make([]string, len(languages))
 	for i, lang := range languages {
 		language_names[i] = lang.Name
@@ -60,6 +60,28 @@ func (r ApplicantRepository) GetLanguages(id int64) ([]models.Language, error) {
 	return languages, err
 }
 
+func (r ApplicantRepository) GetTechnologiesIds(technologies []models.Technology) ([]int64, error) {
+	query := `SELECT t.id FROM technology t
+			  WHERE t.name IN (?)`
+
+	technology_names := make([]string, len(technologies))
+	for i, tech := range technologies {
+		technology_names[i] = tech.Name
+	}
+	query, args, err := sqlx.In(query, technology_names)
+	if err != nil {
+		return nil, err
+	}
+	var technology_ids []int64
+	query = r.DB.Rebind(query)
+	err = r.DB.Select(&technology_ids, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return technology_ids, nil
+}
+
 func (r ApplicantRepository) GetTechnologies(id int64) ([]models.Technology, error) {
 	query := `SELECT t.id, t.name
 	 		  FROM technology t
@@ -78,7 +100,7 @@ func (r ApplicantRepository) GetTechnologies(id int64) ([]models.Technology, err
 func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) ([]models.Applicant, error) {
 	var queryBuilder strings.Builder
 	queryBuilder.WriteString("SELECT * FROM applicant a WHERE 1=1")
-	var args []interface{}
+	var args []any
 
 	if request.Experience != nil {
 		queryBuilder.WriteString(" AND experience >= ?")
@@ -91,7 +113,7 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 	}
 
 	if request.Graduated != nil {
-		queryBuilder.WriteString(" AND graduted = ?")
+		queryBuilder.WriteString(" AND graduated = ?")
 		args = append(args, *request.Graduated)
 	}
 
@@ -105,18 +127,23 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 		args = append(args, *request.Specialty)
 	}
 
-	if len(request.LanguagesRequired) > 0 {
+	if len(request.LanguagesRequired.Items) > 0 {
 		queryBuilder.WriteString(
 			` AND EXISTS (
 				SELECT 1 FROM applicant_language al
 				WHERE al.applicant_id = a.id AND al.language_id IN (?)
 				GROUP BY al.applicant_id
-				HAVING COUNT(DISTINCT al.applicant_id) = ?
+				HAVING COUNT(DISTINCT al.language_id) = ?
 			)`,
 		)
-		languages_ids, err := r.GetLanguagesIds(request.LanguagesRequired)
+		languages_ids, err := r.GetLanguagesIds(request.LanguagesRequired.Items)
 		if err != nil {
 			return nil, err
+		}
+		if len(languages_ids) != len(request.LanguagesRequired.Items) {
+			return nil, fmt.Errorf(
+				"Non existing languages in request: %v\n",
+				request.LanguagesRequired)
 		}
 		args = append(
 			args,
@@ -125,18 +152,23 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 		)
 	}
 
-	if len(request.TechnologiesRequired) > 0 {
+	if len(request.TechnologiesRequired.Items) > 0 {
 		queryBuilder.WriteString(
 			` AND EXISTS (
 				SELECT 1 FROM applicant_technology at
 				WHERE at.applicant_id = a.id AND at.technology_id IN (?)
 				GROUP BY at.applicant_id
-				HAVING COUNT(DISTINCT at.applicant_id) = ?
+				HAVING COUNT(DISTINCT at.technology_id) = ?
 			)`,
 		)
-		technologies_ids := make([]int64, len(request.TechnologiesRequired))
-		for i, technology := range request.TechnologiesRequired {
-			technologies_ids[i] = technology.ID
+		technologies_ids, err := r.GetTechnologiesIds(request.TechnologiesRequired.Items)
+		if err != nil {
+			return nil, err
+		}
+		if len(technologies_ids) != len(request.TechnologiesRequired.Items) {
+			return nil, fmt.Errorf(
+				"Non existing technologies in request: %v\n",
+				request.TechnologiesRequired)
 		}
 		args = append(
 			args,
@@ -174,6 +206,7 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 			return nil, err
 		}
 	}
+	// add ids retrieval for LanguagesOptional and TechnologiesOptional
 
 	for i, applicant := range applicants {
 		applicants[i].Score = applicant.CalcScore(request)
@@ -183,11 +216,11 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 
 type ApplicantLanguage struct {
 	ApplicantID int64 `db:"applicant_id"`
-	LanguageID int64 `db:"language_id"`
+	LanguageID  int64 `db:"language_id"`
 }
 
 type ApplicantTechnology struct {
-	ApplicantID int64 `db:"applicant_id"`
+	ApplicantID  int64 `db:"applicant_id"`
 	TechnologyID int64 `db:"technology_id"`
 }
 
@@ -266,11 +299,11 @@ func (r ApplicantRepository) InsertApplicant(a *models.Applicant) error {
 		return err
 	}
 	id, err := res.LastInsertId()
-    if err != nil {
-        return fmt.Errorf("addApplicant: %v", err)
-    }
+	if err != nil {
+		return fmt.Errorf("addApplicant: %v", err)
+	}
 	a.ID = id
-    return nil
+	return nil
 }
 
 func (r ApplicantRepository) DeleteApplicant(id int64) error {
@@ -282,7 +315,7 @@ func (r ApplicantRepository) DeleteApplicant(id int64) error {
 	if err != nil {
 		return err
 	}
-	if count == 0{
+	if count == 0 {
 		return fmt.Errorf("Not found applicant with id: %v", id)
 	}
 

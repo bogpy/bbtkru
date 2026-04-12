@@ -242,10 +242,12 @@ class SearchableMultiChoiceField<T> extends StatefulWidget {
   });
 
   @override
-  State<SearchableMultiChoiceField<T>> createState() => _SearchableMultiChoiceFieldState<T>();
+  State<SearchableMultiChoiceField<T>> createState() =>
+      _SearchableMultiChoiceFieldState<T>();
 }
 
-class _SearchableMultiChoiceFieldState<T> extends State<SearchableMultiChoiceField<T>> {
+class _SearchableMultiChoiceFieldState<T>
+    extends State<SearchableMultiChoiceField<T>> {
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
 
@@ -258,18 +260,21 @@ class _SearchableMultiChoiceFieldState<T> extends State<SearchableMultiChoiceFie
   @override
   Widget build(BuildContext context) {
     final filteredValues = widget.values.where((v) {
-      final matchesQuery = widget.labelBuilder(v).toLowerCase().contains(_query.toLowerCase());
+      final matchesQuery = widget
+          .labelBuilder(v)
+          .toLowerCase()
+          .contains(_query.toLowerCase());
       final isSelected = widget.selectedValues.contains(v);
-      
+
       if (_query.isEmpty) {
         return isSelected; // Only show selected items when query is empty
       }
       return matchesQuery; // Show items matching query (includes selected and unselected)
     }).toList();
 
-    // Sort to keep selected items at the top if needed, 
+    // Sort to keep selected items at the top if needed,
     // or just rely on the filter logic above which already reduces the list significantly.
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -356,7 +361,9 @@ class DatePickerField extends StatelessWidget {
           border: const OutlineInputBorder(),
         ),
         child: Text(
-          selectedDate == null ? 'Select Date' : intl.DateFormat('yyyy-MM-dd').format(selectedDate!),
+          selectedDate == null
+              ? 'Select Date'
+              : intl.DateFormat('yyyy-MM-dd').format(selectedDate!),
         ),
       ),
     );

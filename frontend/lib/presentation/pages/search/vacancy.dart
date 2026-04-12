@@ -86,8 +86,9 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(height: 24),
           TextField(
             controller: _searchController,
             decoration: const InputDecoration(
@@ -100,7 +101,21 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
             },
           ),
           const SizedBox(height: 20),
-          Text("Filters", style: Theme.of(context).textTheme.titleMedium),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Filters", style: Theme.of(context).textTheme.titleMedium),
+              TextButton.icon(
+                onPressed: () {
+                  ref.read(vacancyRequestProvider.notifier).reset();
+                  ref.read(vacancySearchTextProvider.notifier).reset();
+                  _searchController.clear();
+                },
+                icon: const Icon(Icons.refresh, size: 18),
+                label: const Text('Reset'),
+              ),
+            ],
+          ),
           const Divider(),
           const SizedBox(height: 10),
           NumericTextFormField(
@@ -122,7 +137,10 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
           SingleChoiceField<EmploymentType>(
             label: 'Employment Type',
             value: request.employment,
-            items: EmploymentType.values.map((e) => DropdownMenuItem(value: e, child: Text(e.displayName))).toList(),
+            items: [
+              const DropdownMenuItem(value: null, child: Text('None')),
+              ...EmploymentType.values.map((e) => DropdownMenuItem(value: e, child: Text(e.displayName))),
+            ],
             onChanged: (val) {
               ref.read(vacancyRequestProvider.notifier).update(request.copyWith(employment: val));
             },
@@ -131,7 +149,10 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
           SingleChoiceField<LocationType>(
             label: 'Preferred Location',
             value: request.location,
-            items: LocationType.values.map((l) => DropdownMenuItem(value: l, child: Text(l.displayName))).toList(),
+            items: [
+              const DropdownMenuItem(value: null, child: Text('None')),
+              ...LocationType.values.map((l) => DropdownMenuItem(value: l, child: Text(l.displayName))),
+            ],
             onChanged: (val) {
               ref.read(vacancyRequestProvider.notifier).update(request.copyWith(location: val));
             },

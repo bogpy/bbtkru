@@ -84,8 +84,9 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(height: 24),
           TextField(
             controller: _searchController,
             decoration: const InputDecoration(
@@ -98,7 +99,21 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
             },
           ),
           const SizedBox(height: 20),
-          Text("Filters", style: Theme.of(context).textTheme.titleMedium),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Filters", style: Theme.of(context).textTheme.titleMedium),
+              TextButton.icon(
+                onPressed: () {
+                  ref.read(companyRequestProvider.notifier).reset();
+                  ref.read(companySearchTextProvider.notifier).reset();
+                  _searchController.clear();
+                },
+                icon: const Icon(Icons.refresh, size: 18),
+                label: const Text('Reset'),
+              ),
+            ],
+          ),
           const Divider(),
           const SizedBox(height: 10),
           CustomTextFormField(

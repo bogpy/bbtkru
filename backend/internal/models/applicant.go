@@ -67,15 +67,15 @@ func (x *Applicant) GetTechnologies() []Technology {
 }
 
 type RequestForApplicant struct {
-	Experience           *int `form:"experience"`
-	Level                *LevelType `form:"level" binding:"omitempty,oneof=Intern Junior Middle Senior Lead"`
-	Graduated            *bool `form:"graduated"`
+	Experience           *int           `form:"experience"`
+	Level                *LevelType     `form:"level" binding:"omitempty,oneof=Intern Junior Middle Senior Lead"`
+	Graduated            *bool          `form:"graduated"`
 	Education_type       *EducationType `form:"education" binding:"omitempty,oneof=HighSchool Bachelor Master PhD"`
 	Specialty            *SpecialtyType `form:"specialty" binding:"omitempty,oneof=Frontend Backend Fullstack DataEngineer DevOps"`
-	LanguagesRequired    []Language `form:"languages_required"`
-	LanguagesOptional    []Language `form:"languages_optional"`
-	TechnologiesRequired []Technology `form:"technologies_required"`
-	TechnologiesOptional []Technology `form:"technologies_optional"`
+	LanguagesRequired    LanguageList   `form:"languagesRequired"`
+	LanguagesOptional    LanguageList   `form:"languagesOptional"`
+	TechnologiesRequired TechnologyList `form:"technologiesRequired"`
+	TechnologiesOptional TechnologyList `form:"technologiesOptional"`
 }
 
 const (
@@ -86,12 +86,12 @@ const (
 
 func (x Applicant) CalcScore(r RequestForApplicant) int {
 	score := 0
-	score += x.Experience * ExpWeight
+	score += x.Experience * AppExpWeight
 
-	if r.LanguagesOptional != nil {
+	if len(r.LanguagesOptional.Items) > 0 {
 		var cnt = 0
 		mp := make(map[int64]bool)
-		for _, lang := range r.LanguagesOptional {
+		for _, lang := range r.LanguagesOptional.Items {
 			mp[lang.ID] = true
 		}
 		for _, lang := range x.Languages {
@@ -101,10 +101,10 @@ func (x Applicant) CalcScore(r RequestForApplicant) int {
 		}
 		score += cnt * LangWeight
 	}
-	if r.TechnologiesOptional != nil {
+	if len(r.TechnologiesOptional.Items) > 0 {
 		var cnt = 0
 		mp := make(map[int64]bool)
-		for _, tech := range r.TechnologiesOptional {
+		for _, tech := range r.TechnologiesOptional.Items {
 			mp[tech.ID] = true
 		}
 		for _, tech := range x.Technologies {
@@ -118,8 +118,8 @@ func (x Applicant) CalcScore(r RequestForApplicant) int {
 }
 
 func SortIntern(s []Applicant, r RequestForApplicant) {
-	for _, x := range s {
-		x.CalcScore(r)
+	for i := range s {
+		s[i].Score = s[i].CalcScore(r)
 	}
 	sort.Slice(s, func(i, j int) bool {
 		return s[i].Score > s[j].Score
