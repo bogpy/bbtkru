@@ -3,6 +3,8 @@ package models
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+	"strings"
 )
 
 type Language struct {
@@ -10,9 +12,7 @@ type Language struct {
 	Name string `db:"name" json:"name"`
 }
 
-type LanguageList struct {
-	Items []Language
-}
+type LanguageList []Language
 
 func (x *Language) SetID(id int64) {
 	x.ID = id
@@ -40,10 +40,17 @@ func (x *Language) MarshalJSON() ([]byte, error) {
 }
 
 func (x *LanguageList) UnmarshalText(text []byte) error {
+	log.Printf("unmarshalling text: %v\n", string(text))
 	if len(text) == 0 {
+		*x = nil
 		return nil
 	}
-	return json.Unmarshal(text, &x.Items)
+	for item := range strings.SplitSeq(string(text), ",") {
+		if len(item) != 0 {
+			*x = append(*x, Language{Name: item})
+		}
+	}
+	return nil
 }
 
 type Technology struct {
@@ -81,8 +88,15 @@ func (x *Technology) MarshalJSON() ([]byte, error) {
 }
 
 func (x *TechnologyList) UnmarshalText(text []byte) error {
+	log.Printf("unmarshalling text: %v\n", string(text))
 	if len(text) == 0 {
+		x.Items = nil
 		return nil
 	}
-	return json.Unmarshal(text, &x.Items)
+	for item := range strings.SplitSeq(string(text), ",") {
+		if len(item) != 0 {
+			x.Items = append(x.Items, Technology{Name: item})
+		}
+	}
+	return nil
 }

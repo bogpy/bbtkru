@@ -127,7 +127,7 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 		args = append(args, *request.Specialty)
 	}
 
-	if len(request.LanguagesRequired.Items) > 0 {
+	if len(request.LanguagesRequired) > 0 {
 		queryBuilder.WriteString(
 			` AND EXISTS (
 				SELECT 1 FROM applicant_language al
@@ -136,11 +136,11 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 				HAVING COUNT(DISTINCT al.language_id) = ?
 			)`,
 		)
-		languages_ids, err := r.GetLanguagesIds(request.LanguagesRequired.Items)
+		languages_ids, err := r.GetLanguagesIds(request.LanguagesRequired)
 		if err != nil {
 			return nil, err
 		}
-		if len(languages_ids) != len(request.LanguagesRequired.Items) {
+		if len(languages_ids) != len(request.LanguagesRequired) {
 			return nil, fmt.Errorf(
 				"Non existing languages in request: %v\n",
 				request.LanguagesRequired)

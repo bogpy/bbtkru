@@ -88,10 +88,10 @@ func (x Applicant) CalcScore(r RequestForApplicant) int {
 	score := 0
 	score += x.Experience * AppExpWeight
 
-	if len(r.LanguagesOptional.Items) > 0 {
+	if len(r.LanguagesOptional) > 0 {
 		var cnt = 0
 		mp := make(map[int64]bool)
-		for _, lang := range r.LanguagesOptional.Items {
+		for _, lang := range r.LanguagesOptional {
 			mp[lang.ID] = true
 		}
 		for _, lang := range x.Languages {
