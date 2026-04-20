@@ -89,27 +89,26 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 24),
-          OutlinedButton.icon(
-            onPressed: () {
-              ref.read(vacancyRequestProvider.notifier).reset();
-              ref.read(vacancySearchTextProvider.notifier).reset();
-              _searchController.clear();
-            },
-            icon: const Icon(Icons.refresh),
-            label: const Text('Reset Filters'),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.error,
-            ),
-          ),
           TextField(
             controller: _searchController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Search by title',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.search),
+              border: const OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.search),
+              suffixIcon: _searchController.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _searchController.clear();
+                        ref.read(vacancySearchTextProvider.notifier).update('');
+                        setState(() {});
+                      },
+                    )
+                  : null,
             ),
             onChanged: (value) {
               ref.read(vacancySearchTextProvider.notifier).update(value);
+              setState(() {});
             },
           ),
           const SizedBox(height: 20),
@@ -179,22 +178,22 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
           ),
           const SizedBox(height: 16),
           SearchableMultiChoiceField<String>(
-            label: 'Technologies',
-            values: DataService.technologies,
-            selectedValues: request.technologies,
-            labelBuilder: (s) => s,
-            onChanged: (val) {
-              ref.read(vacancyRequestProvider.notifier).update(request.copyWith(technologies: val));
-            },
-          ),
-          const SizedBox(height: 16),
-          SearchableMultiChoiceField<String>(
             label: 'Languages',
             values: DataService.languages,
             selectedValues: request.languages,
             labelBuilder: (s) => s,
             onChanged: (val) {
               ref.read(vacancyRequestProvider.notifier).update(request.copyWith(languages: val));
+            },
+          ),
+          const SizedBox(height: 16),
+          SearchableMultiChoiceField<String>(
+            label: 'Technologies',
+            values: DataService.technologies,
+            selectedValues: request.technologies,
+            labelBuilder: (s) => s,
+            onChanged: (val) {
+              ref.read(vacancyRequestProvider.notifier).update(request.copyWith(technologies: val));
             },
           ),
         ],
@@ -204,24 +203,19 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
 
   Widget _buildVacancyResults() {
     final vacancyAsync = ref.watch(vacanciesProvider);
-    final searchText = ref.watch(vacancySearchTextProvider);
 
     return vacancyAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stack) => Center(child: Text('Error: $error')),
       data: (items) {
-        final filtered = items
-            .where((i) => i.title.toLowerCase().contains(searchText.toLowerCase()))
-            .toList();
-
-        if (filtered.isEmpty) {
+        if (items.isEmpty) {
           return const Center(child: Text("No vacancies found matching filters."));
         }
 
         return ListView.builder(
-          itemCount: filtered.length,
+          itemCount: items.length,
           itemBuilder: (context, index) {
-            final item = filtered[index];
+            final item = items[index];
             return ListTile(
               leading: const Icon(Icons.work_outline),
               title: Text(item.title),

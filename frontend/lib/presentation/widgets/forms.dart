@@ -260,20 +260,22 @@ class _SearchableMultiChoiceFieldState<T>
   @override
   Widget build(BuildContext context) {
     final filteredValues = widget.values.where((v) {
-      final matchesQuery = widget
+      final isSelected = widget.selectedValues.contains(v);
+      if (_query.isEmpty) return isSelected;
+      return widget
           .labelBuilder(v)
           .toLowerCase()
           .contains(_query.toLowerCase());
-      final isSelected = widget.selectedValues.contains(v);
-
-      if (_query.isEmpty) {
-        return isSelected; // Only show selected items when query is empty
-      }
-      return matchesQuery; // Show items matching query (includes selected and unselected)
     }).toList();
 
-    // Sort to keep selected items at the top if needed,
-    // or just rely on the filter logic above which already reduces the list significantly.
+    // Sort selected items to the top
+    filteredValues.sort((a, b) {
+      final aSelected = widget.selectedValues.contains(a);
+      final bSelected = widget.selectedValues.contains(b);
+      if (aSelected && !bSelected) return -1;
+      if (!aSelected && bSelected) return 1;
+      return 0;
+    });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,6 +287,15 @@ class _SearchableMultiChoiceFieldState<T>
           decoration: InputDecoration(
             hintText: 'Search ${widget.label.toLowerCase()}...',
             prefixIcon: const Icon(Icons.search, size: 20),
+            suffixIcon: _query.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.clear, size: 20),
+                    onPressed: () {
+                      _searchController.clear();
+                      setState(() => _query = '');
+                    },
+                  )
+                : null,
             isDense: true,
             border: const OutlineInputBorder(),
             filled: true,
@@ -295,12 +306,12 @@ class _SearchableMultiChoiceFieldState<T>
         Container(
           constraints: BoxConstraints(maxHeight: widget.height),
           width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).dividerColor),
-            borderRadius: BorderRadius.circular(4),
+          decoration: const BoxDecoration(
+            // Border removed for cleaner UI
+            borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             child: Wrap(
               spacing: 8,
               runSpacing: 8,

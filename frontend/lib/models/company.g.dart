@@ -32,12 +32,14 @@ Map<String, dynamic> _$CompanyToJson(_Company instance) => <String, dynamic>{
 
 _RequestForCompany _$RequestForCompanyFromJson(Map<String, dynamic> json) =>
     _RequestForCompany(
+      name: json['name'] as String?,
       country: json['country'] as String?,
       employeeCount: (json['employeeCount'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RequestForCompanyToJson(_RequestForCompany instance) =>
     <String, dynamic>{
+      'name': ?instance.name,
       'country': ?instance.country,
       'employeeCount': ?instance.employeeCount,
     };

@@ -302,7 +302,7 @@ as int,
 /// @nodoc
 mixin _$RequestForCompany {
 
- String? get country; int? get employeeCount;
+ String? get name; String? get country; int? get employeeCount;
 /// Create a copy of RequestForCompany
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -315,16 +315,16 @@ $RequestForCompanyCopyWith<RequestForCompany> get copyWith => _$RequestForCompan
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequestForCompany&&(identical(other.country, country) || other.country == country)&&(identical(other.employeeCount, employeeCount) || other.employeeCount == employeeCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequestForCompany&&(identical(other.name, name) || other.name == name)&&(identical(other.country, country) || other.country == country)&&(identical(other.employeeCount, employeeCount) || other.employeeCount == employeeCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,country,employeeCount);
+int get hashCode => Object.hash(runtimeType,name,country,employeeCount);
 
 @override
 String toString() {
-  return 'RequestForCompany(country: $country, employeeCount: $employeeCount)';
+  return 'RequestForCompany(name: $name, country: $country, employeeCount: $employeeCount)';
 }
 
 
@@ -335,7 +335,7 @@ abstract mixin class $RequestForCompanyCopyWith<$Res>  {
   factory $RequestForCompanyCopyWith(RequestForCompany value, $Res Function(RequestForCompany) _then) = _$RequestForCompanyCopyWithImpl;
 @useResult
 $Res call({
- String? country, int? employeeCount
+ String? name, String? country, int? employeeCount
 });
 
 
@@ -352,9 +352,10 @@ class _$RequestForCompanyCopyWithImpl<$Res>
 
 /// Create a copy of RequestForCompany
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? country = freezed,Object? employeeCount = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = freezed,Object? country = freezed,Object? employeeCount = freezed,}) {
   return _then(_self.copyWith(
-country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
 as String?,employeeCount: freezed == employeeCount ? _self.employeeCount : employeeCount // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
@@ -441,10 +442,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? country,  int? employeeCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? name,  String? country,  int? employeeCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RequestForCompany() when $default != null:
-return $default(_that.country,_that.employeeCount);case _:
+return $default(_that.name,_that.country,_that.employeeCount);case _:
   return orElse();
 
 }
@@ -462,10 +463,10 @@ return $default(_that.country,_that.employeeCount);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? country,  int? employeeCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? name,  String? country,  int? employeeCount)  $default,) {final _that = this;
 switch (_that) {
 case _RequestForCompany():
-return $default(_that.country,_that.employeeCount);case _:
+return $default(_that.name,_that.country,_that.employeeCount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -482,10 +483,10 @@ return $default(_that.country,_that.employeeCount);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? country,  int? employeeCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? name,  String? country,  int? employeeCount)?  $default,) {final _that = this;
 switch (_that) {
 case _RequestForCompany() when $default != null:
-return $default(_that.country,_that.employeeCount);case _:
+return $default(_that.name,_that.country,_that.employeeCount);case _:
   return null;
 
 }
@@ -497,9 +498,10 @@ return $default(_that.country,_that.employeeCount);case _:
 
 @JsonSerializable(includeIfNull: false)
 class _RequestForCompany implements RequestForCompany {
-  const _RequestForCompany({this.country, this.employeeCount});
+  const _RequestForCompany({this.name, this.country, this.employeeCount});
   factory _RequestForCompany.fromJson(Map<String, dynamic> json) => _$RequestForCompanyFromJson(json);
 
+@override final  String? name;
 @override final  String? country;
 @override final  int? employeeCount;
 
@@ -516,16 +518,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequestForCompany&&(identical(other.country, country) || other.country == country)&&(identical(other.employeeCount, employeeCount) || other.employeeCount == employeeCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequestForCompany&&(identical(other.name, name) || other.name == name)&&(identical(other.country, country) || other.country == country)&&(identical(other.employeeCount, employeeCount) || other.employeeCount == employeeCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,country,employeeCount);
+int get hashCode => Object.hash(runtimeType,name,country,employeeCount);
 
 @override
 String toString() {
-  return 'RequestForCompany(country: $country, employeeCount: $employeeCount)';
+  return 'RequestForCompany(name: $name, country: $country, employeeCount: $employeeCount)';
 }
 
 
@@ -536,7 +538,7 @@ abstract mixin class _$RequestForCompanyCopyWith<$Res> implements $RequestForCom
   factory _$RequestForCompanyCopyWith(_RequestForCompany value, $Res Function(_RequestForCompany) _then) = __$RequestForCompanyCopyWithImpl;
 @override @useResult
 $Res call({
- String? country, int? employeeCount
+ String? name, String? country, int? employeeCount
 });
 
 
@@ -553,9 +555,10 @@ class __$RequestForCompanyCopyWithImpl<$Res>
 
 /// Create a copy of RequestForCompany
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? country = freezed,Object? employeeCount = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = freezed,Object? country = freezed,Object? employeeCount = freezed,}) {
   return _then(_RequestForCompany(
-country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
+name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,country: freezed == country ? _self.country : country // ignore: cast_nullable_to_non_nullable
 as String?,employeeCount: freezed == employeeCount ? _self.employeeCount : employeeCount // ignore: cast_nullable_to_non_nullable
 as int?,
   ));

@@ -218,8 +218,8 @@ return $default(_that.id,_that.name,_that.dateOfBirth,_that.education,_that.univ
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(explicitToJson: true)
 class _Applicant implements Applicant {
   const _Applicant({required this.id, required this.name, required this.dateOfBirth, required this.education, required this.university, required this.graduated, required this.specialty, required this.level, required this.experience, this.workHistory = "", final  List<String> languages = const [], final  List<String> technologies = const [], this.score = 0}): _languages = languages,_technologies = technologies;
   factory _Applicant.fromJson(Map<String, dynamic> json) => _$ApplicantFromJson(json);
@@ -326,7 +326,7 @@ as int,
 /// @nodoc
 mixin _$RequestForApplicant {
 
- int? get experience; LevelType? get level; bool? get graduated; EducationType? get education; SpecialtyType? get specialty; List<String> get languagesRequired; List<String> get languagesOptional; List<String> get technologiesRequired; List<String> get technologiesOptional;
+ String? get name; int? get experience; LevelType? get level; bool? get graduated; EducationType? get education; SpecialtyType? get specialty;@JsonKey(toJson: _listToQuery) List<String> get languagesRequired;@JsonKey(toJson: _listToQuery) List<String> get languagesOptional;@JsonKey(toJson: _listToQuery) List<String> get technologiesRequired;@JsonKey(toJson: _listToQuery) List<String> get technologiesOptional;
 /// Create a copy of RequestForApplicant
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -339,16 +339,16 @@ $RequestForApplicantCopyWith<RequestForApplicant> get copyWith => _$RequestForAp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequestForApplicant&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.level, level) || other.level == level)&&(identical(other.graduated, graduated) || other.graduated == graduated)&&(identical(other.education, education) || other.education == education)&&(identical(other.specialty, specialty) || other.specialty == specialty)&&const DeepCollectionEquality().equals(other.languagesRequired, languagesRequired)&&const DeepCollectionEquality().equals(other.languagesOptional, languagesOptional)&&const DeepCollectionEquality().equals(other.technologiesRequired, technologiesRequired)&&const DeepCollectionEquality().equals(other.technologiesOptional, technologiesOptional));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequestForApplicant&&(identical(other.name, name) || other.name == name)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.level, level) || other.level == level)&&(identical(other.graduated, graduated) || other.graduated == graduated)&&(identical(other.education, education) || other.education == education)&&(identical(other.specialty, specialty) || other.specialty == specialty)&&const DeepCollectionEquality().equals(other.languagesRequired, languagesRequired)&&const DeepCollectionEquality().equals(other.languagesOptional, languagesOptional)&&const DeepCollectionEquality().equals(other.technologiesRequired, technologiesRequired)&&const DeepCollectionEquality().equals(other.technologiesOptional, technologiesOptional));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,experience,level,graduated,education,specialty,const DeepCollectionEquality().hash(languagesRequired),const DeepCollectionEquality().hash(languagesOptional),const DeepCollectionEquality().hash(technologiesRequired),const DeepCollectionEquality().hash(technologiesOptional));
+int get hashCode => Object.hash(runtimeType,name,experience,level,graduated,education,specialty,const DeepCollectionEquality().hash(languagesRequired),const DeepCollectionEquality().hash(languagesOptional),const DeepCollectionEquality().hash(technologiesRequired),const DeepCollectionEquality().hash(technologiesOptional));
 
 @override
 String toString() {
-  return 'RequestForApplicant(experience: $experience, level: $level, graduated: $graduated, education: $education, specialty: $specialty, languagesRequired: $languagesRequired, languagesOptional: $languagesOptional, technologiesRequired: $technologiesRequired, technologiesOptional: $technologiesOptional)';
+  return 'RequestForApplicant(name: $name, experience: $experience, level: $level, graduated: $graduated, education: $education, specialty: $specialty, languagesRequired: $languagesRequired, languagesOptional: $languagesOptional, technologiesRequired: $technologiesRequired, technologiesOptional: $technologiesOptional)';
 }
 
 
@@ -359,7 +359,7 @@ abstract mixin class $RequestForApplicantCopyWith<$Res>  {
   factory $RequestForApplicantCopyWith(RequestForApplicant value, $Res Function(RequestForApplicant) _then) = _$RequestForApplicantCopyWithImpl;
 @useResult
 $Res call({
- int? experience, LevelType? level, bool? graduated, EducationType? education, SpecialtyType? specialty, List<String> languagesRequired, List<String> languagesOptional, List<String> technologiesRequired, List<String> technologiesOptional
+ String? name, int? experience, LevelType? level, bool? graduated, EducationType? education, SpecialtyType? specialty,@JsonKey(toJson: _listToQuery) List<String> languagesRequired,@JsonKey(toJson: _listToQuery) List<String> languagesOptional,@JsonKey(toJson: _listToQuery) List<String> technologiesRequired,@JsonKey(toJson: _listToQuery) List<String> technologiesOptional
 });
 
 
@@ -376,9 +376,10 @@ class _$RequestForApplicantCopyWithImpl<$Res>
 
 /// Create a copy of RequestForApplicant
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? experience = freezed,Object? level = freezed,Object? graduated = freezed,Object? education = freezed,Object? specialty = freezed,Object? languagesRequired = null,Object? languagesOptional = null,Object? technologiesRequired = null,Object? technologiesOptional = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = freezed,Object? experience = freezed,Object? level = freezed,Object? graduated = freezed,Object? education = freezed,Object? specialty = freezed,Object? languagesRequired = null,Object? languagesOptional = null,Object? technologiesRequired = null,Object? technologiesOptional = null,}) {
   return _then(_self.copyWith(
-experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
+name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
 as int?,level: freezed == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
 as LevelType?,graduated: freezed == graduated ? _self.graduated : graduated // ignore: cast_nullable_to_non_nullable
 as bool?,education: freezed == education ? _self.education : education // ignore: cast_nullable_to_non_nullable
@@ -472,10 +473,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? experience,  LevelType? level,  bool? graduated,  EducationType? education,  SpecialtyType? specialty,  List<String> languagesRequired,  List<String> languagesOptional,  List<String> technologiesRequired,  List<String> technologiesOptional)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? name,  int? experience,  LevelType? level,  bool? graduated,  EducationType? education,  SpecialtyType? specialty, @JsonKey(toJson: _listToQuery)  List<String> languagesRequired, @JsonKey(toJson: _listToQuery)  List<String> languagesOptional, @JsonKey(toJson: _listToQuery)  List<String> technologiesRequired, @JsonKey(toJson: _listToQuery)  List<String> technologiesOptional)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RequestForApplicant() when $default != null:
-return $default(_that.experience,_that.level,_that.graduated,_that.education,_that.specialty,_that.languagesRequired,_that.languagesOptional,_that.technologiesRequired,_that.technologiesOptional);case _:
+return $default(_that.name,_that.experience,_that.level,_that.graduated,_that.education,_that.specialty,_that.languagesRequired,_that.languagesOptional,_that.technologiesRequired,_that.technologiesOptional);case _:
   return orElse();
 
 }
@@ -493,10 +494,10 @@ return $default(_that.experience,_that.level,_that.graduated,_that.education,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? experience,  LevelType? level,  bool? graduated,  EducationType? education,  SpecialtyType? specialty,  List<String> languagesRequired,  List<String> languagesOptional,  List<String> technologiesRequired,  List<String> technologiesOptional)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? name,  int? experience,  LevelType? level,  bool? graduated,  EducationType? education,  SpecialtyType? specialty, @JsonKey(toJson: _listToQuery)  List<String> languagesRequired, @JsonKey(toJson: _listToQuery)  List<String> languagesOptional, @JsonKey(toJson: _listToQuery)  List<String> technologiesRequired, @JsonKey(toJson: _listToQuery)  List<String> technologiesOptional)  $default,) {final _that = this;
 switch (_that) {
 case _RequestForApplicant():
-return $default(_that.experience,_that.level,_that.graduated,_that.education,_that.specialty,_that.languagesRequired,_that.languagesOptional,_that.technologiesRequired,_that.technologiesOptional);case _:
+return $default(_that.name,_that.experience,_that.level,_that.graduated,_that.education,_that.specialty,_that.languagesRequired,_that.languagesOptional,_that.technologiesRequired,_that.technologiesOptional);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -513,10 +514,10 @@ return $default(_that.experience,_that.level,_that.graduated,_that.education,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? experience,  LevelType? level,  bool? graduated,  EducationType? education,  SpecialtyType? specialty,  List<String> languagesRequired,  List<String> languagesOptional,  List<String> technologiesRequired,  List<String> technologiesOptional)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? name,  int? experience,  LevelType? level,  bool? graduated,  EducationType? education,  SpecialtyType? specialty, @JsonKey(toJson: _listToQuery)  List<String> languagesRequired, @JsonKey(toJson: _listToQuery)  List<String> languagesOptional, @JsonKey(toJson: _listToQuery)  List<String> technologiesRequired, @JsonKey(toJson: _listToQuery)  List<String> technologiesOptional)?  $default,) {final _that = this;
 switch (_that) {
 case _RequestForApplicant() when $default != null:
-return $default(_that.experience,_that.level,_that.graduated,_that.education,_that.specialty,_that.languagesRequired,_that.languagesOptional,_that.technologiesRequired,_that.technologiesOptional);case _:
+return $default(_that.name,_that.experience,_that.level,_that.graduated,_that.education,_that.specialty,_that.languagesRequired,_that.languagesOptional,_that.technologiesRequired,_that.technologiesOptional);case _:
   return null;
 
 }
@@ -528,37 +529,38 @@ return $default(_that.experience,_that.level,_that.graduated,_that.education,_th
 
 @JsonSerializable(includeIfNull: false)
 class _RequestForApplicant implements RequestForApplicant {
-  const _RequestForApplicant({this.experience, this.level, this.graduated, this.education, this.specialty, final  List<String> languagesRequired = const [], final  List<String> languagesOptional = const [], final  List<String> technologiesRequired = const [], final  List<String> technologiesOptional = const []}): _languagesRequired = languagesRequired,_languagesOptional = languagesOptional,_technologiesRequired = technologiesRequired,_technologiesOptional = technologiesOptional;
+  const _RequestForApplicant({this.name, this.experience, this.level, this.graduated, this.education, this.specialty, @JsonKey(toJson: _listToQuery) final  List<String> languagesRequired = const [], @JsonKey(toJson: _listToQuery) final  List<String> languagesOptional = const [], @JsonKey(toJson: _listToQuery) final  List<String> technologiesRequired = const [], @JsonKey(toJson: _listToQuery) final  List<String> technologiesOptional = const []}): _languagesRequired = languagesRequired,_languagesOptional = languagesOptional,_technologiesRequired = technologiesRequired,_technologiesOptional = technologiesOptional;
   factory _RequestForApplicant.fromJson(Map<String, dynamic> json) => _$RequestForApplicantFromJson(json);
 
+@override final  String? name;
 @override final  int? experience;
 @override final  LevelType? level;
 @override final  bool? graduated;
 @override final  EducationType? education;
 @override final  SpecialtyType? specialty;
  final  List<String> _languagesRequired;
-@override@JsonKey() List<String> get languagesRequired {
+@override@JsonKey(toJson: _listToQuery) List<String> get languagesRequired {
   if (_languagesRequired is EqualUnmodifiableListView) return _languagesRequired;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_languagesRequired);
 }
 
  final  List<String> _languagesOptional;
-@override@JsonKey() List<String> get languagesOptional {
+@override@JsonKey(toJson: _listToQuery) List<String> get languagesOptional {
   if (_languagesOptional is EqualUnmodifiableListView) return _languagesOptional;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_languagesOptional);
 }
 
  final  List<String> _technologiesRequired;
-@override@JsonKey() List<String> get technologiesRequired {
+@override@JsonKey(toJson: _listToQuery) List<String> get technologiesRequired {
   if (_technologiesRequired is EqualUnmodifiableListView) return _technologiesRequired;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_technologiesRequired);
 }
 
  final  List<String> _technologiesOptional;
-@override@JsonKey() List<String> get technologiesOptional {
+@override@JsonKey(toJson: _listToQuery) List<String> get technologiesOptional {
   if (_technologiesOptional is EqualUnmodifiableListView) return _technologiesOptional;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_technologiesOptional);
@@ -578,16 +580,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequestForApplicant&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.level, level) || other.level == level)&&(identical(other.graduated, graduated) || other.graduated == graduated)&&(identical(other.education, education) || other.education == education)&&(identical(other.specialty, specialty) || other.specialty == specialty)&&const DeepCollectionEquality().equals(other._languagesRequired, _languagesRequired)&&const DeepCollectionEquality().equals(other._languagesOptional, _languagesOptional)&&const DeepCollectionEquality().equals(other._technologiesRequired, _technologiesRequired)&&const DeepCollectionEquality().equals(other._technologiesOptional, _technologiesOptional));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequestForApplicant&&(identical(other.name, name) || other.name == name)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.level, level) || other.level == level)&&(identical(other.graduated, graduated) || other.graduated == graduated)&&(identical(other.education, education) || other.education == education)&&(identical(other.specialty, specialty) || other.specialty == specialty)&&const DeepCollectionEquality().equals(other._languagesRequired, _languagesRequired)&&const DeepCollectionEquality().equals(other._languagesOptional, _languagesOptional)&&const DeepCollectionEquality().equals(other._technologiesRequired, _technologiesRequired)&&const DeepCollectionEquality().equals(other._technologiesOptional, _technologiesOptional));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,experience,level,graduated,education,specialty,const DeepCollectionEquality().hash(_languagesRequired),const DeepCollectionEquality().hash(_languagesOptional),const DeepCollectionEquality().hash(_technologiesRequired),const DeepCollectionEquality().hash(_technologiesOptional));
+int get hashCode => Object.hash(runtimeType,name,experience,level,graduated,education,specialty,const DeepCollectionEquality().hash(_languagesRequired),const DeepCollectionEquality().hash(_languagesOptional),const DeepCollectionEquality().hash(_technologiesRequired),const DeepCollectionEquality().hash(_technologiesOptional));
 
 @override
 String toString() {
-  return 'RequestForApplicant(experience: $experience, level: $level, graduated: $graduated, education: $education, specialty: $specialty, languagesRequired: $languagesRequired, languagesOptional: $languagesOptional, technologiesRequired: $technologiesRequired, technologiesOptional: $technologiesOptional)';
+  return 'RequestForApplicant(name: $name, experience: $experience, level: $level, graduated: $graduated, education: $education, specialty: $specialty, languagesRequired: $languagesRequired, languagesOptional: $languagesOptional, technologiesRequired: $technologiesRequired, technologiesOptional: $technologiesOptional)';
 }
 
 
@@ -598,7 +600,7 @@ abstract mixin class _$RequestForApplicantCopyWith<$Res> implements $RequestForA
   factory _$RequestForApplicantCopyWith(_RequestForApplicant value, $Res Function(_RequestForApplicant) _then) = __$RequestForApplicantCopyWithImpl;
 @override @useResult
 $Res call({
- int? experience, LevelType? level, bool? graduated, EducationType? education, SpecialtyType? specialty, List<String> languagesRequired, List<String> languagesOptional, List<String> technologiesRequired, List<String> technologiesOptional
+ String? name, int? experience, LevelType? level, bool? graduated, EducationType? education, SpecialtyType? specialty,@JsonKey(toJson: _listToQuery) List<String> languagesRequired,@JsonKey(toJson: _listToQuery) List<String> languagesOptional,@JsonKey(toJson: _listToQuery) List<String> technologiesRequired,@JsonKey(toJson: _listToQuery) List<String> technologiesOptional
 });
 
 
@@ -615,9 +617,10 @@ class __$RequestForApplicantCopyWithImpl<$Res>
 
 /// Create a copy of RequestForApplicant
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? experience = freezed,Object? level = freezed,Object? graduated = freezed,Object? education = freezed,Object? specialty = freezed,Object? languagesRequired = null,Object? languagesOptional = null,Object? technologiesRequired = null,Object? technologiesOptional = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = freezed,Object? experience = freezed,Object? level = freezed,Object? graduated = freezed,Object? education = freezed,Object? specialty = freezed,Object? languagesRequired = null,Object? languagesOptional = null,Object? technologiesRequired = null,Object? technologiesOptional = null,}) {
   return _then(_RequestForApplicant(
-experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
+name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
 as int?,level: freezed == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
 as LevelType?,graduated: freezed == graduated ? _self.graduated : graduated // ignore: cast_nullable_to_non_nullable
 as bool?,education: freezed == education ? _self.education : education // ignore: cast_nullable_to_non_nullable

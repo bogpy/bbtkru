@@ -218,8 +218,8 @@ return $default(_that.id,_that.title,_that.description,_that.companyID,_that.com
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(explicitToJson: true)
 class _Vacancy implements Vacancy {
   const _Vacancy({required this.id, required this.title, required this.description, required this.companyID, required this.companyName, required this.experience, required this.salary, required this.hours, required this.employment, required this.location, final  List<String> languages = const [], final  List<String> technologies = const [], this.score = 0}): _languages = languages,_technologies = technologies;
   factory _Vacancy.fromJson(Map<String, dynamic> json) => _$VacancyFromJson(json);
@@ -326,7 +326,7 @@ as int,
 /// @nodoc
 mixin _$RequestForVacancy {
 
- int? get experience; int? get salary; EmploymentType? get employment; LocationType? get location; String? get country; int? get hours; List<String> get languages; List<String> get technologies;
+ String? get title; int? get experience; int? get salary; EmploymentType? get employment; LocationType? get location; String? get country; int? get hours;@JsonKey(toJson: _listToQuery) List<String> get languages;@JsonKey(toJson: _listToQuery) List<String> get technologies;
 /// Create a copy of RequestForVacancy
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -339,16 +339,16 @@ $RequestForVacancyCopyWith<RequestForVacancy> get copyWith => _$RequestForVacanc
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequestForVacancy&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.salary, salary) || other.salary == salary)&&(identical(other.employment, employment) || other.employment == employment)&&(identical(other.location, location) || other.location == location)&&(identical(other.country, country) || other.country == country)&&(identical(other.hours, hours) || other.hours == hours)&&const DeepCollectionEquality().equals(other.languages, languages)&&const DeepCollectionEquality().equals(other.technologies, technologies));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequestForVacancy&&(identical(other.title, title) || other.title == title)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.salary, salary) || other.salary == salary)&&(identical(other.employment, employment) || other.employment == employment)&&(identical(other.location, location) || other.location == location)&&(identical(other.country, country) || other.country == country)&&(identical(other.hours, hours) || other.hours == hours)&&const DeepCollectionEquality().equals(other.languages, languages)&&const DeepCollectionEquality().equals(other.technologies, technologies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,experience,salary,employment,location,country,hours,const DeepCollectionEquality().hash(languages),const DeepCollectionEquality().hash(technologies));
+int get hashCode => Object.hash(runtimeType,title,experience,salary,employment,location,country,hours,const DeepCollectionEquality().hash(languages),const DeepCollectionEquality().hash(technologies));
 
 @override
 String toString() {
-  return 'RequestForVacancy(experience: $experience, salary: $salary, employment: $employment, location: $location, country: $country, hours: $hours, languages: $languages, technologies: $technologies)';
+  return 'RequestForVacancy(title: $title, experience: $experience, salary: $salary, employment: $employment, location: $location, country: $country, hours: $hours, languages: $languages, technologies: $technologies)';
 }
 
 
@@ -359,7 +359,7 @@ abstract mixin class $RequestForVacancyCopyWith<$Res>  {
   factory $RequestForVacancyCopyWith(RequestForVacancy value, $Res Function(RequestForVacancy) _then) = _$RequestForVacancyCopyWithImpl;
 @useResult
 $Res call({
- int? experience, int? salary, EmploymentType? employment, LocationType? location, String? country, int? hours, List<String> languages, List<String> technologies
+ String? title, int? experience, int? salary, EmploymentType? employment, LocationType? location, String? country, int? hours,@JsonKey(toJson: _listToQuery) List<String> languages,@JsonKey(toJson: _listToQuery) List<String> technologies
 });
 
 
@@ -376,9 +376,10 @@ class _$RequestForVacancyCopyWithImpl<$Res>
 
 /// Create a copy of RequestForVacancy
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? experience = freezed,Object? salary = freezed,Object? employment = freezed,Object? location = freezed,Object? country = freezed,Object? hours = freezed,Object? languages = null,Object? technologies = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = freezed,Object? experience = freezed,Object? salary = freezed,Object? employment = freezed,Object? location = freezed,Object? country = freezed,Object? hours = freezed,Object? languages = null,Object? technologies = null,}) {
   return _then(_self.copyWith(
-experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
+title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
 as int?,salary: freezed == salary ? _self.salary : salary // ignore: cast_nullable_to_non_nullable
 as int?,employment: freezed == employment ? _self.employment : employment // ignore: cast_nullable_to_non_nullable
 as EmploymentType?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
@@ -471,10 +472,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? experience,  int? salary,  EmploymentType? employment,  LocationType? location,  String? country,  int? hours,  List<String> languages,  List<String> technologies)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? title,  int? experience,  int? salary,  EmploymentType? employment,  LocationType? location,  String? country,  int? hours, @JsonKey(toJson: _listToQuery)  List<String> languages, @JsonKey(toJson: _listToQuery)  List<String> technologies)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RequestForVacancy() when $default != null:
-return $default(_that.experience,_that.salary,_that.employment,_that.location,_that.country,_that.hours,_that.languages,_that.technologies);case _:
+return $default(_that.title,_that.experience,_that.salary,_that.employment,_that.location,_that.country,_that.hours,_that.languages,_that.technologies);case _:
   return orElse();
 
 }
@@ -492,10 +493,10 @@ return $default(_that.experience,_that.salary,_that.employment,_that.location,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? experience,  int? salary,  EmploymentType? employment,  LocationType? location,  String? country,  int? hours,  List<String> languages,  List<String> technologies)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? title,  int? experience,  int? salary,  EmploymentType? employment,  LocationType? location,  String? country,  int? hours, @JsonKey(toJson: _listToQuery)  List<String> languages, @JsonKey(toJson: _listToQuery)  List<String> technologies)  $default,) {final _that = this;
 switch (_that) {
 case _RequestForVacancy():
-return $default(_that.experience,_that.salary,_that.employment,_that.location,_that.country,_that.hours,_that.languages,_that.technologies);case _:
+return $default(_that.title,_that.experience,_that.salary,_that.employment,_that.location,_that.country,_that.hours,_that.languages,_that.technologies);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -512,10 +513,10 @@ return $default(_that.experience,_that.salary,_that.employment,_that.location,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? experience,  int? salary,  EmploymentType? employment,  LocationType? location,  String? country,  int? hours,  List<String> languages,  List<String> technologies)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? title,  int? experience,  int? salary,  EmploymentType? employment,  LocationType? location,  String? country,  int? hours, @JsonKey(toJson: _listToQuery)  List<String> languages, @JsonKey(toJson: _listToQuery)  List<String> technologies)?  $default,) {final _that = this;
 switch (_that) {
 case _RequestForVacancy() when $default != null:
-return $default(_that.experience,_that.salary,_that.employment,_that.location,_that.country,_that.hours,_that.languages,_that.technologies);case _:
+return $default(_that.title,_that.experience,_that.salary,_that.employment,_that.location,_that.country,_that.hours,_that.languages,_that.technologies);case _:
   return null;
 
 }
@@ -527,9 +528,10 @@ return $default(_that.experience,_that.salary,_that.employment,_that.location,_t
 
 @JsonSerializable(includeIfNull: false)
 class _RequestForVacancy implements RequestForVacancy {
-  const _RequestForVacancy({this.experience, this.salary, this.employment, this.location, this.country, this.hours, final  List<String> languages = const [], final  List<String> technologies = const []}): _languages = languages,_technologies = technologies;
+  const _RequestForVacancy({this.title, this.experience, this.salary, this.employment, this.location, this.country, this.hours, @JsonKey(toJson: _listToQuery) final  List<String> languages = const [], @JsonKey(toJson: _listToQuery) final  List<String> technologies = const []}): _languages = languages,_technologies = technologies;
   factory _RequestForVacancy.fromJson(Map<String, dynamic> json) => _$RequestForVacancyFromJson(json);
 
+@override final  String? title;
 @override final  int? experience;
 @override final  int? salary;
 @override final  EmploymentType? employment;
@@ -537,14 +539,14 @@ class _RequestForVacancy implements RequestForVacancy {
 @override final  String? country;
 @override final  int? hours;
  final  List<String> _languages;
-@override@JsonKey() List<String> get languages {
+@override@JsonKey(toJson: _listToQuery) List<String> get languages {
   if (_languages is EqualUnmodifiableListView) return _languages;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_languages);
 }
 
  final  List<String> _technologies;
-@override@JsonKey() List<String> get technologies {
+@override@JsonKey(toJson: _listToQuery) List<String> get technologies {
   if (_technologies is EqualUnmodifiableListView) return _technologies;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_technologies);
@@ -564,16 +566,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequestForVacancy&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.salary, salary) || other.salary == salary)&&(identical(other.employment, employment) || other.employment == employment)&&(identical(other.location, location) || other.location == location)&&(identical(other.country, country) || other.country == country)&&(identical(other.hours, hours) || other.hours == hours)&&const DeepCollectionEquality().equals(other._languages, _languages)&&const DeepCollectionEquality().equals(other._technologies, _technologies));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequestForVacancy&&(identical(other.title, title) || other.title == title)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.salary, salary) || other.salary == salary)&&(identical(other.employment, employment) || other.employment == employment)&&(identical(other.location, location) || other.location == location)&&(identical(other.country, country) || other.country == country)&&(identical(other.hours, hours) || other.hours == hours)&&const DeepCollectionEquality().equals(other._languages, _languages)&&const DeepCollectionEquality().equals(other._technologies, _technologies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,experience,salary,employment,location,country,hours,const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_technologies));
+int get hashCode => Object.hash(runtimeType,title,experience,salary,employment,location,country,hours,const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_technologies));
 
 @override
 String toString() {
-  return 'RequestForVacancy(experience: $experience, salary: $salary, employment: $employment, location: $location, country: $country, hours: $hours, languages: $languages, technologies: $technologies)';
+  return 'RequestForVacancy(title: $title, experience: $experience, salary: $salary, employment: $employment, location: $location, country: $country, hours: $hours, languages: $languages, technologies: $technologies)';
 }
 
 
@@ -584,7 +586,7 @@ abstract mixin class _$RequestForVacancyCopyWith<$Res> implements $RequestForVac
   factory _$RequestForVacancyCopyWith(_RequestForVacancy value, $Res Function(_RequestForVacancy) _then) = __$RequestForVacancyCopyWithImpl;
 @override @useResult
 $Res call({
- int? experience, int? salary, EmploymentType? employment, LocationType? location, String? country, int? hours, List<String> languages, List<String> technologies
+ String? title, int? experience, int? salary, EmploymentType? employment, LocationType? location, String? country, int? hours,@JsonKey(toJson: _listToQuery) List<String> languages,@JsonKey(toJson: _listToQuery) List<String> technologies
 });
 
 
@@ -601,9 +603,10 @@ class __$RequestForVacancyCopyWithImpl<$Res>
 
 /// Create a copy of RequestForVacancy
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? experience = freezed,Object? salary = freezed,Object? employment = freezed,Object? location = freezed,Object? country = freezed,Object? hours = freezed,Object? languages = null,Object? technologies = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = freezed,Object? experience = freezed,Object? salary = freezed,Object? employment = freezed,Object? location = freezed,Object? country = freezed,Object? hours = freezed,Object? languages = null,Object? technologies = null,}) {
   return _then(_RequestForVacancy(
-experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
+title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,experience: freezed == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
 as int?,salary: freezed == salary ? _self.salary : salary // ignore: cast_nullable_to_non_nullable
 as int?,employment: freezed == employment ? _self.employment : employment // ignore: cast_nullable_to_non_nullable
 as EmploymentType?,location: freezed == location ? _self.location : location // ignore: cast_nullable_to_non_nullable

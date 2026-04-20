@@ -33,6 +33,8 @@ enum LocationType {
 
 @freezed
 abstract class Vacancy with _$Vacancy {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
   const factory Vacancy({
     required int id,
     required String title,
@@ -55,18 +57,22 @@ abstract class Vacancy with _$Vacancy {
   factory Vacancy.fromJson(Map<String, dynamic> json) => _$VacancyFromJson(json);
 }
 
+String? _listToQuery(List<String> list) => list.isEmpty ? null : list.join(',');
+
 @freezed
 abstract class RequestForVacancy with _$RequestForVacancy {
+  // ignore: invalid_annotation_target
   @JsonSerializable(includeIfNull: false)
   const factory RequestForVacancy({
+    String? title,
     int? experience,
     int? salary,
     EmploymentType? employment,
     LocationType? location,
     String? country,
     int? hours,
-    @Default([]) List<String> languages,
-    @Default([]) List<String> technologies,
+    @JsonKey(toJson: _listToQuery) @Default([]) List<String> languages,
+    @JsonKey(toJson: _listToQuery) @Default([]) List<String> technologies,
   }) = _RequestForVacancy;
 
   factory RequestForVacancy.fromJson(Map<String, dynamic> json) => _$RequestForVacancyFromJson(json);

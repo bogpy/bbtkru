@@ -87,27 +87,26 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 24),
-          OutlinedButton.icon(
-            onPressed: () {
-              ref.read(companyRequestProvider.notifier).reset();
-              ref.read(companySearchTextProvider.notifier).reset();
-              _searchController.clear();
-            },
-            icon: const Icon(Icons.refresh),
-            label: const Text('Reset Filters'),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.error,
-            ),
-          ),
           TextField(
             controller: _searchController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Search by name',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.search),
+              border: const OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.search),
+              suffixIcon: _searchController.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _searchController.clear();
+                        ref.read(companySearchTextProvider.notifier).update('');
+                        setState(() {});
+                      },
+                    )
+                  : null,
             ),
             onChanged: (value) {
               ref.read(companySearchTextProvider.notifier).update(value);
+              setState(() {});
             },
           ),
           const SizedBox(height: 20),
@@ -150,24 +149,19 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
 
   Widget _buildCompanyResults() {
     final companyAsync = ref.watch(companiesProvider);
-    final searchText = ref.watch(companySearchTextProvider);
 
     return companyAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stack) => Center(child: Text('Error: $error')),
       data: (items) {
-        final filtered = items
-            .where((i) => i.name.toLowerCase().contains(searchText.toLowerCase()))
-            .toList();
-
-        if (filtered.isEmpty) {
+        if (items.isEmpty) {
           return const Center(child: Text("No companies found matching filters."));
         }
 
         return ListView.builder(
-          itemCount: filtered.length,
+          itemCount: items.length,
           itemBuilder: (context, index) {
-            final item = filtered[index];
+            final item = items[index];
             return ListTile(
               leading: CircleAvatar(child: Text(item.name[0])),
               title: Text(item.name),

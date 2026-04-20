@@ -76,7 +76,7 @@ class ApiService {
         final List data = response.data;
         return data.map((json) => Applicant.fromJson(json)).toList();
       }
-      throw Exception('Failed to load vacancies');
+      throw Exception('Failed to load applicants');
     } on DioException catch (e) {
       if (CancelToken.isCancel(e)) throw Exception('Cancelled');
       throw _handleError(e);

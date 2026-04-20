@@ -89,27 +89,26 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 24),
-          OutlinedButton.icon(
-            onPressed: () {
-              ref.read(applicantRequestProvider.notifier).reset();
-              ref.read(applicantSearchTextProvider.notifier).reset();
-              _searchController.clear();
-            },
-            icon: const Icon(Icons.refresh),
-            label: const Text('Reset Filters'),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.error,
-            ),
-          ),
           TextField(
             controller: _searchController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Search by title',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.search),
+              border: const OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.search),
+              suffixIcon: _searchController.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _searchController.clear();
+                        ref.read(applicantSearchTextProvider.notifier).update('');
+                        setState(() {});
+                      },
+                    )
+                  : null,
             ),
             onChanged: (value) {
               ref.read(applicantSearchTextProvider.notifier).update(value);
+              setState(() {});
             },
           ),
           const SizedBox(height: 20),
@@ -188,22 +187,22 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
           ),
           const SizedBox(height: 16),
           SearchableMultiChoiceField<String>(
-            label: 'Technologies',
-            values: DataService.technologies,
-            selectedValues: request.technologiesRequired,
-            labelBuilder: (s) => s,
-            onChanged: (val) {
-              ref.read(applicantRequestProvider.notifier).update(request.copyWith(technologiesRequired: val));
-            },
-          ),
-          const SizedBox(height: 16),
-          SearchableMultiChoiceField<String>(
             label: 'Languages',
             values: DataService.languages,
             selectedValues: request.languagesRequired,
             labelBuilder: (s) => s,
             onChanged: (val) {
               ref.read(applicantRequestProvider.notifier).update(request.copyWith(languagesRequired: val));
+            },
+          ),
+          const SizedBox(height: 16),
+          SearchableMultiChoiceField<String>(
+            label: 'Technologies',
+            values: DataService.technologies,
+            selectedValues: request.technologiesRequired,
+            labelBuilder: (s) => s,
+            onChanged: (val) {
+              ref.read(applicantRequestProvider.notifier).update(request.copyWith(technologiesRequired: val));
             },
           ),
         ],
@@ -213,24 +212,19 @@ class _ApplicantSearchPageState extends ConsumerState<ApplicantSearchPage> {
 
   Widget _buildApplicantResults() {
     final applicantAsync = ref.watch(applicantsProvider);
-    final searchText = ref.watch(applicantSearchTextProvider);
 
     return applicantAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stack) => Center(child: Text('Error: $error')),
       data: (items) {
-        final filtered = items
-            .where((i) => i.name.toLowerCase().contains(searchText.toLowerCase()))
-            .toList();
-
-        if (filtered.isEmpty) {
+        if (items.isEmpty) {
           return const Center(child: Text("No applicants found matching filters."));
         }
 
         return ListView.builder(
-          itemCount: filtered.length,
+          itemCount: items.length,
           itemBuilder: (context, index) {
-            final item = filtered[index];
+            final item = items[index];
             return ListTile(
               leading: CircleAvatar(child: Text(item.name[0])),
               title: Text(item.name),

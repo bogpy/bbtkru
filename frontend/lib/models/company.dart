@@ -6,6 +6,7 @@ part 'company.g.dart';
 
 @freezed
 abstract class Company with _$Company {
+  // ignore: invalid_annotation_target
   @JsonSerializable(explicitToJson: true)
   const factory Company({
     required int id,
@@ -22,8 +23,10 @@ abstract class Company with _$Company {
 
 @freezed
 abstract class RequestForCompany with _$RequestForCompany {
+  // ignore: invalid_annotation_target
   @JsonSerializable(includeIfNull: false)
   const factory RequestForCompany({
+    String? name,
     String? country,
     int? employeeCount,
   }) = _RequestForCompany;

@@ -17,14 +17,6 @@ class VacancyRequestNotifier extends Notifier<RequestForVacancy> {
 
 final vacancyRequestProvider = NotifierProvider<VacancyRequestNotifier, RequestForVacancy>(VacancyRequestNotifier.new);
 
-final vacanciesProvider = FutureProvider<List<Vacancy>>((ref) async {
-  final request = ref.watch(vacancyRequestProvider);
-  await Future.delayed(const Duration(milliseconds: 350));
-  final cancelToken = CancelToken();
-  ref.onDispose(() => cancelToken.cancel());
-  return ApiService().getVacancies(request, cancelToken: cancelToken);
-});
-
 class VacancySearchTextNotifier extends Notifier<String> {
   @override
   String build() => "";
@@ -33,6 +25,20 @@ class VacancySearchTextNotifier extends Notifier<String> {
 }
 
 final vacancySearchTextProvider = NotifierProvider<VacancySearchTextNotifier, String>(VacancySearchTextNotifier.new);
+
+final vacanciesProvider = FutureProvider<List<Vacancy>>((ref) async {
+  final request = ref.watch(vacancyRequestProvider);
+  final searchText = ref.watch(vacancySearchTextProvider);
+  
+  // Throttle API calls
+  await Future.delayed(const Duration(milliseconds: 500));
+  
+  final cancelToken = CancelToken();
+  ref.onDispose(() => cancelToken.cancel());
+  
+  final finalRequest = request.copyWith(title: searchText.isEmpty ? null : searchText);
+  return ApiService().getVacancies(finalRequest, cancelToken: cancelToken);
+});
 
 // --- Applicant ---
 
@@ -45,14 +51,6 @@ class ApplicantRequestNotifier extends Notifier<RequestForApplicant> {
 
 final applicantRequestProvider = NotifierProvider<ApplicantRequestNotifier, RequestForApplicant>(ApplicantRequestNotifier.new);
 
-final applicantsProvider = FutureProvider<List<Applicant>>((ref) async {
-  final request = ref.watch(applicantRequestProvider);
-  await Future.delayed(const Duration(milliseconds: 350));
-  final cancelToken = CancelToken();
-  ref.onDispose(() => cancelToken.cancel());
-  return ApiService().getApplicants(request, cancelToken: cancelToken);
-});
-
 class ApplicantSearchTextNotifier extends Notifier<String> {
   @override
   String build() => "";
@@ -61,6 +59,19 @@ class ApplicantSearchTextNotifier extends Notifier<String> {
 }
 
 final applicantSearchTextProvider = NotifierProvider<ApplicantSearchTextNotifier, String>(ApplicantSearchTextNotifier.new);
+
+final applicantsProvider = FutureProvider<List<Applicant>>((ref) async {
+  final request = ref.watch(applicantRequestProvider);
+  final searchText = ref.watch(applicantSearchTextProvider);
+  
+  await Future.delayed(const Duration(milliseconds: 500));
+  
+  final cancelToken = CancelToken();
+  ref.onDispose(() => cancelToken.cancel());
+  
+  final finalRequest = request.copyWith(name: searchText.isEmpty ? null : searchText);
+  return ApiService().getApplicants(finalRequest, cancelToken: cancelToken);
+});
 
 // --- Company ---
 
@@ -73,14 +84,6 @@ class CompanyRequestNotifier extends Notifier<RequestForCompany> {
 
 final companyRequestProvider = NotifierProvider<CompanyRequestNotifier, RequestForCompany>(CompanyRequestNotifier.new);
 
-final companiesProvider = FutureProvider<List<Company>>((ref) async {
-  final request = ref.watch(companyRequestProvider);
-  await Future.delayed(const Duration(milliseconds: 350));
-  final cancelToken = CancelToken();
-  ref.onDispose(() => cancelToken.cancel());
-  return ApiService().getCompanies(request, cancelToken: cancelToken);
-});
-
 class CompanySearchTextNotifier extends Notifier<String> {
   @override
   String build() => "";
@@ -89,3 +92,16 @@ class CompanySearchTextNotifier extends Notifier<String> {
 }
 
 final companySearchTextProvider = NotifierProvider<CompanySearchTextNotifier, String>(CompanySearchTextNotifier.new);
+
+final companiesProvider = FutureProvider<List<Company>>((ref) async {
+  final request = ref.watch(companyRequestProvider);
+  final searchText = ref.watch(companySearchTextProvider);
+  
+  await Future.delayed(const Duration(milliseconds: 500));
+  
+  final cancelToken = CancelToken();
+  ref.onDispose(() => cancelToken.cancel());
+  
+  final finalRequest = request.copyWith(name: searchText.isEmpty ? null : searchText);
+  return ApiService().getCompanies(finalRequest, cancelToken: cancelToken);
+});

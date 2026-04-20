@@ -59,6 +59,7 @@ const _$LocationTypeEnumMap = {
 _RequestForVacancy _$RequestForVacancyFromJson(
   Map<String, dynamic> json,
 ) => _RequestForVacancy(
+  title: json['title'] as String?,
   experience: (json['experience'] as num?)?.toInt(),
   salary: (json['salary'] as num?)?.toInt(),
   employment: $enumDecodeNullable(_$EmploymentTypeEnumMap, json['employment']),
@@ -77,12 +78,13 @@ _RequestForVacancy _$RequestForVacancyFromJson(
 
 Map<String, dynamic> _$RequestForVacancyToJson(_RequestForVacancy instance) =>
     <String, dynamic>{
+      'title': ?instance.title,
       'experience': ?instance.experience,
       'salary': ?instance.salary,
       'employment': ?_$EmploymentTypeEnumMap[instance.employment],
       'location': ?_$LocationTypeEnumMap[instance.location],
       'country': ?instance.country,
       'hours': ?instance.hours,
-      'languages': instance.languages,
-      'technologies': instance.technologies,
+      'languages': ?_listToQuery(instance.languages),
+      'technologies': ?_listToQuery(instance.technologies),
     };

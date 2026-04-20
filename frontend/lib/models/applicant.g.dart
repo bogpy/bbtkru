@@ -70,6 +70,7 @@ const _$LevelTypeEnumMap = {
 
 _RequestForApplicant _$RequestForApplicantFromJson(Map<String, dynamic> json) =>
     _RequestForApplicant(
+      name: json['name'] as String?,
       experience: (json['experience'] as num?)?.toInt(),
       level: $enumDecodeNullable(_$LevelTypeEnumMap, json['level']),
       graduated: json['graduated'] as bool?,
@@ -100,13 +101,14 @@ _RequestForApplicant _$RequestForApplicantFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$RequestForApplicantToJson(
   _RequestForApplicant instance,
 ) => <String, dynamic>{
+  'name': ?instance.name,
   'experience': ?instance.experience,
   'level': ?_$LevelTypeEnumMap[instance.level],
   'graduated': ?instance.graduated,
   'education': ?_$EducationTypeEnumMap[instance.education],
   'specialty': ?_$SpecialtyTypeEnumMap[instance.specialty],
-  'languagesRequired': instance.languagesRequired,
-  'languagesOptional': instance.languagesOptional,
-  'technologiesRequired': instance.technologiesRequired,
-  'technologiesOptional': instance.technologiesOptional,
+  'languagesRequired': ?_listToQuery(instance.languagesRequired),
+  'languagesOptional': ?_listToQuery(instance.languagesOptional),
+  'technologiesRequired': ?_listToQuery(instance.technologiesRequired),
+  'technologiesOptional': ?_listToQuery(instance.technologiesOptional),
 };

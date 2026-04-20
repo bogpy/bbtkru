@@ -57,6 +57,8 @@ enum LevelType {
 
 @freezed
 abstract class Applicant with _$Applicant {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
   const factory Applicant({
     required int id,
     required String name,
@@ -76,19 +78,23 @@ abstract class Applicant with _$Applicant {
   factory Applicant.fromJson(Map<String, dynamic> json) => _$ApplicantFromJson(json);
 }
 
+String? _listToQuery(List<String> list) => list.isEmpty ? null : list.join(',');
+
 @freezed
 abstract class RequestForApplicant with _$RequestForApplicant {
+  // ignore: invalid_annotation_target
   @JsonSerializable(includeIfNull: false)
   const factory RequestForApplicant({
+    String? name,
     int? experience,
     LevelType? level,
     bool? graduated,
     EducationType? education,
     SpecialtyType? specialty,
-    @Default([]) List<String> languagesRequired,
-    @Default([]) List<String> languagesOptional,
-    @Default([]) List<String> technologiesRequired,
-    @Default([]) List<String> technologiesOptional,
+    @JsonKey(toJson: _listToQuery) @Default([]) List<String> languagesRequired,
+    @JsonKey(toJson: _listToQuery) @Default([]) List<String> languagesOptional,
+    @JsonKey(toJson: _listToQuery) @Default([]) List<String> technologiesRequired,
+    @JsonKey(toJson: _listToQuery) @Default([]) List<String> technologiesOptional,
   }) = _RequestForApplicant;
 
   factory RequestForApplicant.fromJson(Map<String, dynamic> json) => _$RequestForApplicantFromJson(json);
