@@ -4,15 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"strings"
 )
 
 type Language struct {
 	ID   int64  `db:"id" json:"id"`
 	Name string `db:"name" json:"name"`
 }
-
-type LanguageList []Language
 
 func (x *Language) SetID(id int64) {
 	x.ID = id
@@ -39,27 +36,21 @@ func (x *Language) MarshalJSON() ([]byte, error) {
 	return ans, nil
 }
 
-func (x *LanguageList) UnmarshalText(text []byte) error {
+func (x *Language) UnmarshalText(text []byte) error {
 	log.Printf("unmarshalling text: %v\n", string(text))
-	if len(text) == 0 {
-		*x = nil
-		return nil
+
+	var name string
+	name = string(text)
+	if name == "" || len(name) > 20 {
+		return fmt.Errorf("Invalid language name %v", name)
 	}
-	for item := range strings.SplitSeq(string(text), ",") {
-		if len(item) != 0 {
-			*x = append(*x, Language{Name: item})
-		}
-	}
+	*x = Language{Name: name}
 	return nil
 }
 
 type Technology struct {
 	ID   int64  `db:"id" json:"id"`
 	Name string `db:"name" json:"name"`
-}
-
-type TechnologyList struct {
-	Items []Technology
 }
 
 func (x *Technology) SetID(id int64) {
@@ -87,16 +78,14 @@ func (x *Technology) MarshalJSON() ([]byte, error) {
 	return ans, nil
 }
 
-func (x *TechnologyList) UnmarshalText(text []byte) error {
+func (x *Technology) UnmarshalText(text []byte) error {
 	log.Printf("unmarshalling text: %v\n", string(text))
-	if len(text) == 0 {
-		x.Items = nil
-		return nil
+
+	var name string
+	name = string(text)
+	if name == "" || len(name) > 40 {
+		return fmt.Errorf("Invalid technology name %v", name)
 	}
-	for item := range strings.SplitSeq(string(text), ",") {
-		if len(item) != 0 {
-			x.Items = append(x.Items, Technology{Name: item})
-		}
-	}
+	*x = Technology{Name: name}
 	return nil
 }

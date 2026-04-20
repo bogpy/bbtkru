@@ -72,10 +72,10 @@ type RequestForApplicant struct {
 	Graduated            *bool          `form:"graduated"`
 	Education_type       *EducationType `form:"education" binding:"omitempty,oneof=HighSchool Bachelor Master PhD"`
 	Specialty            *SpecialtyType `form:"specialty" binding:"omitempty,oneof=Frontend Backend Fullstack DataEngineer DevOps"`
-	LanguagesRequired    LanguageList   `form:"languagesRequired"`
-	LanguagesOptional    LanguageList   `form:"languagesOptional"`
-	TechnologiesRequired TechnologyList `form:"technologiesRequired"`
-	TechnologiesOptional TechnologyList `form:"technologiesOptional"`
+	LanguagesRequired    []Language     `form:"languagesRequired,parser=encoding.TextUnmarshaler" collection_format:"csv"`
+	LanguagesOptional    []Language     `form:"languagesOptional,parser=encoding.TextUnmarshaler" collection_format:"csv"`
+	TechnologiesRequired []Technology   `form:"technologiesRequired,parser=encoding.TextUnmarshaler" collection_format:"csv"`
+	TechnologiesOptional []Technology   `form:"technologiesOptional,parser=encoding.TextUnmarshaler" collection_format:"csv"`
 }
 
 const (
@@ -101,10 +101,10 @@ func (x Applicant) CalcScore(r RequestForApplicant) int {
 		}
 		score += cnt * LangWeight
 	}
-	if len(r.TechnologiesOptional.Items) > 0 {
+	if len(r.TechnologiesOptional) > 0 {
 		var cnt = 0
 		mp := make(map[int64]bool)
-		for _, tech := range r.TechnologiesOptional.Items {
+		for _, tech := range r.TechnologiesOptional {
 			mp[tech.ID] = true
 		}
 		for _, tech := range x.Technologies {

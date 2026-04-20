@@ -152,7 +152,7 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 		)
 	}
 
-	if len(request.TechnologiesRequired.Items) > 0 {
+	if len(request.TechnologiesRequired) > 0 {
 		queryBuilder.WriteString(
 			` AND EXISTS (
 				SELECT 1 FROM applicant_technology at
@@ -161,11 +161,11 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 				HAVING COUNT(DISTINCT at.technology_id) = ?
 			)`,
 		)
-		technologies_ids, err := r.GetTechnologiesIds(request.TechnologiesRequired.Items)
+		technologies_ids, err := r.GetTechnologiesIds(request.TechnologiesRequired)
 		if err != nil {
 			return nil, err
 		}
-		if len(technologies_ids) != len(request.TechnologiesRequired.Items) {
+		if len(technologies_ids) != len(request.TechnologiesRequired) {
 			return nil, fmt.Errorf(
 				"Non existing technologies in request: %v\n",
 				request.TechnologiesRequired)
