@@ -46,6 +46,7 @@ func (e Env) InsertApplicants(c *gin.Context) {
 	var applicants []*models.Applicant
 	if err := c.ShouldBindJSON(&applicants); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		log.Printf("Error binding query: %#v", err)
 		return
 	}
 	r := repository.NewApplicantRepository(e.db)
@@ -61,8 +62,10 @@ func (e Env) InsertApplicant(c *gin.Context) {
 	var applicant *models.Applicant
 	if err := c.ShouldBindJSON(&applicant); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		log.Printf("Error binding query: %#v", err)
 		return
 	}
+	log.Printf("Adding applicant: %+v", applicant)
 	r := repository.NewApplicantRepository(e.db)
 	err := r.InsertApplicant(applicant)
 	if err != nil {

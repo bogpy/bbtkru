@@ -19,7 +19,7 @@ func NewVacancyRepository(db *sqlx.DB) *VacancyRepository {
 func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]models.Vacancy, error) {
 	var queryBuilder strings.Builder
 	queryBuilder.WriteString("SELECT * FROM vacancy v WHERE 1=1")
-	var args []interface{}
+	var args []any
 	if request.Experience != nil {
 		queryBuilder.WriteString(" AND experience <= ?")
 		args = append(args, *request.Experience)
