@@ -55,6 +55,8 @@ type RequestForVacancy struct {
 	Location   *LocationType		`form:"location" binding:"omitempty,oneof=Remote Hybrid In-office"`
 	Hours      *int		`form:"hours"`
 	Country    *string	`form:"country"`
+	Languages    []Language     `form:"languages,parser=encoding.TextUnmarshaler" collection_format:"csv"`
+	Technologies []Technology   `form:"technologies,parser=encoding.TextUnmarshaler" collection_format:"csv"`
 }
 
 const (

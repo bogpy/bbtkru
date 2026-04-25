@@ -176,8 +176,7 @@ class _PublishApplicantPageState extends ConsumerState<PublishApplicantPage> {
     setState(() => _isPublishing = true);
     
     try {
-      final applicant = Applicant(
-        id: 0, // Server should assign ID
+      final request = PublicationRequestForApplicant(
         name: _name,
         dateOfBirth: _dateOfBirth!,
         education: _education,
@@ -191,7 +190,7 @@ class _PublishApplicantPageState extends ConsumerState<PublishApplicantPage> {
         technologies: _technologies,
       );
       
-      await ApiService().createApplicant(applicant);
+      await ApiService().createApplicant(request);
       
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Resume published successfully!")));

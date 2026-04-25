@@ -32,7 +32,7 @@ Map<String, dynamic> _$ApplicantToJson(_Applicant instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'dateOfBirth': instance.dateOfBirth.toIso8601String(),
+      'dateOfBirth': _dateTimeToJson(instance.dateOfBirth),
       'education': _$EducationTypeEnumMap[instance.education]!,
       'university': instance.university,
       'graduated': instance.graduated,
@@ -66,6 +66,44 @@ const _$LevelTypeEnumMap = {
   LevelType.middle: 'Middle',
   LevelType.senior: 'Senior',
   LevelType.lead: 'Lead',
+};
+
+_PublicationRequestForApplicant _$PublicationRequestForApplicantFromJson(
+  Map<String, dynamic> json,
+) => _PublicationRequestForApplicant(
+  name: json['name'] as String,
+  dateOfBirth: DateTime.parse(json['dateOfBirth'] as String),
+  education: $enumDecode(_$EducationTypeEnumMap, json['education']),
+  university: json['university'] as String,
+  graduated: json['graduated'] as bool,
+  specialty: $enumDecode(_$SpecialtyTypeEnumMap, json['specialty']),
+  level: $enumDecode(_$LevelTypeEnumMap, json['level']),
+  experience: (json['experience'] as num).toInt(),
+  workHistory: json['workHistory'] as String? ?? "",
+  languages:
+      (json['languages'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
+  technologies:
+      (json['technologies'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const [],
+);
+
+Map<String, dynamic> _$PublicationRequestForApplicantToJson(
+  _PublicationRequestForApplicant instance,
+) => <String, dynamic>{
+  'name': instance.name,
+  'dateOfBirth': _dateTimeToJson(instance.dateOfBirth),
+  'education': _$EducationTypeEnumMap[instance.education]!,
+  'university': instance.university,
+  'graduated': instance.graduated,
+  'specialty': _$SpecialtyTypeEnumMap[instance.specialty]!,
+  'level': _$LevelTypeEnumMap[instance.level]!,
+  'experience': instance.experience,
+  'workHistory': instance.workHistory,
+  'languages': instance.languages,
+  'technologies': instance.technologies,
 };
 
 _RequestForApplicant _$RequestForApplicantFromJson(Map<String, dynamic> json) =>

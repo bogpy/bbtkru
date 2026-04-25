@@ -109,9 +109,9 @@ class ApiService {
     }
   }
 
-  Future<void> createApplicant(Applicant applicant) async {
+  Future<void> createApplicant(PublicationRequestForApplicant request) async {
     try {
-      await _dio.post('/applicants', data: applicant.toJson());
+      await _dio.post('/applicants', data: request.toJson());
     } on DioException catch (e) {
       throw _handleError(e);
     }

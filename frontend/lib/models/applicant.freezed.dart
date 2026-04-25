@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Applicant {
 
- int get id; String get name; DateTime get dateOfBirth; EducationType get education; String get university; bool get graduated; SpecialtyType get specialty; LevelType get level; int get experience; String get workHistory; List<String> get languages; List<String> get technologies; int get score;
+ int get id; String get name;@JsonKey(toJson: _dateTimeToJson) DateTime get dateOfBirth; EducationType get education; String get university; bool get graduated; SpecialtyType get specialty; LevelType get level; int get experience; String get workHistory; List<String> get languages; List<String> get technologies; int get score;
 /// Create a copy of Applicant
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ApplicantCopyWith<$Res>  {
   factory $ApplicantCopyWith(Applicant value, $Res Function(Applicant) _then) = _$ApplicantCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, DateTime dateOfBirth, EducationType education, String university, bool graduated, SpecialtyType specialty, LevelType level, int experience, String workHistory, List<String> languages, List<String> technologies, int score
+ int id, String name,@JsonKey(toJson: _dateTimeToJson) DateTime dateOfBirth, EducationType education, String university, bool graduated, SpecialtyType specialty, LevelType level, int experience, String workHistory, List<String> languages, List<String> technologies, int score
 });
 
 
@@ -165,7 +165,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  DateTime dateOfBirth,  EducationType education,  String university,  bool graduated,  SpecialtyType specialty,  LevelType level,  int experience,  String workHistory,  List<String> languages,  List<String> technologies,  int score)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name, @JsonKey(toJson: _dateTimeToJson)  DateTime dateOfBirth,  EducationType education,  String university,  bool graduated,  SpecialtyType specialty,  LevelType level,  int experience,  String workHistory,  List<String> languages,  List<String> technologies,  int score)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Applicant() when $default != null:
 return $default(_that.id,_that.name,_that.dateOfBirth,_that.education,_that.university,_that.graduated,_that.specialty,_that.level,_that.experience,_that.workHistory,_that.languages,_that.technologies,_that.score);case _:
@@ -186,7 +186,7 @@ return $default(_that.id,_that.name,_that.dateOfBirth,_that.education,_that.univ
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  DateTime dateOfBirth,  EducationType education,  String university,  bool graduated,  SpecialtyType specialty,  LevelType level,  int experience,  String workHistory,  List<String> languages,  List<String> technologies,  int score)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name, @JsonKey(toJson: _dateTimeToJson)  DateTime dateOfBirth,  EducationType education,  String university,  bool graduated,  SpecialtyType specialty,  LevelType level,  int experience,  String workHistory,  List<String> languages,  List<String> technologies,  int score)  $default,) {final _that = this;
 switch (_that) {
 case _Applicant():
 return $default(_that.id,_that.name,_that.dateOfBirth,_that.education,_that.university,_that.graduated,_that.specialty,_that.level,_that.experience,_that.workHistory,_that.languages,_that.technologies,_that.score);case _:
@@ -206,7 +206,7 @@ return $default(_that.id,_that.name,_that.dateOfBirth,_that.education,_that.univ
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  DateTime dateOfBirth,  EducationType education,  String university,  bool graduated,  SpecialtyType specialty,  LevelType level,  int experience,  String workHistory,  List<String> languages,  List<String> technologies,  int score)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name, @JsonKey(toJson: _dateTimeToJson)  DateTime dateOfBirth,  EducationType education,  String university,  bool graduated,  SpecialtyType specialty,  LevelType level,  int experience,  String workHistory,  List<String> languages,  List<String> technologies,  int score)?  $default,) {final _that = this;
 switch (_that) {
 case _Applicant() when $default != null:
 return $default(_that.id,_that.name,_that.dateOfBirth,_that.education,_that.university,_that.graduated,_that.specialty,_that.level,_that.experience,_that.workHistory,_that.languages,_that.technologies,_that.score);case _:
@@ -221,12 +221,12 @@ return $default(_that.id,_that.name,_that.dateOfBirth,_that.education,_that.univ
 
 @JsonSerializable(explicitToJson: true)
 class _Applicant implements Applicant {
-  const _Applicant({required this.id, required this.name, required this.dateOfBirth, required this.education, required this.university, required this.graduated, required this.specialty, required this.level, required this.experience, this.workHistory = "", final  List<String> languages = const [], final  List<String> technologies = const [], this.score = 0}): _languages = languages,_technologies = technologies;
+  const _Applicant({required this.id, required this.name, @JsonKey(toJson: _dateTimeToJson) required this.dateOfBirth, required this.education, required this.university, required this.graduated, required this.specialty, required this.level, required this.experience, this.workHistory = "", final  List<String> languages = const [], final  List<String> technologies = const [], this.score = 0}): _languages = languages,_technologies = technologies;
   factory _Applicant.fromJson(Map<String, dynamic> json) => _$ApplicantFromJson(json);
 
 @override final  int id;
 @override final  String name;
-@override final  DateTime dateOfBirth;
+@override@JsonKey(toJson: _dateTimeToJson) final  DateTime dateOfBirth;
 @override final  EducationType education;
 @override final  String university;
 @override final  bool graduated;
@@ -283,7 +283,7 @@ abstract mixin class _$ApplicantCopyWith<$Res> implements $ApplicantCopyWith<$Re
   factory _$ApplicantCopyWith(_Applicant value, $Res Function(_Applicant) _then) = __$ApplicantCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, DateTime dateOfBirth, EducationType education, String university, bool graduated, SpecialtyType specialty, LevelType level, int experience, String workHistory, List<String> languages, List<String> technologies, int score
+ int id, String name,@JsonKey(toJson: _dateTimeToJson) DateTime dateOfBirth, EducationType education, String university, bool graduated, SpecialtyType specialty, LevelType level, int experience, String workHistory, List<String> languages, List<String> technologies, int score
 });
 
 
@@ -316,6 +316,311 @@ as String,languages: null == languages ? _self._languages : languages // ignore:
 as List<String>,technologies: null == technologies ? _self._technologies : technologies // ignore: cast_nullable_to_non_nullable
 as List<String>,score: null == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
 as int,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$PublicationRequestForApplicant {
+
+ String get name;@JsonKey(toJson: _dateTimeToJson) DateTime get dateOfBirth; EducationType get education; String get university; bool get graduated; SpecialtyType get specialty; LevelType get level; int get experience; String get workHistory; List<String> get languages; List<String> get technologies;
+/// Create a copy of PublicationRequestForApplicant
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$PublicationRequestForApplicantCopyWith<PublicationRequestForApplicant> get copyWith => _$PublicationRequestForApplicantCopyWithImpl<PublicationRequestForApplicant>(this as PublicationRequestForApplicant, _$identity);
+
+  /// Serializes this PublicationRequestForApplicant to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PublicationRequestForApplicant&&(identical(other.name, name) || other.name == name)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.education, education) || other.education == education)&&(identical(other.university, university) || other.university == university)&&(identical(other.graduated, graduated) || other.graduated == graduated)&&(identical(other.specialty, specialty) || other.specialty == specialty)&&(identical(other.level, level) || other.level == level)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.workHistory, workHistory) || other.workHistory == workHistory)&&const DeepCollectionEquality().equals(other.languages, languages)&&const DeepCollectionEquality().equals(other.technologies, technologies));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,name,dateOfBirth,education,university,graduated,specialty,level,experience,workHistory,const DeepCollectionEquality().hash(languages),const DeepCollectionEquality().hash(technologies));
+
+@override
+String toString() {
+  return 'PublicationRequestForApplicant(name: $name, dateOfBirth: $dateOfBirth, education: $education, university: $university, graduated: $graduated, specialty: $specialty, level: $level, experience: $experience, workHistory: $workHistory, languages: $languages, technologies: $technologies)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $PublicationRequestForApplicantCopyWith<$Res>  {
+  factory $PublicationRequestForApplicantCopyWith(PublicationRequestForApplicant value, $Res Function(PublicationRequestForApplicant) _then) = _$PublicationRequestForApplicantCopyWithImpl;
+@useResult
+$Res call({
+ String name,@JsonKey(toJson: _dateTimeToJson) DateTime dateOfBirth, EducationType education, String university, bool graduated, SpecialtyType specialty, LevelType level, int experience, String workHistory, List<String> languages, List<String> technologies
+});
+
+
+
+
+}
+/// @nodoc
+class _$PublicationRequestForApplicantCopyWithImpl<$Res>
+    implements $PublicationRequestForApplicantCopyWith<$Res> {
+  _$PublicationRequestForApplicantCopyWithImpl(this._self, this._then);
+
+  final PublicationRequestForApplicant _self;
+  final $Res Function(PublicationRequestForApplicant) _then;
+
+/// Create a copy of PublicationRequestForApplicant
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? dateOfBirth = null,Object? education = null,Object? university = null,Object? graduated = null,Object? specialty = null,Object? level = null,Object? experience = null,Object? workHistory = null,Object? languages = null,Object? technologies = null,}) {
+  return _then(_self.copyWith(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // ignore: cast_nullable_to_non_nullable
+as DateTime,education: null == education ? _self.education : education // ignore: cast_nullable_to_non_nullable
+as EducationType,university: null == university ? _self.university : university // ignore: cast_nullable_to_non_nullable
+as String,graduated: null == graduated ? _self.graduated : graduated // ignore: cast_nullable_to_non_nullable
+as bool,specialty: null == specialty ? _self.specialty : specialty // ignore: cast_nullable_to_non_nullable
+as SpecialtyType,level: null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
+as LevelType,experience: null == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
+as int,workHistory: null == workHistory ? _self.workHistory : workHistory // ignore: cast_nullable_to_non_nullable
+as String,languages: null == languages ? _self.languages : languages // ignore: cast_nullable_to_non_nullable
+as List<String>,technologies: null == technologies ? _self.technologies : technologies // ignore: cast_nullable_to_non_nullable
+as List<String>,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [PublicationRequestForApplicant].
+extension PublicationRequestForApplicantPatterns on PublicationRequestForApplicant {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PublicationRequestForApplicant value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _PublicationRequestForApplicant() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PublicationRequestForApplicant value)  $default,){
+final _that = this;
+switch (_that) {
+case _PublicationRequestForApplicant():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PublicationRequestForApplicant value)?  $default,){
+final _that = this;
+switch (_that) {
+case _PublicationRequestForApplicant() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name, @JsonKey(toJson: _dateTimeToJson)  DateTime dateOfBirth,  EducationType education,  String university,  bool graduated,  SpecialtyType specialty,  LevelType level,  int experience,  String workHistory,  List<String> languages,  List<String> technologies)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _PublicationRequestForApplicant() when $default != null:
+return $default(_that.name,_that.dateOfBirth,_that.education,_that.university,_that.graduated,_that.specialty,_that.level,_that.experience,_that.workHistory,_that.languages,_that.technologies);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name, @JsonKey(toJson: _dateTimeToJson)  DateTime dateOfBirth,  EducationType education,  String university,  bool graduated,  SpecialtyType specialty,  LevelType level,  int experience,  String workHistory,  List<String> languages,  List<String> technologies)  $default,) {final _that = this;
+switch (_that) {
+case _PublicationRequestForApplicant():
+return $default(_that.name,_that.dateOfBirth,_that.education,_that.university,_that.graduated,_that.specialty,_that.level,_that.experience,_that.workHistory,_that.languages,_that.technologies);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name, @JsonKey(toJson: _dateTimeToJson)  DateTime dateOfBirth,  EducationType education,  String university,  bool graduated,  SpecialtyType specialty,  LevelType level,  int experience,  String workHistory,  List<String> languages,  List<String> technologies)?  $default,) {final _that = this;
+switch (_that) {
+case _PublicationRequestForApplicant() when $default != null:
+return $default(_that.name,_that.dateOfBirth,_that.education,_that.university,_that.graduated,_that.specialty,_that.level,_that.experience,_that.workHistory,_that.languages,_that.technologies);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+@JsonSerializable(explicitToJson: true)
+class _PublicationRequestForApplicant implements PublicationRequestForApplicant {
+  const _PublicationRequestForApplicant({required this.name, @JsonKey(toJson: _dateTimeToJson) required this.dateOfBirth, required this.education, required this.university, required this.graduated, required this.specialty, required this.level, required this.experience, this.workHistory = "", final  List<String> languages = const [], final  List<String> technologies = const []}): _languages = languages,_technologies = technologies;
+  factory _PublicationRequestForApplicant.fromJson(Map<String, dynamic> json) => _$PublicationRequestForApplicantFromJson(json);
+
+@override final  String name;
+@override@JsonKey(toJson: _dateTimeToJson) final  DateTime dateOfBirth;
+@override final  EducationType education;
+@override final  String university;
+@override final  bool graduated;
+@override final  SpecialtyType specialty;
+@override final  LevelType level;
+@override final  int experience;
+@override@JsonKey() final  String workHistory;
+ final  List<String> _languages;
+@override@JsonKey() List<String> get languages {
+  if (_languages is EqualUnmodifiableListView) return _languages;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_languages);
+}
+
+ final  List<String> _technologies;
+@override@JsonKey() List<String> get technologies {
+  if (_technologies is EqualUnmodifiableListView) return _technologies;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_technologies);
+}
+
+
+/// Create a copy of PublicationRequestForApplicant
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PublicationRequestForApplicantCopyWith<_PublicationRequestForApplicant> get copyWith => __$PublicationRequestForApplicantCopyWithImpl<_PublicationRequestForApplicant>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$PublicationRequestForApplicantToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PublicationRequestForApplicant&&(identical(other.name, name) || other.name == name)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.education, education) || other.education == education)&&(identical(other.university, university) || other.university == university)&&(identical(other.graduated, graduated) || other.graduated == graduated)&&(identical(other.specialty, specialty) || other.specialty == specialty)&&(identical(other.level, level) || other.level == level)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.workHistory, workHistory) || other.workHistory == workHistory)&&const DeepCollectionEquality().equals(other._languages, _languages)&&const DeepCollectionEquality().equals(other._technologies, _technologies));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,name,dateOfBirth,education,university,graduated,specialty,level,experience,workHistory,const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_technologies));
+
+@override
+String toString() {
+  return 'PublicationRequestForApplicant(name: $name, dateOfBirth: $dateOfBirth, education: $education, university: $university, graduated: $graduated, specialty: $specialty, level: $level, experience: $experience, workHistory: $workHistory, languages: $languages, technologies: $technologies)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$PublicationRequestForApplicantCopyWith<$Res> implements $PublicationRequestForApplicantCopyWith<$Res> {
+  factory _$PublicationRequestForApplicantCopyWith(_PublicationRequestForApplicant value, $Res Function(_PublicationRequestForApplicant) _then) = __$PublicationRequestForApplicantCopyWithImpl;
+@override @useResult
+$Res call({
+ String name,@JsonKey(toJson: _dateTimeToJson) DateTime dateOfBirth, EducationType education, String university, bool graduated, SpecialtyType specialty, LevelType level, int experience, String workHistory, List<String> languages, List<String> technologies
+});
+
+
+
+
+}
+/// @nodoc
+class __$PublicationRequestForApplicantCopyWithImpl<$Res>
+    implements _$PublicationRequestForApplicantCopyWith<$Res> {
+  __$PublicationRequestForApplicantCopyWithImpl(this._self, this._then);
+
+  final _PublicationRequestForApplicant _self;
+  final $Res Function(_PublicationRequestForApplicant) _then;
+
+/// Create a copy of PublicationRequestForApplicant
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? dateOfBirth = null,Object? education = null,Object? university = null,Object? graduated = null,Object? specialty = null,Object? level = null,Object? experience = null,Object? workHistory = null,Object? languages = null,Object? technologies = null,}) {
+  return _then(_PublicationRequestForApplicant(
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // ignore: cast_nullable_to_non_nullable
+as DateTime,education: null == education ? _self.education : education // ignore: cast_nullable_to_non_nullable
+as EducationType,university: null == university ? _self.university : university // ignore: cast_nullable_to_non_nullable
+as String,graduated: null == graduated ? _self.graduated : graduated // ignore: cast_nullable_to_non_nullable
+as bool,specialty: null == specialty ? _self.specialty : specialty // ignore: cast_nullable_to_non_nullable
+as SpecialtyType,level: null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
+as LevelType,experience: null == experience ? _self.experience : experience // ignore: cast_nullable_to_non_nullable
+as int,workHistory: null == workHistory ? _self.workHistory : workHistory // ignore: cast_nullable_to_non_nullable
+as String,languages: null == languages ? _self._languages : languages // ignore: cast_nullable_to_non_nullable
+as List<String>,technologies: null == technologies ? _self._technologies : technologies // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 

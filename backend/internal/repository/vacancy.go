@@ -50,6 +50,56 @@ func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]mod
 		args = append(args, *request.Country)
 	}
 
+	if len(request.Languages) > 0 {
+		queryBuilder.WriteString(
+			` AND EXISTS (
+				SELECT 1 FROM vacancy_language vl
+				WHERE vl.vacancy_id = v.id AND vl.language_id IN (?)
+				GROUP BY vl.vacancy_id
+				HAVING COUNT(DISTINCT vl.language_id) = ?
+			)`,
+		)
+		languages_ids, err := r.GetLanguagesIds(request.Languages)
+		if err != nil {
+			return nil, err
+		}
+		if len(languages_ids) != len(request.Languages) {
+			return nil, fmt.Errorf(
+				"Non existing languages in request: %v\n",
+				request.Languages)
+		}
+		args = append(
+			args,
+			languages_ids,
+			len(languages_ids),
+		)
+	}
+
+	if len(request.Technologies) > 0 {
+		queryBuilder.WriteString(
+			` AND EXISTS (
+				SELECT 1 FROM vacancy_technology vt
+				WHERE vt.vacancy_id = v.id AND vt.technology_id IN (?)
+				GROUP BY vt.vacancy_id
+				HAVING COUNT(DISTINCT vt.technology_id) = ?
+			)`,
+		)
+		technologies_ids, err := r.GetTechnologiesIds(request.Technologies)
+		if err != nil {
+			return nil, err
+		}
+		if len(technologies_ids) != len(request.Technologies) {
+			return nil, fmt.Errorf(
+				"Non existing technologies in request: %v\n",
+				request.Technologies)
+		}
+		args = append(
+			args,
+			technologies_ids,
+			len(technologies_ids),
+		)
+	}
+
 	query := queryBuilder.String()
 	var vacancies []models.Vacancy
 	err := r.DB.Select(&vacancies, query, args...)
@@ -69,6 +119,50 @@ func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]mod
 	}
 
 	return vacancies, nil
+}
+
+func (r VacancyRepository) GetTechnologiesIds(technologies []models.Technology) ([]int64, error) {
+	query := `SELECT t.id FROM technology t
+			  WHERE t.name IN (?)`
+
+	technology_names := make([]string, len(technologies))
+	for i, tech := range technologies {
+		technology_names[i] = tech.Name
+	}
+	query, args, err := sqlx.In(query, technology_names)
+	if err != nil {
+		return nil, err
+	}
+	var technology_ids []int64
+	query = r.DB.Rebind(query)
+	err = r.DB.Select(&technology_ids, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return technology_ids, nil
+}
+
+func (r VacancyRepository) GetLanguagesIds(languages []models.Language) ([]int64, error) {
+	query := `SELECT l.id FROM language l
+			  WHERE l.name IN (?)`
+
+	language_names := make([]string, len(languages))
+	for i, lang := range languages {
+		language_names[i] = lang.Name
+	}
+	query, args, err := sqlx.In(query, language_names)
+	if err != nil {
+		return nil, err
+	}
+	var languages_ids []int64
+	query = r.DB.Rebind(query)
+	err = r.DB.Select(&languages_ids, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return languages_ids, nil
 }
 
 func (r VacancyRepository) BulkInsert(vacancies []*models.Vacancy) error {

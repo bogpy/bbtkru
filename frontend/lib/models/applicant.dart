@@ -62,7 +62,7 @@ abstract class Applicant with _$Applicant {
   const factory Applicant({
     required int id,
     required String name,
-    required DateTime dateOfBirth,
+    @JsonKey(toJson: _dateTimeToJson) required DateTime dateOfBirth,
     required EducationType education,
     required String university,
     required bool graduated,
@@ -78,7 +78,33 @@ abstract class Applicant with _$Applicant {
   factory Applicant.fromJson(Map<String, dynamic> json) => _$ApplicantFromJson(json);
 }
 
+String _dateTimeToJson(DateTime date) => 
+    "${date.year.toString().padLeft(4, '0')}-"
+    "${date.month.toString().padLeft(2, '0')}-"
+    "${date.day.toString().padLeft(2, '0')}T00:00:00Z";
+
 String? _listToQuery(List<String> list) => list.isEmpty ? null : list.join(',');
+
+@freezed
+abstract class PublicationRequestForApplicant with _$PublicationRequestForApplicant {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
+  const factory PublicationRequestForApplicant({
+    required String name,
+    @JsonKey(toJson: _dateTimeToJson) required DateTime dateOfBirth,
+    required EducationType education,
+    required String university,
+    required bool graduated,
+    required SpecialtyType specialty,
+    required LevelType level,
+    required int experience,
+    @Default("") String workHistory,
+    @Default([]) List<String> languages,
+    @Default([]) List<String> technologies,
+  }) = _PublicationRequestForApplicant;
+
+  factory PublicationRequestForApplicant.fromJson(Map<String, dynamic> json) => _$PublicationRequestForApplicantFromJson(json);
+}
 
 @freezed
 abstract class RequestForApplicant with _$RequestForApplicant {
