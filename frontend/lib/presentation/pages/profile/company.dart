@@ -27,21 +27,18 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Company Profile'),
-            const SizedBox(width: 8),
-            IconButton(
-              icon: Icon(ref.watch(themeProvider) == ThemeMode.light
-                  ? Icons.dark_mode
-                  : Icons.light_mode),
-              onPressed: () {
-                ref.read(themeProvider.notifier).toggleTheme();
-              },
-            ),
-          ],
-        ),
+        title: const Text('Company Profile'),
+        actions: [
+          IconButton(
+            icon: Icon(ref.watch(themeProvider) == ThemeMode.light
+                ? Icons.dark_mode
+                : Icons.light_mode),
+            onPressed: () {
+              ref.read(themeProvider.notifier).toggleTheme();
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: FutureBuilder<Company>(
         future: _companyFuture,
@@ -59,57 +56,210 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
           final company = snapshot.data!;
 
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: CircleAvatar(
-                    radius: 50,
-                    child: Text(company.name[0], style: const TextStyle(fontSize: 40)),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: Text(
-                    company.name,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ),
-                const Divider(height: 40),
-                InfoRow(icon: Icons.public, label: "Operating Country", value: company.country),
-                InfoRow(icon: Icons.calendar_today, label: "Year Founded", value: company.yearFound.toString()),
-                InfoRow(icon: Icons.people, label: "Total Employees", value: company.employeeCount.toString()),
-                const SizedBox(height: 30),
-                const Text("Active Vacancies", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                const Divider(),
-                if (company.vacancies.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Center(child: Text("No open vacancies at the moment.")),
-                  )
-                else
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: company.vacancies.length,
-                    itemBuilder: (context, index) {
-                      final vacancy = company.vacancies[index];
-                      return Card(
-                        child: ListTile(
-                          title: Text(vacancy.title),
-                          subtitle: Text("${vacancy.location.displayName} • ${vacancy.employment.displayName}"),
-                          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                          onTap: () => Navigator.pushNamed(context, '/vacancy', arguments: vacancy.id),
-                        ),
-                      );
-                    },
-                  ),
+                _buildHeader(context, company),
+                const SizedBox(height: 24),
+                _buildDetails(context, company),
+                const SizedBox(height: 32),
+                _buildVacanciesSection(context, company),
+                const SizedBox(height: 40),
               ],
             ),
           );
         },
       ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context, Company company) {
+    return Card(
+      elevation: 0,
+      color: Theme.of(context).colorScheme.secondaryContainer.withValues(alpha: 0.3),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            Center(
+              child: CircleAvatar(
+                radius: 50,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                child: Text(
+                  company.name[0].toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              company.name,
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.location_on, size: 16, color: Theme.of(context).colorScheme.primary),
+                const SizedBox(width: 4),
+                Text(
+                  company.country,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetails(BuildContext context, Company company) {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Theme.of(context).dividerColor.withValues(alpha: 0.1)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            InfoRow(
+              icon: Icons.calendar_today,
+              label: "Year Founded",
+              value: company.yearFound.toString(),
+              iconColor: Colors.orange,
+            ),
+            const Divider(height: 24),
+            InfoRow(
+              icon: Icons.people,
+              label: "Total Employees",
+              value: company.employeeCount.toString(),
+              iconColor: Colors.blue,
+            ),
+            const Divider(height: 24),
+            InfoRow(
+              icon: Icons.star,
+              label: "Company Score",
+              value: company.score.toString(),
+              iconColor: Colors.amber,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVacanciesSection(BuildContext context, Company company) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, bottom: 16),
+          child: Row(
+            children: [
+              const Text(
+                "Active Vacancies",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  company.vacancies.length.toString(),
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (company.vacancies.isEmpty)
+          Card(
+            elevation: 0,
+            color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.1),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+              child: Center(
+                child: Column(
+                  children: [
+                    Icon(Icons.work_off_outlined, size: 48, color: Colors.grey),
+                    SizedBox(height: 12),
+                    Text(
+                      "No open vacancies at the moment.",
+                      style: TextStyle(color: Colors.grey, fontSize: 16),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        else
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: company.vacancies.length,
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
+            itemBuilder: (context, index) {
+              final vacancy = company.vacancies[index];
+              return Card(
+                elevation: 2,
+                shadowColor: Colors.black12,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  title: Text(
+                    vacancy.title,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.location_on, size: 14, color: Colors.grey[600]),
+                        const SizedBox(width: 4),
+                        Text(vacancy.location.displayName),
+                        const SizedBox(width: 12),
+                        Icon(Icons.access_time, size: 14, color: Colors.grey[600]),
+                        const SizedBox(width: 4),
+                        Text(vacancy.employment.displayName),
+                      ],
+                    ),
+                  ),
+                  trailing: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 14,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
+                  ),
+                  onTap: () => Navigator.pushNamed(context, '/vacancy', arguments: vacancy.id),
+                ),
+              );
+            },
+          ),
+      ],
     );
   }
 }

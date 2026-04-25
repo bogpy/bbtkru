@@ -101,8 +101,13 @@ func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]mod
 	}
 
 	query := queryBuilder.String()
+	query, args, err := sqlx.In(query, args...)
+	if err != nil {
+		return nil, err
+	}
+	query = r.DB.Rebind(query)
 	var vacancies []models.Vacancy
-	err := r.DB.Select(&vacancies, query, args...)
+	err = r.DB.Select(&vacancies, query, args...)
 	if err != nil {
 		return nil, err
 	}
