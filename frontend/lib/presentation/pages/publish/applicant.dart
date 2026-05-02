@@ -35,21 +35,18 @@ class _PublishApplicantPageState extends ConsumerState<PublishApplicantPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Publish Resume'),
-            const SizedBox(width: 8),
-            IconButton(
-              icon: Icon(ref.watch(themeProvider) == ThemeMode.light
-                  ? Icons.dark_mode
-                  : Icons.light_mode),
-              onPressed: () {
-                ref.read(themeProvider.notifier).toggleTheme();
-              },
-            ),
-          ],
-        ),
+        title: const Text('Publish Resume'),
+        actions: [
+          IconButton(
+            icon: Icon(ref.watch(themeProvider) == ThemeMode.light
+                ? Icons.dark_mode
+                : Icons.light_mode),
+            onPressed: () {
+              ref.read(themeProvider.notifier).toggleTheme();
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),

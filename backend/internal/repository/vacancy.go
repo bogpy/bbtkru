@@ -265,7 +265,12 @@ func (r VacancyRepository) GetVacancyByID(id int64) (*models.Vacancy, error) {
 	var err error
 	err = r.DB.Get(
 		&vacancy,
-		"SELECT * FROM vacancy WHERE (id) = (?)",
+		`SELECT 
+			v.*,
+			c.name AS companyName
+		 FROM vacancy v
+		 JOIN company c ON v.companyID = c.id
+		 WHERE v.id = ?`,
 		id,
 	)
 	if err != nil {

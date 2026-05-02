@@ -21,7 +21,7 @@ type Vacancy struct {
 	Title             string         `db:"title" json:"title"`
 	Description       string         `db:"description" json:"description"`
 	CompanyID         int64          `db:"companyID" json:"companyID"`
-	CompanyName       string         `db:"-" json:"companyName"`
+	CompanyName       string         `db:"companyName" json:"companyName"`
 	Experience        int            `db:"experience" json:"experience"`
 	Salary            int            `db:"salary" json:"salary"`
 	Hours             int            `db:"hours" json:"hours"`

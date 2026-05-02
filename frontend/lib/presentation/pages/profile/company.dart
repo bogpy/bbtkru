@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:headless_hunter_frontend/core/theme_provider.dart';
 import 'package:headless_hunter_frontend/models/company.dart';
+import 'package:headless_hunter_frontend/models/vacancy.dart';
 import 'package:headless_hunter_frontend/presentation/widgets/forms.dart';
 import 'package:headless_hunter_frontend/services/api_service.dart';
 
@@ -14,12 +15,20 @@ class CompanyProfilePage extends ConsumerStatefulWidget {
 }
 
 class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
-  late Future<Company> _companyFuture;
+  late Future<(Company, List<Vacancy>)> _companyDataFuture;
 
   @override
   void initState() {
     super.initState();
-    _companyFuture = ApiService().getCompany(widget.id);
+    _companyDataFuture = _fetchData();
+  }
+
+  Future<(Company, List<Vacancy>)> _fetchData() async {
+    final results = await Future.wait([
+      ApiService().getCompany(widget.id),
+      ApiService().getCompanyVacancies(widget.id),
+    ]);
+    return (results[0] as Company, results[1] as List<Vacancy>);
   }
 
   @override
@@ -40,8 +49,8 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
           const SizedBox(width: 8),
         ],
       ),
-      body: FutureBuilder<Company>(
-        future: _companyFuture,
+      body: FutureBuilder<(Company, List<Vacancy>)>(
+        future: _companyDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -53,7 +62,7 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
             return const Center(child: Text('Company not found.'));
           }
 
-          final company = snapshot.data!;
+          final (company, vacancies) = snapshot.data!;
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -64,7 +73,7 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
                 const SizedBox(height: 24),
                 _buildDetails(context, company),
                 const SizedBox(height: 32),
-                _buildVacanciesSection(context, company),
+                _buildVacanciesSection(context, vacancies),
                 const SizedBox(height: 40),
               ],
             ),
@@ -162,7 +171,7 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
     );
   }
 
-  Widget _buildVacanciesSection(BuildContext context, Company company) {
+  Widget _buildVacanciesSection(BuildContext context, List<Vacancy> vacancies) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -182,14 +191,14 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  company.vacancies.length.toString(),
+                  vacancies.length.toString(),
                   style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
           ),
         ),
-        if (company.vacancies.isEmpty)
+        if (vacancies.isEmpty)
           Card(
             elevation: 0,
             color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.1),
@@ -214,10 +223,10 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: company.vacancies.length,
+            itemCount: vacancies.length,
             separatorBuilder: (context, index) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
-              final vacancy = company.vacancies[index];
+              final vacancy = vacancies[index];
               return Card(
                 elevation: 2,
                 shadowColor: Colors.black12,

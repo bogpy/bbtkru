@@ -27,21 +27,18 @@ class _PublishCompanyPageState extends ConsumerState<PublishCompanyPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Create Company Profile'),
-            const SizedBox(width: 8),
-            IconButton(
-              icon: Icon(ref.watch(themeProvider) == ThemeMode.light
-                  ? Icons.dark_mode
-                  : Icons.light_mode),
-              onPressed: () {
-                ref.read(themeProvider.notifier).toggleTheme();
-              },
-            ),
-          ],
-        ),
+        title: const Text('Create Company Profile'),
+        actions: [
+          IconButton(
+            icon: Icon(ref.watch(themeProvider) == ThemeMode.light
+                ? Icons.dark_mode
+                : Icons.light_mode),
+            onPressed: () {
+              ref.read(themeProvider.notifier).toggleTheme();
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),

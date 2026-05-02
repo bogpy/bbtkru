@@ -27,6 +27,19 @@ class ApiService {
     }
   }
 
+  Future<List<Vacancy>> getCompanyVacancies(int id) async {
+    try {
+      final response = await _dio.get('/companies/vacancies/$id');
+      if (response.statusCode == 200) {
+        final List data = response.data;
+        return data.map((json) => Vacancy.fromJson(json)).toList();
+      }
+      throw Exception('Failed to load company vacancies');
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   Future<Company> getCompany(int id) async {
     try {
       final response = await _dio.get('/companies/$id');
