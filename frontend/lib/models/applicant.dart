@@ -1,14 +1,100 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class Applicant {
+  final int id;
+  final String name;
+  final DateTime dateOfBirth;
+  final EducationType education;
+  final String university;
+  final bool graduated;
+  final SpecialtyType specialty;
+  final LevelType level;
+  final int experience;
+  final String workHistory;
+  final List<String> languages;
+  final List<String> technologies;
+  final int score;
 
-part 'applicant.freezed.dart';
-part 'applicant.g.dart';
+  Applicant({
+    required this.id,
+    required this.name,
+    required this.dateOfBirth,
+    required this.education,
+    required this.university,
+    required this.graduated,
+    required this.specialty,
+    required this.level,
+    required this.experience,
+    this.workHistory = '',
+    this.languages = const [],
+    this.technologies = const [],
+    this.score = 0,
+  });
+
+  factory Applicant.fromJson(Map<String, dynamic> json) {
+    // Handle capitalized "Languages" and "Technologies" from API
+    final List<String> langs = (json['Languages'] as List?)?.cast<String>() ?? 
+                               (json['languages'] as List?)?.cast<String>() ?? 
+                               (json['languagesRequired'] as List?)?.cast<String>() ??
+                               const [];
+    final List<String> techs = (json['Technologies'] as List?)?.cast<String>() ?? 
+                               (json['technologies'] as List?)?.cast<String>() ?? 
+                               (json['technologiesRequired'] as List?)?.cast<String>() ??
+                               const [];
+
+    return Applicant(
+      id: json['id'] as int? ?? 0,
+      name: json['name'] as String? ?? '',
+      dateOfBirth: DateTime.tryParse(json['dateOfBirth'] as String? ?? '') ?? DateTime.now(),
+      education: _parseEducation(json['education']),
+      university: json['university'] as String? ?? '',
+      graduated: json['graduated'] as bool? ?? false,
+      specialty: _parseSpecialty(json['specialty']),
+      level: _parseLevel(json['level']),
+      experience: json['experience'] as int? ?? 0,
+      workHistory: json['workHistory'] as String? ?? '',
+      languages: langs,
+      technologies: techs,
+      score: json['score'] as int? ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'dateOfBirth': "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}T00:00:00Z",
+        'education': education.name,
+        'university': university,
+        'graduated': graduated,
+        'specialty': specialty.name,
+        'level': level.name,
+        'experience': experience,
+        'workHistory': workHistory,
+        'languages': languages,
+        'technologies': technologies,
+        'score': score,
+      };
+
+  static EducationType _parseEducation(dynamic value) {
+    for (var type in EducationType.values) {
+      if (type.name == value || type.displayName == value) return type;
+    }
+    return EducationType.bachelor;
+  }
+  static SpecialtyType _parseSpecialty(dynamic value) {
+    for (var type in SpecialtyType.values) {
+      if (type.name == value || type.displayName == value) return type;
+    }
+    return SpecialtyType.frontend;
+  }
+  static LevelType _parseLevel(dynamic value) {
+    for (var type in LevelType.values) {
+      if (type.name == value || type.displayName == value) return type;
+    }
+    return LevelType.junior;
+  }
+}
 
 enum EducationType {
-  @JsonValue("HighSchool") highSchool,
-  @JsonValue("Bachelor") bachelor,
-  @JsonValue("Master") master,
-  @JsonValue("PhD") phD;
-
+  highSchool, bachelor, master, phD;
   String get displayName {
     switch (this) {
       case EducationType.highSchool: return 'High School';
@@ -20,12 +106,7 @@ enum EducationType {
 }
 
 enum SpecialtyType {
-  @JsonValue("Frontend") frontend,
-  @JsonValue("Backend") backend,
-  @JsonValue("Fullstack") fullstack,
-  @JsonValue("DataEngineer") dataEngineer,
-  @JsonValue("DevOps") devOps;
-
+  frontend, backend, fullstack, dataEngineer, devOps;
   String get displayName {
     switch (this) {
       case SpecialtyType.frontend: return 'Frontend';
@@ -38,12 +119,7 @@ enum SpecialtyType {
 }
 
 enum LevelType {
-  @JsonValue("Intern") intern,
-  @JsonValue("Junior") junior,
-  @JsonValue("Middle") middle,
-  @JsonValue("Senior") senior,
-  @JsonValue("Lead") lead;
-
+  intern, junior, middle, senior, lead;
   String get displayName {
     switch (this) {
       case LevelType.intern: return 'Intern';
@@ -55,82 +131,111 @@ enum LevelType {
   }
 }
 
-@freezed
-abstract class Applicant with _$Applicant {
-  // ignore: invalid_annotation_target
-  @JsonSerializable(explicitToJson: true)
-  const factory Applicant({
-    required int id,
-    required String name,
-    @JsonKey(toJson: _dateTimeToJson) required DateTime dateOfBirth,
-    required EducationType education,
-    required String university,
-    required bool graduated,
-    required SpecialtyType specialty,
-    required LevelType level,
-    required int experience,
-    @Default("") String workHistory,
-    @Default([]) List<String> languages,
-    @Default([]) List<String> technologies,
-    @Default(0) int score,
-  }) = _Applicant;
+class RequestForApplicant {
+  final String? name;
+  final int? experience;
+  final LevelType? level;
+  final bool? graduated;
+  final EducationType? education;
+  final SpecialtyType? specialty;
+  final List<String> languagesRequired;
+  final List<String> languagesOptional;
+  final List<String> technologiesRequired;
+  final List<String> technologiesOptional;
 
-  factory Applicant.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic> data = Map<String, dynamic>.from(json);
-    if (data['languagesRequired'] != null && (data['languages'] == null || (data['languages'] as List).isEmpty)) {
-      data['languages'] = data['languagesRequired'];
-    }
-    if (data['technologiesRequired'] != null && (data['technologies'] == null || (data['technologies'] as List).isEmpty)) {
-      data['technologies'] = data['technologiesRequired'];
-    }
-    return _$ApplicantFromJson(data);
+  RequestForApplicant({
+    this.name,
+    this.experience,
+    this.level,
+    this.graduated,
+    this.education,
+    this.specialty,
+    this.languagesRequired = const [],
+    this.languagesOptional = const [],
+    this.technologiesRequired = const [],
+    this.technologiesOptional = const [],
+  });
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (name != null) map['name'] = name;
+    if (experience != null) map['experience'] = experience;
+    if (level != null) map['level'] = level?.name;
+    if (graduated != null) map['graduated'] = graduated;
+    if (education != null) map['education'] = education?.name;
+    if (specialty != null) map['specialty'] = specialty?.name;
+    if (languagesRequired.isNotEmpty) map['languagesRequired'] = languagesRequired.join(',');
+    if (languagesOptional.isNotEmpty) map['languagesOptional'] = languagesOptional.join(',');
+    if (technologiesRequired.isNotEmpty) map['technologiesRequired'] = technologiesRequired.join(',');
+    if (technologiesOptional.isNotEmpty) map['technologiesOptional'] = technologiesOptional.join(',');
+    return map;
   }
-}
 
-String _dateTimeToJson(DateTime date) => 
-    "${date.year.toString().padLeft(4, '0')}-"
-    "${date.month.toString().padLeft(2, '0')}-"
-    "${date.day.toString().padLeft(2, '0')}T00:00:00Z";
-
-String? _listToQuery(List<String> list) => list.isEmpty ? null : list.join(',');
-
-@freezed
-abstract class PublicationRequestForApplicant with _$PublicationRequestForApplicant {
-  // ignore: invalid_annotation_target
-  @JsonSerializable(explicitToJson: true)
-  const factory PublicationRequestForApplicant({
-    required String name,
-    @JsonKey(toJson: _dateTimeToJson) required DateTime dateOfBirth,
-    required EducationType education,
-    required String university,
-    required bool graduated,
-    required SpecialtyType specialty,
-    required LevelType level,
-    required int experience,
-    @Default("") String workHistory,
-    @Default([]) List<String> languages,
-    @Default([]) List<String> technologies,
-  }) = _PublicationRequestForApplicant;
-
-  factory PublicationRequestForApplicant.fromJson(Map<String, dynamic> json) => _$PublicationRequestForApplicantFromJson(json);
-}
-
-@freezed
-abstract class RequestForApplicant with _$RequestForApplicant {
-  // ignore: invalid_annotation_target
-  @JsonSerializable(includeIfNull: false)
-  const factory RequestForApplicant({
+  RequestForApplicant copyWith({
     String? name,
     int? experience,
     LevelType? level,
     bool? graduated,
     EducationType? education,
     SpecialtyType? specialty,
-    @JsonKey(toJson: _listToQuery) @Default([]) List<String> languagesRequired,
-    @JsonKey(toJson: _listToQuery) @Default([]) List<String> languagesOptional,
-    @JsonKey(toJson: _listToQuery) @Default([]) List<String> technologiesRequired,
-    @JsonKey(toJson: _listToQuery) @Default([]) List<String> technologiesOptional,
-  }) = _RequestForApplicant;
+    List<String>? languagesRequired,
+    List<String>? languagesOptional,
+    List<String>? technologiesRequired,
+    List<String>? technologiesOptional,
+  }) {
+    return RequestForApplicant(
+      name: name ?? this.name,
+      experience: experience ?? this.experience,
+      level: level ?? this.level,
+      graduated: graduated ?? this.graduated,
+      education: education ?? this.education,
+      specialty: specialty ?? this.specialty,
+      languagesRequired: languagesRequired ?? this.languagesRequired,
+      languagesOptional: languagesOptional ?? this.languagesOptional,
+      technologiesRequired: technologiesRequired ?? this.technologiesRequired,
+      technologiesOptional: technologiesOptional ?? this.technologiesOptional,
+    );
+  }
+}
 
-  factory RequestForApplicant.fromJson(Map<String, dynamic> json) => _$RequestForApplicantFromJson(json);
+class PublicationRequestForApplicant {
+  final String name;
+  final DateTime dateOfBirth;
+  final EducationType education;
+  final String university;
+  final bool graduated;
+  final SpecialtyType specialty;
+  final LevelType level;
+  final int experience;
+  final String workHistory;
+  final List<String> languages;
+  final List<String> technologies;
+
+  PublicationRequestForApplicant({
+    required this.name,
+    required this.dateOfBirth,
+    required this.education,
+    required this.university,
+    required this.graduated,
+    required this.specialty,
+    required this.level,
+    required this.experience,
+    this.workHistory = '',
+    this.languages = const [],
+    this.technologies = const [],
+  });
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'dateOfBirth': "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}T00:00:00Z",
+        'education': education.name,
+        'university': university,
+        'graduated': graduated,
+        'specialty': specialty.name,
+        'level': level.name,
+        'experience': experience,
+        'workHistory': workHistory,
+        'languages': languages,
+        'technologies': technologies,
+      };
 }

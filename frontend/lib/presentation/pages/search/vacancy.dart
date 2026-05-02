@@ -130,7 +130,7 @@ class _VacancySearchPageState extends ConsumerState<VacancySearchPage> {
           const Divider(),
           const SizedBox(height: 10),
           NumericTextFormField(
-            label: 'Minimum Experience (years)',
+            label: 'Maximum Requied Experience (years)',
             initialValue: request.experience,
             onChanged: (val) {
               ref.read(vacancyRequestProvider.notifier).update(request.copyWith(experience: val));

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:headless_hunter_frontend/core/theme_provider.dart';
 import 'package:headless_hunter_frontend/models/vacancy.dart';
-import 'package:headless_hunter_frontend/presentation/widgets/forms.dart';
 import 'package:headless_hunter_frontend/services/api_service.dart';
 
 class VacancyProfilePage extends ConsumerStatefulWidget {

@@ -10,9 +10,9 @@ import 'dart:async';
 
 class VacancyRequestNotifier extends Notifier<RequestForVacancy> {
   @override
-  RequestForVacancy build() => const RequestForVacancy();
+  RequestForVacancy build() => RequestForVacancy();
   void update(RequestForVacancy value) => state = value;
-  void reset() => state = const RequestForVacancy();
+  void reset() => state = RequestForVacancy();
 }
 
 final vacancyRequestProvider = NotifierProvider<VacancyRequestNotifier, RequestForVacancy>(VacancyRequestNotifier.new);
@@ -44,9 +44,9 @@ final vacanciesProvider = FutureProvider<List<Vacancy>>((ref) async {
 
 class ApplicantRequestNotifier extends Notifier<RequestForApplicant> {
   @override
-  RequestForApplicant build() => const RequestForApplicant();
+  RequestForApplicant build() => RequestForApplicant();
   void update(RequestForApplicant value) => state = value;
-  void reset() => state = const RequestForApplicant();
+  void reset() => state = RequestForApplicant();
 }
 
 final applicantRequestProvider = NotifierProvider<ApplicantRequestNotifier, RequestForApplicant>(ApplicantRequestNotifier.new);
@@ -77,9 +77,9 @@ final applicantsProvider = FutureProvider<List<Applicant>>((ref) async {
 
 class CompanyRequestNotifier extends Notifier<RequestForCompany> {
   @override
-  RequestForCompany build() => const RequestForCompany();
+  RequestForCompany build() => RequestForCompany();
   void update(RequestForCompany value) => state = value;
-  void reset() => state = const RequestForCompany();
+  void reset() => state = RequestForCompany();
 }
 
 final companyRequestProvider = NotifierProvider<CompanyRequestNotifier, RequestForCompany>(CompanyRequestNotifier.new);

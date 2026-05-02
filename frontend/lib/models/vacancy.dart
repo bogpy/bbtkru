@@ -1,13 +1,92 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'vacancy.freezed.dart';
-part 'vacancy.g.dart';
+class Vacancy {
+  final int id;
+  final String title;
+  final String description;
+  final int companyID;
+  final String companyName;
+  final int experience;
+  final int salary;
+  final int hours;
+  final EmploymentType employment;
+  final LocationType location;
+  final List<String> languages;
+  final List<String> technologies;
+  final int score;
+
+  Vacancy({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.companyID,
+    required this.companyName,
+    required this.experience,
+    required this.salary,
+    required this.hours,
+    required this.employment,
+    required this.location,
+    this.languages = const [],
+    this.technologies = const [],
+    this.score = 0,
+  });
+
+  factory Vacancy.fromJson(Map<String, dynamic> json) {
+    // Handle "Languages" and "Technologies" capitalized keys from API
+    final List<String> langs = (json['Languages'] as List?)?.cast<String>() ?? 
+                               (json['languages'] as List?)?.cast<String>() ?? 
+                               const [];
+    final List<String> techs = (json['Technologies'] as List?)?.cast<String>() ?? 
+                               (json['technologies'] as List?)?.cast<String>() ?? 
+                               const [];
+
+    return Vacancy(
+      id: json['id'] as int? ?? 0,
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      companyID: json['companyID'] as int? ?? 0,
+      companyName: json['companyName'] as String? ?? '',
+      experience: json['experience'] as int? ?? 0,
+      salary: json['salary'] as int? ?? 0,
+      hours: json['hours'] as int? ?? 0,
+      employment: _parseEmployment(json['employment']),
+      location: _parseLocation(json['location']),
+      languages: langs,
+      technologies: techs,
+      score: json['score'] as int? ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'description': description,
+        'companyID': companyID,
+        'companyName': companyName,
+        'experience': experience,
+        'salary': salary,
+        'hours': hours,
+        'employment': employment.name,
+        'location': location.name,
+        'languages': languages,
+        'technologies': technologies,
+        'score': score,
+      };
+
+  static EmploymentType _parseEmployment(dynamic value) {
+    if (value == "Internship") return EmploymentType.internship;
+    if (value == "Part-time") return EmploymentType.partTime;
+    return EmploymentType.fullTime;
+  }
+
+  static LocationType _parseLocation(dynamic value) {
+    if (value == "Remote") return LocationType.remote;
+    if (value == "Hybrid") return LocationType.hybrid;
+    return LocationType.inOffice;
+  }
+}
 
 enum EmploymentType {
-  @JsonValue("Internship") internship,
-  @JsonValue("Full-time") fullTime,
-  @JsonValue("Part-time") partTime;
-
+  internship, fullTime, partTime;
   String get displayName {
     switch (this) {
       case EmploymentType.internship: return 'Internship';
@@ -18,10 +97,7 @@ enum EmploymentType {
 }
 
 enum LocationType {
-  @JsonValue("Remote") remote,
-  @JsonValue("Hybrid") hybrid,
-  @JsonValue("In-office") inOffice;
-
+  remote, hybrid, inOffice;
   String get displayName {
     switch (this) {
       case LocationType.remote: return 'Remote';
@@ -31,39 +107,44 @@ enum LocationType {
   }
 }
 
-@freezed
-abstract class Vacancy with _$Vacancy {
-  // ignore: invalid_annotation_target
-  @JsonSerializable(explicitToJson: true)
-  const factory Vacancy({
-    required int id,
-    required String title,
-    required String description,
-    
-    required int companyID,
-    required String companyName,
-    
-    required int experience,
-    required int salary,
-    required int hours,
-    required EmploymentType employment,
-    required LocationType location,
-    
-    @Default([]) List<String> languages,
-    @Default([]) List<String> technologies,
-    @Default(0) int score,
-  }) = _Vacancy;
+class RequestForVacancy {
+  final String? title;
+  final int? experience;
+  final int? salary;
+  final EmploymentType? employment;
+  final LocationType? location;
+  final String? country;
+  final int? hours;
+  final List<String> languages;
+  final List<String> technologies;
 
-  factory Vacancy.fromJson(Map<String, dynamic> json) => _$VacancyFromJson(json);
-}
+  RequestForVacancy({
+    this.title,
+    this.experience,
+    this.salary,
+    this.employment,
+    this.location,
+    this.country,
+    this.hours,
+    this.languages = const [],
+    this.technologies = const [],
+  });
 
-String? _listToQuery(List<String> list) => list.isEmpty ? null : list.join(',');
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (title != null) map['title'] = title;
+    if (experience != null) map['experience'] = experience;
+    if (salary != null) map['salary'] = salary;
+    if (employment != null) map['employment'] = employment?.name;
+    if (location != null) map['location'] = location?.name;
+    if (country != null) map['country'] = country;
+    if (hours != null) map['hours'] = hours;
+    if (languages.isNotEmpty) map['languages'] = languages.join(',');
+    if (technologies.isNotEmpty) map['technologies'] = technologies.join(',');
+    return map;
+  }
 
-@freezed
-abstract class RequestForVacancy with _$RequestForVacancy {
-  // ignore: invalid_annotation_target
-  @JsonSerializable(includeIfNull: false)
-  const factory RequestForVacancy({
+  RequestForVacancy copyWith({
     String? title,
     int? experience,
     int? salary,
@@ -71,9 +152,19 @@ abstract class RequestForVacancy with _$RequestForVacancy {
     LocationType? location,
     String? country,
     int? hours,
-    @JsonKey(toJson: _listToQuery) @Default([]) List<String> languages,
-    @JsonKey(toJson: _listToQuery) @Default([]) List<String> technologies,
-  }) = _RequestForVacancy;
-
-  factory RequestForVacancy.fromJson(Map<String, dynamic> json) => _$RequestForVacancyFromJson(json);
+    List<String>? languages,
+    List<String>? technologies,
+  }) {
+    return RequestForVacancy(
+      title: title ?? this.title,
+      experience: experience ?? this.experience,
+      salary: salary ?? this.salary,
+      employment: employment ?? this.employment,
+      location: location ?? this.location,
+      country: country ?? this.country,
+      hours: hours ?? this.hours,
+      languages: languages ?? this.languages,
+      technologies: technologies ?? this.technologies,
+    );
+  }
 }
