@@ -75,7 +75,16 @@ abstract class Applicant with _$Applicant {
     @Default(0) int score,
   }) = _Applicant;
 
-  factory Applicant.fromJson(Map<String, dynamic> json) => _$ApplicantFromJson(json);
+  factory Applicant.fromJson(Map<String, dynamic> json) {
+    final Map<String, dynamic> data = Map<String, dynamic>.from(json);
+    if (data['languagesRequired'] != null && (data['languages'] == null || (data['languages'] as List).isEmpty)) {
+      data['languages'] = data['languagesRequired'];
+    }
+    if (data['technologiesRequired'] != null && (data['technologies'] == null || (data['technologies'] as List).isEmpty)) {
+      data['technologies'] = data['technologiesRequired'];
+    }
+    return _$ApplicantFromJson(data);
+  }
 }
 
 String _dateTimeToJson(DateTime date) => 

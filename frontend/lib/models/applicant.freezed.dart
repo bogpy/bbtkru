@@ -11,7 +11,6 @@ part of 'applicant.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$Applicant {
 
@@ -22,8 +21,6 @@ mixin _$Applicant {
 @pragma('vm:prefer-inline')
 $ApplicantCopyWith<Applicant> get copyWith => _$ApplicantCopyWithImpl<Applicant>(this as Applicant, _$identity);
 
-  /// Serializes this Applicant to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
@@ -31,7 +28,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is Applicant&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.education, education) || other.education == education)&&(identical(other.university, university) || other.university == university)&&(identical(other.graduated, graduated) || other.graduated == graduated)&&(identical(other.specialty, specialty) || other.specialty == specialty)&&(identical(other.level, level) || other.level == level)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.workHistory, workHistory) || other.workHistory == workHistory)&&const DeepCollectionEquality().equals(other.languages, languages)&&const DeepCollectionEquality().equals(other.technologies, technologies)&&(identical(other.score, score) || other.score == score));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,name,dateOfBirth,education,university,graduated,specialty,level,experience,workHistory,const DeepCollectionEquality().hash(languages),const DeepCollectionEquality().hash(technologies),score);
 
@@ -222,7 +219,7 @@ return $default(_that.id,_that.name,_that.dateOfBirth,_that.education,_that.univ
 @JsonSerializable(explicitToJson: true)
 class _Applicant implements Applicant {
   const _Applicant({required this.id, required this.name, @JsonKey(toJson: _dateTimeToJson) required this.dateOfBirth, required this.education, required this.university, required this.graduated, required this.specialty, required this.level, required this.experience, this.workHistory = "", final  List<String> languages = const [], final  List<String> technologies = const [], this.score = 0}): _languages = languages,_technologies = technologies;
-  factory _Applicant.fromJson(Map<String, dynamic> json) => _$ApplicantFromJson(json);
+  
 
 @override final  int id;
 @override final  String name;
@@ -256,17 +253,14 @@ class _Applicant implements Applicant {
 @pragma('vm:prefer-inline')
 _$ApplicantCopyWith<_Applicant> get copyWith => __$ApplicantCopyWithImpl<_Applicant>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$ApplicantToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _Applicant&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.dateOfBirth, dateOfBirth) || other.dateOfBirth == dateOfBirth)&&(identical(other.education, education) || other.education == education)&&(identical(other.university, university) || other.university == university)&&(identical(other.graduated, graduated) || other.graduated == graduated)&&(identical(other.specialty, specialty) || other.specialty == specialty)&&(identical(other.level, level) || other.level == level)&&(identical(other.experience, experience) || other.experience == experience)&&(identical(other.workHistory, workHistory) || other.workHistory == workHistory)&&const DeepCollectionEquality().equals(other._languages, _languages)&&const DeepCollectionEquality().equals(other._technologies, _technologies)&&(identical(other.score, score) || other.score == score));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,name,dateOfBirth,education,university,graduated,specialty,level,experience,workHistory,const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_technologies),score);
 
