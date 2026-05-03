@@ -12,6 +12,7 @@ import (
 	"github.com/bogpy/bbtkru/internal/repository"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func main() {
@@ -36,11 +37,14 @@ func main() {
 	env := handlers.NewEnv(db)
 
 	router := gin.Default()
+
 	router.Use(func(c *gin.Context) {
 		log.Printf("Inbound Request - IP: %s | Origin: %s\n", c.ClientIP(), c.GetHeader("Origin"))
 		c.Next()
 	})
+
 	router.SetTrustedProxies([]string{"127.0.0.1"})
+
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:5001"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
@@ -60,13 +64,20 @@ func main() {
 	router.GET("/languages", env.GetAllLanguages)
 	router.GET("/technologies", env.GetAllTechnologies)
 
-	router.POST("/vacancies", env.InsertVacancy)
-	router.POST("/applicants", env.InsertApplicant)
-	router.POST("/companies", env.InsertCompany)
+	router.POST("/login", login)
+	router.GET("/logout", logout)
 
-	router.DELETE("/companies/:id", env.DeleteCompanyByID)
-	router.DELETE("/vacancies/:id", env.DeleteVacancyByID)
-	router.DELETE("/applicants/:id", env.DeleteApplicantByID)
+	private := router.Group("/private")
+	router.Use(authMiddleware())
+	{
+		private.POST("/vacancies", env.InsertVacancy)
+		private.POST("/applicants", env.InsertApplicant)
+		private.POST("/companies", env.InsertCompany)
+
+		private.DELETE("/companies/:id", env.DeleteCompanyByID)
+		private.DELETE("/vacancies/:id", env.DeleteVacancyByID)
+		private.DELETE("/applicants/:id", env.DeleteApplicantByID)
+	}
 
 	router.Run(":8080")
 }
