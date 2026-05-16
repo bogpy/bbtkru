@@ -12,7 +12,7 @@ import (
 	"github.com/bogpy/bbtkru/internal/repository"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
+	"github.com/bogpy/bbtkru/internal/auth"
 )
 
 func main() {
@@ -64,11 +64,11 @@ func main() {
 	router.GET("/languages", env.GetAllLanguages)
 	router.GET("/technologies", env.GetAllTechnologies)
 
-	router.POST("/login", login)
-	router.GET("/logout", logout)
+	router.POST("/login", env.LoginHandler)
+	router.GET("/logout", env.LogoutHandler)
 
 	private := router.Group("/private")
-	router.Use(authMiddleware())
+	router.Use(auth.JwtMiddleware())
 	{
 		private.POST("/vacancies", env.InsertVacancy)
 		private.POST("/applicants", env.InsertApplicant)
