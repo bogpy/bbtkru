@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:headless_hunter_frontend/core/theme_provider.dart';
+import 'package:headless_hunter_frontend/logic/auth_provider.dart';
 import 'package:headless_hunter_frontend/presentation/pages/profile/applicant.dart';
 import 'package:headless_hunter_frontend/presentation/pages/profile/company.dart';
 import 'package:headless_hunter_frontend/presentation/pages/profile/vacancy.dart';
@@ -11,6 +12,9 @@ import 'package:headless_hunter_frontend/presentation/pages/search/vacancy.dart'
 import 'package:headless_hunter_frontend/presentation/pages/publish/applicant.dart';
 import 'package:headless_hunter_frontend/presentation/pages/publish/company.dart';
 import 'package:headless_hunter_frontend/presentation/pages/publish/vacancy.dart';
+import 'package:headless_hunter_frontend/presentation/pages/auth/login.dart';
+import 'package:headless_hunter_frontend/presentation/pages/auth/register.dart';
+import 'package:headless_hunter_frontend/presentation/pages/account/control_panel.dart';
 import 'package:headless_hunter_frontend/services/data_service.dart';
 
 void main() async {
@@ -32,8 +36,7 @@ class MyApp extends ConsumerWidget {
       navigatorKey: navigatorKey,
       builder: (context, child) => Listener(
         onPointerDown: (event) {
-          // 8 is the standard bitmask for the "back" button on most mice
-          if (event.kind == PointerDeviceKind.mouse && event.buttons == kBackMouseButton) {
+          if (event.kind == PointerDeviceKind.mouse && event.buttons == 8) {
             navigatorKey.currentState?.maybePop();
           }
         },
@@ -75,6 +78,9 @@ class MyApp extends ConsumerWidget {
         '/publish_applicant': (context) => const PublishApplicantPage(),
         '/publish_vacancy': (context) => const PublishVacancyPage(),
         '/publish_company': (context) => const PublishCompanyPage(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+        '/account': (context) => const ControlPanelPage(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/applicant') {
@@ -106,11 +112,28 @@ class MainPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: const Text('HeadlessHunter'),
         actions: [
+          authState.when(
+            data: (user) => IconButton(
+              icon: Icon(user != null ? Icons.account_circle : Icons.login),
+              tooltip: user != null ? 'Account' : 'Login',
+              onPressed: () {
+                if (user != null) {
+                  Navigator.pushNamed(context, '/account');
+                } else {
+                  Navigator.pushNamed(context, '/login');
+                }
+              },
+            ),
+            loading: () => const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+            error: (_, __) => IconButton(icon: const Icon(Icons.error), onPressed: () {}),
+          ),
           IconButton(
             icon: Icon(ref.watch(themeProvider) == ThemeMode.light
                 ? Icons.dark_mode

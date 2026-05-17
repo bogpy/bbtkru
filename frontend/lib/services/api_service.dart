@@ -1,22 +1,80 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/applicant.dart';
 import '../models/company.dart';
 import '../models/vacancy.dart';
+import '../models/user.dart';
 
 class ApiService {
   static const String _baseUrl = 'http://158.160.175.91:8080';
   
-  final Dio _dio = Dio(BaseOptions(
-    baseUrl: _baseUrl,
-    connectTimeout: const Duration(seconds: 5),
-    receiveTimeout: const Duration(seconds: 3),
-    headers: {'Content-Type': 'application/json'},
-  ));
+  late final Dio _dio;
 
   static final ApiService _instance = ApiService._internal();
   factory ApiService() => _instance;
-  ApiService._internal();
 
+  ApiService._internal() {
+    _dio = Dio(BaseOptions(
+      baseUrl: _baseUrl,
+      connectTimeout: const Duration(seconds: 5),
+      receiveTimeout: const Duration(seconds: 3),
+      headers: {'Content-Type': 'application/json'},
+    ));
+
+    // Interceptor for Auth Token
+    _dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        final prefs = await SharedPreferences.getInstance();
+        final token = prefs.getString('auth_token');
+        if (token != null) {
+          options.headers['Authorization'] = 'Bearer $token';
+        }
+        return handler.next(options);
+      },
+    ));
+  }
+
+  // --- Auth ---
+
+  Future<(User, String)> login(String email, String password) async {
+    try {
+      final response = await _dio.post('/auth/login', data: {
+        'email': email,
+        'password': password,
+      });
+      final user = User.fromJson(response.data['user']);
+      final token = response.data['token'] as String;
+      return (user, token);
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<(User, String)> register(String name, String email, String password) async {
+    try {
+      final response = await _dio.post('/auth/register', data: {
+        'name': name,
+        'email': email,
+        'password': password,
+      });
+      final user = User.fromJson(response.data['user']);
+      final token = response.data['token'] as String;
+      return (user, token);
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<User> getMe() async {
+    try {
+      final response = await _dio.get('/auth/me');
+      return User.fromJson(response.data);
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  // --- Data Fetching ---
 
   Future<Applicant> getApplicant(int id) async {
     try {
@@ -48,6 +106,7 @@ class ApiService {
       throw _handleError(e);
     }
   }
+
   Future<Vacancy> getVacancy(int id) async {
     try {
       final response = await _dio.get('/vacancies/$id');
@@ -56,6 +115,7 @@ class ApiService {
       throw _handleError(e);
     }
   }
+
   Future<List<Company>> getCompanies(RequestForCompany request, {CancelToken? cancelToken}) async {
     try {
       final response = await _dio.get('/companies', queryParameters: request.toJson(), cancelToken: cancelToken);
@@ -69,6 +129,7 @@ class ApiService {
       throw _handleError(e);
     }
   }
+
   Future<List<Vacancy>> getVacancies(RequestForVacancy request, {CancelToken? cancelToken}) async {
     try {
       final response = await _dio.get('/vacancies', queryParameters: request.toJson(), cancelToken: cancelToken);
@@ -82,6 +143,7 @@ class ApiService {
       throw _handleError(e);
     }
   }
+
   Future<List<Applicant>> getApplicants(RequestForApplicant request, {CancelToken? cancelToken}) async {
     try {
       final response = await _dio.get('/applicants', queryParameters: request.toJson(), cancelToken: cancelToken);
@@ -122,6 +184,8 @@ class ApiService {
     }
   }
 
+  // --- Creation ---
+
   Future<void> createApplicant(PublicationRequestForApplicant request) async {
     try {
       await _dio.post('/applicants', data: request.toJson());
@@ -149,6 +213,7 @@ class ApiService {
   String _handleError(DioException e) {
     if (e.type == DioExceptionType.connectionTimeout) return "Check your internet.";
     if (e.response?.statusCode == 403) return "IP Not Whitelisted (CORS/IP Error).";
-    return e.message ?? "Something went wrong.";
+    if (e.response?.statusCode == 401) return "Unauthorized. Please login again.";
+    return e.response?.data?['message'] ?? e.message ?? "Something went wrong.";
   }
 }
