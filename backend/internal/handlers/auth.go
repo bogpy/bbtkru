@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/bogpy/bbtkru/internal/auth"
 	"github.com/bogpy/bbtkru/internal/models"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func (e Env) LoginHandler(c *gin.Context) {
@@ -16,20 +18,20 @@ func (e Env) LoginHandler(c *gin.Context) {
 
 	var user models.User
 	err := e.db.Get(&user,
-		"SELECT id, username, password FROM user WHERE name = ?",
-		loginReq.Username,
+		"SELECT * FROM user WHERE email = ?",
+		loginReq.Email,
 	)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email"})
 		return
 	}
 
 	if !user.CheckPassword(loginReq.Password) {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password"})
 		return
 	}
 
-	token, err := auth.GenerateJWT(user.Username)
+	token, err := auth.GenerateJWT(user.Email)
 	if err != nil {
 		c.JSON(
 			http.StatusInternalServerError,
@@ -59,13 +61,14 @@ func (e Env) RegisterHandler(c *gin.Context) {
 		return
 	}
 
-	query := `INSERT INTO user (name, password) VALUES (?, ?)`
-	_, err := e.db.Exec(query, user.Username, user.Password)
+	query := `INSERT INTO user (name, email, password) VALUES (?, ?, ?)`
+	_, err := e.db.Exec(query, user.Name, user.Email, user.Password)
 	if err != nil {
 		c.JSON(
 			http.StatusConflict,
 			gin.H{"error": "User already exists or database error"},
 		)
+		log.Printf("Error: %v\n", err)
 		return
 	}
 
