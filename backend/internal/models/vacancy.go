@@ -17,19 +17,19 @@ const (
 )
 
 type Vacancy struct {
-	ID                int64          `db:"id" json:"id"`
-	Title             string         `db:"title" json:"title"`
-	Description       string         `db:"description" json:"description"`
-	CompanyID         int64          `db:"companyID" json:"companyID"`
-	CompanyName       string         `db:"companyName" json:"companyName"`
-	Experience        int            `db:"experience" json:"experience"`
-	Salary            int            `db:"salary" json:"salary"`
-	Hours             int            `db:"hours" json:"hours"`
-	Employment        EmploymentType `db:"employment" json:"employment"`
-	Location          LocationType   `db:"location" json:"location"`
-	Languages []Language
-	Technologies []Technology
-	Score             int
+	ID           int64          `db:"id" json:"id"`
+	Title        string         `db:"title" json:"title"`
+	Description  string         `db:"description" json:"description"`
+	CompanyID    int64          `db:"companyID" json:"companyID"`
+	CompanyName  string         `db:"companyName" json:"companyName"`
+	Experience   int            `db:"experience" json:"experience"`
+	Salary       int            `db:"salary" json:"salary"`
+	Hours        int            `db:"hours" json:"hours"`
+	Employment   EmploymentType `db:"employment" json:"employment"`
+	Location     LocationType   `db:"location" json:"location"`
+	Languages    []Language     `json:"languages"`
+	Technologies []Technology   `json:"technologies"`
+	Score        int
 }
 
 func (x *Vacancy) SetID(id int64) {
@@ -49,14 +49,14 @@ func (x *Vacancy) GetTechnologies() []Technology {
 }
 
 type RequestForVacancy struct {
-	Experience *int		`form:"experience"`
-	Salary     *int		`form:"salary"`
-	Employment *EmploymentType		`form:"employment" binding:"omitempty,oneof=internship fullTime partTime"`
-	Location   *LocationType		`form:"location" binding:"omitempty,oneof=remote hybrid inOffice"`
-	Hours      *int		`form:"hours"`
-	Country    *string	`form:"country"`
-	Languages    []Language     `form:"languages,parser=encoding.TextUnmarshaler" collection_format:"csv"`
-	Technologies []Technology   `form:"technologies,parser=encoding.TextUnmarshaler" collection_format:"csv"`
+	Experience   *int            `form:"experience"`
+	Salary       *int            `form:"salary"`
+	Employment   *EmploymentType `form:"employment" binding:"omitempty,oneof=internship fullTime partTime"`
+	Location     *LocationType   `form:"location" binding:"omitempty,oneof=remote hybrid inOffice"`
+	Hours        *int            `form:"hours"`
+	Country      *string         `form:"country"`
+	Languages    []Language      `form:"languages,parser=encoding.TextUnmarshaler" collection_format:"csv"`
+	Technologies []Technology    `form:"technologies,parser=encoding.TextUnmarshaler" collection_format:"csv"`
 }
 
 const (

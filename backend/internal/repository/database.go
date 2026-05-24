@@ -10,7 +10,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-func NamedExecWrapper [T IdSetter] (db *sqlx.DB, query string, arr []T) error {
+func NamedExecWrapper[T IdSetter](db *sqlx.DB, query string, arr []T) error {
 	tx := db.MustBegin()
 	res, err := tx.NamedExec(query, arr)
 	if err != nil {
@@ -41,6 +41,7 @@ func ConnectDB() *sqlx.DB {
 func InitDB(db *sqlx.DB) {
 	fmt.Print("Initializing database...")
 	schema := `
+		DROP TABLE IF EXISTS user;
 		DROP TABLE IF EXISTS applicant_language;
 		DROP TABLE IF EXISTS applicant_technology;
 		DROP TABLE IF EXISTS vacancy_language;
@@ -50,6 +51,14 @@ func InitDB(db *sqlx.DB) {
 		DROP TABLE IF EXISTS applicant;
 		DROP TABLE IF EXISTS vacancy;
 		DROP TABLE IF EXISTS company;
+
+		CREATE TABLE user (
+			id				INT AUTO_INCREMENT NOT NULL,
+			name			VARCHAR(100) NOT NULL UNIQUE,
+			password		VARCHAR(255) NOT NULL,
+			type			ENUM('Company', 'Applicant', 'Admin'),
+			PRIMARY KEY (id)
+		);
 
 		CREATE TABLE applicant (
 			id				INT AUTO_INCREMENT NOT NULL,

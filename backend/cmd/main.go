@@ -8,11 +8,11 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 
+	"github.com/bogpy/bbtkru/internal/auth"
 	"github.com/bogpy/bbtkru/internal/handlers"
 	"github.com/bogpy/bbtkru/internal/repository"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/bogpy/bbtkru/internal/auth"
 )
 
 func main() {
@@ -64,11 +64,12 @@ func main() {
 	router.GET("/languages", env.GetAllLanguages)
 	router.GET("/technologies", env.GetAllTechnologies)
 
-	router.POST("/login", env.LoginHandler)
-	router.GET("/logout", env.LogoutHandler)
+	router.POST("/auth/login", env.LoginHandler)
+	router.POST("/auth/register", env.RegisterHandler)
+	router.GET("/auth/logout", env.LogoutHandler)
 
 	private := router.Group("/private")
-	router.Use(auth.JwtMiddleware())
+	private.Use(auth.JwtMiddleware())
 	{
 		private.POST("/vacancies", env.InsertVacancy)
 		private.POST("/applicants", env.InsertApplicant)

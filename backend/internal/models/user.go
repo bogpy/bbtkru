@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	ID       uint   `db:"id" json:"id"`
+	ID       int64  `db:"id" json:"id"`
 	Username string `db:"username" json:"username"`
 	Password string `db:"password" json:"-"`
 }
@@ -28,3 +28,4 @@ type LoginRequest struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+
