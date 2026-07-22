@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/bogpy/bbtkru/internal/repository"
 	"github.com/bogpy/bbtkru/internal/models"
+	"github.com/bogpy/bbtkru/internal/repository"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,7 +26,7 @@ func (e Env) GetVacancyByID(c *gin.Context) {
 
 func (e Env) GetVacancies(c *gin.Context) {
 	var request models.RequestForVacancy
-	if err := c.ShouldBindQuery(&request); err != nil{
+	if err := c.ShouldBindQuery(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -41,7 +41,7 @@ func (e Env) GetVacancies(c *gin.Context) {
 
 func (e Env) InsertVacancies(c *gin.Context) {
 	var vacancies []*models.Vacancy
-	if err := c.ShouldBindJSON(&vacancies); err != nil{
+	if err := c.ShouldBindJSON(&vacancies); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -56,7 +56,7 @@ func (e Env) InsertVacancies(c *gin.Context) {
 
 func (e Env) InsertVacancy(c *gin.Context) {
 	var vacancy *models.Vacancy
-	if err := c.ShouldBindJSON(&vacancy); err != nil{
+	if err := c.ShouldBindJSON(&vacancy); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -69,7 +69,7 @@ func (e Env) InsertVacancy(c *gin.Context) {
 	c.JSON(http.StatusOK, nil)
 }
 
-func (e Env) DeleteVacancyByID(c *gin.Context) { 
+func (e Env) DeleteVacancyByID(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})

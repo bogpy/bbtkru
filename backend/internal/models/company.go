@@ -6,7 +6,7 @@ type Company struct {
 	Country       string `db:"country" json:"country"`
 	YearFound     int    `db:"yearFound" json:"yearFound"`
 	EmployeeCount int    `db:"employeeCount" json:"employeeCount"`
-	Vacancies     []Vacancy 
+	Vacancies     []Vacancy
 	Score         int
 }
 
@@ -16,7 +16,7 @@ func (x *Company) SetID(id int64) {
 
 type RequestForCompany struct {
 	Country       *string `form:"country"`
-	EmployeeCount *int `form:"employeeCount"`
+	EmployeeCount *int    `form:"employeeCount"`
 }
 
 const (

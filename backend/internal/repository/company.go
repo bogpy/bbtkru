@@ -8,7 +8,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type CompanyRepository struct{
+type CompanyRepository struct {
 	DB *sqlx.DB
 }
 
@@ -70,7 +70,7 @@ func (r CompanyRepository) DeleteCompany(id int64) error {
 	if err != nil {
 		return err
 	}
-	if count == 0{
+	if count == 0 {
 		return fmt.Errorf("Not found company with id: %v", id)
 	}
 
@@ -105,9 +105,9 @@ func (r CompanyRepository) InsertCompany(c *models.Company) error {
 		return err
 	}
 	id, err := res.LastInsertId()
-    if err != nil {
-        return fmt.Errorf("addCompany: %v", err)
-    }
+	if err != nil {
+		return fmt.Errorf("addCompany: %v", err)
+	}
 	c.ID = id
-    return nil
+	return nil
 }

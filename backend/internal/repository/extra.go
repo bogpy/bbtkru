@@ -2,8 +2,8 @@ package repository
 
 import (
 	"github.com/bogpy/bbtkru/internal/models"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	_ "modernc.org/sqlite"
 )
 
 type IdSetter interface {
@@ -58,7 +58,6 @@ func (r LanguageRepository) GetAll() ([]models.Language, error) {
 	}
 	return languages, nil
 }
-
 
 func (r TechnologyRepository) GetAll() ([]models.Technology, error) {
 	query := `SELECT * FROM technology`

@@ -62,4 +62,3 @@ func JwtMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
-

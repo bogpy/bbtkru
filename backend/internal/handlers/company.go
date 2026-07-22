@@ -98,4 +98,3 @@ func (e Env) DeleteCompanyByID(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, nil)
 }
-

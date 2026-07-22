@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/bogpy/bbtkru/internal/models"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	_ "modernc.org/sqlite"
 )
 
 func NamedExecWrapper[T IdSetter](db *sqlx.DB, query string, arr []T) error {
@@ -32,8 +32,8 @@ func NamedExecWrapper[T IdSetter](db *sqlx.DB, query string, arr []T) error {
 
 func ConnectDB() *sqlx.DB {
 	fmt.Print("Connecting to database...")
-	dsn := os.Getenv("SQLX_MYSQL_DSN")
-	db := sqlx.MustConnect("mysql", dsn)
+	dsn := os.Getenv("SQLX_SQLITE_DSN")
+	db := sqlx.MustConnect("sqlite", dsn)
 	fmt.Println("Success!")
 	return db
 }
@@ -53,61 +53,55 @@ func InitDB(db *sqlx.DB) {
 		DROP TABLE IF EXISTS company;
 
 		CREATE TABLE user (
-			id				INT AUTO_INCREMENT NOT NULL,
+			id INTEGER PRIMARY KEY,
 			name			VARCHAR(100) NOT NULL UNIQUE,
 			email			VARCHAR(100) NOT NULL UNIQUE,
 			password		VARCHAR(255) NOT NULL,
-			type			ENUM('Company', 'Applicant', 'Admin'),
-			PRIMARY KEY (id)
+			type			TEXT CHECK(type IN ('Company', 'Applicant', 'Admin'))
 		);
 
 		CREATE TABLE applicant (
-			id				INT AUTO_INCREMENT NOT NULL,
+			id INTEGER PRIMARY KEY,
 			name			VARCHAR(100) NOT NULL,
-			dateOfBirth		DATE,
-			education		ENUM('HighSchool', 'Bachelor', 'Master', 'PhD'),
+			dateOfBirth		TEXT,
+			education		TEXT CHECK(education IN ('HighSchool', 'Bachelor', 'Master', 'PhD')),
 			university		VARCHAR(100),
-			graduated		BOOL,
-			specialty		ENUM('Frontend', 'Backend', 'Fullstack', 'DataEngineer', 'DevOps'),
-			level			ENUM('Intern', 'Junior', 'Middle', 'Senior', 'Lead'),
+			graduated		BOOLEAN,
+			specialty		TEXT CHECK(specialty IN ('Frontend', 'Backend', 'Fullstack', 'DataEngineer', 'DevOps'),
+			level			TEXT CHECK(level IN ('Intern', 'Junior', 'Middle', 'Senior', 'Lead')),
 			experience		INT,
-			workHistory		TEXT,
-			PRIMARY KEY (id)
+			workHistory		TEXT
 		);
 
 		CREATE TABLE company (
-			id				INT AUTO_INCREMENT NOT NULL,
+			id INTEGER PRIMARY KEY,
 			name			VARCHAR(100) NOT NULL UNIQUE,
 			country			VARCHAR(50),
 			yearFound		INT,
-			employeeCount	INT,
-			PRIMARY KEY (id)
+			employeeCount	INT
 		);
 
 		CREATE TABLE vacancy (
-			id				INT AUTO_INCREMENT NOT NULL,
+			id INTEGER PRIMARY KEY,
 			title			VARCHAR(100) NOT NULL,
 			description		TEXT,
 			companyID		INT NOT NULL,
 			experience		INT,
 			salary			INT,
 			hours			INT,
-			employment		ENUM('Internship', 'Full-time', 'Part-time'),
-			location		ENUM('Remote', 'Hybrid', 'In-office'),
-			PRIMARY KEY (id),
+			employment		TEXT CHECK(employment IN ('Internship', 'Full-time', 'Part-time')),
+			location		TEXT CHECK(location IN ('Remote', 'Hybrid', 'In-office')),
 			FOREIGN KEY (companyID) REFERENCES company(id) ON DELETE CASCADE
 		);
 
 		CREATE TABLE language (
-			id				INT AUTO_INCREMENT NOT NULL,
-			name			VARCHAR(50) NOT NULL UNIQUE,
-			PRIMARY KEY(id)
+			id INTEGER PRIMARY KEY,
+			name			VARCHAR(50) NOT NULL UNIQUE
 		);
 
 		CREATE TABLE technology (
-			id				INT AUTO_INCREMENT NOT NULL,
-			name			VARCHAR(50) NOT NULL UNIQUE,
-			PRIMARY KEY(id)
+			id INTEGER PRIMARY KEY,
+			name			VARCHAR(50) NOT NULL UNIQUE
 		);
 
 		CREATE TABLE applicant_language (
