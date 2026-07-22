@@ -23,6 +23,7 @@ func NamedExecWrapper[T IdSetter](db *sqlx.DB, query string, arr []T) error {
 		return err
 	}
 
+	id = id - int64(len(arr)) + 1
 	for _, ent := range arr {
 		ent.SetID(id)
 		id += 1
@@ -63,11 +64,11 @@ func InitDB(db *sqlx.DB) {
 		CREATE TABLE applicant (
 			id INTEGER PRIMARY KEY,
 			name			VARCHAR(100) NOT NULL,
-			dateOfBirth		TEXT,
+			dateOfBirth		DATETIME,
 			education		TEXT CHECK(education IN ('HighSchool', 'Bachelor', 'Master', 'PhD')),
 			university		VARCHAR(100),
 			graduated		BOOLEAN,
-			specialty		TEXT CHECK(specialty IN ('Frontend', 'Backend', 'Fullstack', 'DataEngineer', 'DevOps'),
+			specialty		TEXT CHECK(specialty IN ('Frontend', 'Backend', 'Fullstack', 'DataEngineer', 'DevOps')),
 			level			TEXT CHECK(level IN ('Intern', 'Junior', 'Middle', 'Senior', 'Lead')),
 			experience		INT,
 			workHistory		TEXT
