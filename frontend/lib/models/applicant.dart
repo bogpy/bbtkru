@@ -31,19 +31,23 @@ class Applicant {
 
   factory Applicant.fromJson(Map<String, dynamic> json) {
     // Handle capitalized "Languages" and "Technologies" from API
-    final List<String> langs = (json['Languages'] as List?)?.cast<String>() ?? 
-                               (json['languages'] as List?)?.cast<String>() ?? 
-                               (json['languagesRequired'] as List?)?.cast<String>() ??
-                               const [];
-    final List<String> techs = (json['Technologies'] as List?)?.cast<String>() ?? 
-                               (json['technologies'] as List?)?.cast<String>() ?? 
-                               (json['technologiesRequired'] as List?)?.cast<String>() ??
-                               const [];
+    final List<String> langs =
+        (json['Languages'] as List?)?.cast<String>() ??
+        (json['languages'] as List?)?.cast<String>() ??
+        (json['languagesRequired'] as List?)?.cast<String>() ??
+        const [];
+    final List<String> techs =
+        (json['Technologies'] as List?)?.cast<String>() ??
+        (json['technologies'] as List?)?.cast<String>() ??
+        (json['technologiesRequired'] as List?)?.cast<String>() ??
+        const [];
 
     return Applicant(
       id: json['id'] as int? ?? 0,
       name: json['name'] as String? ?? '',
-      dateOfBirth: DateTime.tryParse(json['dateOfBirth'] as String? ?? '') ?? DateTime.now(),
+      dateOfBirth:
+          DateTime.tryParse(json['dateOfBirth'] as String? ?? '') ??
+          DateTime.now(),
       education: _parseEducation(json['education']),
       university: json['university'] as String? ?? '',
       graduated: json['graduated'] as bool? ?? false,
@@ -58,20 +62,21 @@ class Applicant {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'dateOfBirth': "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}T00:00:00Z",
-        'education': education.name,
-        'university': university,
-        'graduated': graduated,
-        'specialty': specialty.name,
-        'level': level.name,
-        'experience': experience,
-        'workHistory': workHistory,
-        'languages': languages,
-        'technologies': technologies,
-        'score': score,
-      };
+    'id': id,
+    'name': name,
+    'dateOfBirth':
+        "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}T00:00:00Z",
+    'education': education.apiValue,
+    'university': university,
+    'graduated': graduated,
+    'specialty': specialty.apiValue,
+    'level': level.apiValue,
+    'experience': experience,
+    'workHistory': workHistory,
+    'languages': languages,
+    'technologies': technologies,
+    'score': score,
+  };
 
   static EducationType _parseEducation(dynamic value) {
     for (var type in EducationType.values) {
@@ -79,12 +84,14 @@ class Applicant {
     }
     return EducationType.bachelor;
   }
+
   static SpecialtyType _parseSpecialty(dynamic value) {
     for (var type in SpecialtyType.values) {
       if (type.name == value || type.displayName == value) return type;
     }
     return SpecialtyType.frontend;
   }
+
   static LevelType _parseLevel(dynamic value) {
     for (var type in LevelType.values) {
       if (type.name == value || type.displayName == value) return type;
@@ -94,39 +101,116 @@ class Applicant {
 }
 
 enum EducationType {
-  highSchool, bachelor, master, phD;
+  highSchool,
+  bachelor,
+  master,
+  phD;
+
   String get displayName {
     switch (this) {
-      case EducationType.highSchool: return 'High School';
-      case EducationType.bachelor: return 'Bachelor';
-      case EducationType.master: return 'Master';
-      case EducationType.phD: return 'PhD';
+      case EducationType.highSchool:
+        return 'High School';
+      case EducationType.bachelor:
+        return 'Bachelor';
+      case EducationType.master:
+        return 'Master';
+      case EducationType.phD:
+        return 'PhD';
     }
   }
 }
 
 enum SpecialtyType {
-  frontend, backend, fullstack, dataEngineer, devOps;
+  frontend,
+  backend,
+  fullstack,
+  dataEngineer,
+  devOps;
+
   String get displayName {
     switch (this) {
-      case SpecialtyType.frontend: return 'Frontend';
-      case SpecialtyType.backend: return 'Backend';
-      case SpecialtyType.fullstack: return 'Fullstack';
-      case SpecialtyType.dataEngineer: return 'Data Engineer';
-      case SpecialtyType.devOps: return 'DevOps';
+      case SpecialtyType.frontend:
+        return 'Frontend';
+      case SpecialtyType.backend:
+        return 'Backend';
+      case SpecialtyType.fullstack:
+        return 'Fullstack';
+      case SpecialtyType.dataEngineer:
+        return 'Data Engineer';
+      case SpecialtyType.devOps:
+        return 'DevOps';
     }
   }
 }
 
 enum LevelType {
-  intern, junior, middle, senior, lead;
+  intern,
+  junior,
+  middle,
+  senior,
+  lead;
+
   String get displayName {
     switch (this) {
-      case LevelType.intern: return 'Intern';
-      case LevelType.junior: return 'Junior';
-      case LevelType.middle: return 'Middle';
-      case LevelType.senior: return 'Senior';
-      case LevelType.lead: return 'Lead';
+      case LevelType.intern:
+        return 'Intern';
+      case LevelType.junior:
+        return 'Junior';
+      case LevelType.middle:
+        return 'Middle';
+      case LevelType.senior:
+        return 'Senior';
+      case LevelType.lead:
+        return 'Lead';
+    }
+  }
+}
+
+extension EducationTypeApi on EducationType {
+  String get apiValue {
+    switch (this) {
+      case EducationType.highSchool:
+        return 'HighSchool';
+      case EducationType.bachelor:
+        return 'Bachelor';
+      case EducationType.master:
+        return 'Master';
+      case EducationType.phD:
+        return 'PhD';
+    }
+  }
+}
+
+extension SpecialtyTypeApi on SpecialtyType {
+  String get apiValue {
+    switch (this) {
+      case SpecialtyType.frontend:
+        return 'Frontend';
+      case SpecialtyType.backend:
+        return 'Backend';
+      case SpecialtyType.fullstack:
+        return 'Fullstack';
+      case SpecialtyType.dataEngineer:
+        return 'DataEngineer';
+      case SpecialtyType.devOps:
+        return 'DevOps';
+    }
+  }
+}
+
+extension LevelTypeApi on LevelType {
+  String get apiValue {
+    switch (this) {
+      case LevelType.intern:
+        return 'Intern';
+      case LevelType.junior:
+        return 'Junior';
+      case LevelType.middle:
+        return 'Middle';
+      case LevelType.senior:
+        return 'Senior';
+      case LevelType.lead:
+        return 'Lead';
     }
   }
 }
@@ -160,14 +244,18 @@ class RequestForApplicant {
     final map = <String, dynamic>{};
     if (name != null) map['name'] = name;
     if (experience != null) map['experience'] = experience;
-    if (level != null) map['level'] = level?.name;
+    if (level != null) map['level'] = level!.apiValue;
     if (graduated != null) map['graduated'] = graduated;
-    if (education != null) map['education'] = education?.name;
-    if (specialty != null) map['specialty'] = specialty?.name;
-    if (languagesRequired.isNotEmpty) map['languagesRequired'] = languagesRequired.join(',');
-    if (languagesOptional.isNotEmpty) map['languagesOptional'] = languagesOptional.join(',');
-    if (technologiesRequired.isNotEmpty) map['technologiesRequired'] = technologiesRequired.join(',');
-    if (technologiesOptional.isNotEmpty) map['technologiesOptional'] = technologiesOptional.join(',');
+    if (education != null) map['education'] = education!.apiValue;
+    if (specialty != null) map['specialty'] = specialty!.apiValue;
+    if (languagesRequired.isNotEmpty)
+      map['languagesRequired'] = languagesRequired.join(',');
+    if (languagesOptional.isNotEmpty)
+      map['languagesOptional'] = languagesOptional.join(',');
+    if (technologiesRequired.isNotEmpty)
+      map['technologiesRequired'] = technologiesRequired.join(',');
+    if (technologiesOptional.isNotEmpty)
+      map['technologiesOptional'] = technologiesOptional.join(',');
     return map;
   }
 
@@ -226,16 +314,17 @@ class PublicationRequestForApplicant {
   });
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'dateOfBirth': "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}T00:00:00Z",
-        'education': education.name,
-        'university': university,
-        'graduated': graduated,
-        'specialty': specialty.name,
-        'level': level.name,
-        'experience': experience,
-        'workHistory': workHistory,
-        'languages': languages,
-        'technologies': technologies,
-      };
+    'name': name,
+    'dateOfBirth':
+        "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}T00:00:00Z",
+    'education': education.apiValue,
+    'university': university,
+    'graduated': graduated,
+    'specialty': specialty.apiValue,
+    'level': level.apiValue,
+    'experience': experience,
+    'workHistory': workHistory,
+    'languages': languages,
+    'technologies': technologies,
+  };
 }

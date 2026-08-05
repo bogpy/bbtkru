@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -46,7 +47,9 @@ func main() {
 	router.SetTrustedProxies([]string{"127.0.0.1"})
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5001"},
+		AllowOriginFunc: func(origin string) bool {
+			return strings.HasPrefix(origin, "http://localhost:")
+		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -67,6 +70,7 @@ func main() {
 	router.POST("/auth/login", env.LoginHandler)
 	router.POST("/auth/register", env.RegisterHandler)
 	router.GET("/auth/logout", env.LogoutHandler)
+	router.GET("/auth/me", auth.JwtMiddleware(), env.MeHandler)
 
 	private := router.Group("/private")
 	private.Use(auth.JwtMiddleware())

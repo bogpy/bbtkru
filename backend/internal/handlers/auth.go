@@ -18,7 +18,7 @@ func (e Env) LoginHandler(c *gin.Context) {
 
 	var user models.User
 	err := e.db.Get(&user,
-		"SELECT * FROM user WHERE email = ?",
+		"SELECT id, name, email, password, COALESCE(type, '') AS type FROM user WHERE email = ?",
 		loginReq.Email,
 	)
 	if err != nil {
@@ -40,7 +40,12 @@ func (e Env) LoginHandler(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": token})
+	user.Password = ""
+
+	c.JSON(http.StatusOK, gin.H{
+		"token": token,
+		"user":  user,
+	})
 }
 
 func (e Env) RegisterHandler(c *gin.Context) {
@@ -73,6 +78,39 @@ func (e Env) RegisterHandler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully"})
+}
+
+func (e Env) MeHandler(c *gin.Context) {
+	emailValue, exists := c.Get("username")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "User identity missing"})
+		return
+	}
+
+	email, ok := emailValue.(string)
+	if !ok || email == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user identity"})
+		return
+	}
+
+	var user models.User
+	err := e.db.Get(
+		&user,
+		`SELECT id, name, email, password, COALESCE(type, '') AS type
+		 FROM user
+		 WHERE email = ?`,
+		email,
+	)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "User not found"})
+		return
+	}
+
+	user.Password = ""
+
+	c.JSON(http.StatusOK, gin.H{
+		"user": user,
+	})
 }
 
 func (e Env) LogoutHandler(c *gin.Context) {

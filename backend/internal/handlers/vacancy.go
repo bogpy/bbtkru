@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
@@ -56,17 +57,76 @@ func (e Env) InsertVacancies(c *gin.Context) {
 
 func (e Env) InsertVacancy(c *gin.Context) {
 	var vacancy *models.Vacancy
+
 	if err := c.ShouldBindJSON(&vacancy); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	r := repository.NewVacancyRepository(e.db)
-	err := r.InsertVacancy(vacancy)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Vacancy not added"})
+
+	if err := r.InsertVacancy(vacancy); err != nil {
+		log.Printf("Error inserting vacancy: %v", err)
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{"error": "Vacancy not added"},
+		)
 		return
 	}
-	c.JSON(http.StatusOK, nil)
+
+	var languages []models.Language
+	if err := e.db.Select(
+		&languages,
+		"SELECT id, name FROM language",
+	); err != nil {
+		log.Printf("Error loading languages: %v", err)
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{"error": "Vacancy languages not added"},
+		)
+		return
+	}
+
+	languageIDs := make(map[string]int64, len(languages))
+	for _, language := range languages {
+		languageIDs[language.Name] = language.ID
+	}
+
+	var technologies []models.Technology
+	if err := e.db.Select(
+		&technologies,
+		"SELECT id, name FROM technology",
+	); err != nil {
+		log.Printf("Error loading technologies: %v", err)
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{"error": "Vacancy technologies not added"},
+		)
+		return
+	}
+
+	technologyIDs := make(map[string]int64, len(technologies))
+	for _, technology := range technologies {
+		technologyIDs[technology.Name] = technology.ID
+	}
+
+	if err := r.InsertJunction(
+		[]*models.Vacancy{vacancy},
+		languageIDs,
+		technologyIDs,
+	); err != nil {
+		log.Printf("Error inserting vacancy skills: %v", err)
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{"error": "Vacancy skills not added"},
+		)
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Vacancy added successfully",
+		"id":      vacancy.ID,
+	})
 }
 
 func (e Env) DeleteVacancyByID(c *gin.Context) {
