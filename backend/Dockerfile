@@ -7,7 +7,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN CGOENABLED=0 go build -ldflags="-s -w" -o /app/server ./cmd/main.go
+RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /app/server ./cmd/main.go
 
 # 3. Final Yandex runtime container
 FROM alpine:latest
@@ -19,7 +19,7 @@ COPY --from=litestream /usr/local/bin/litestream /usr/local/bin/litestream
 COPY --from=builder /app/server /app/server
 COPY litestream.yml /etc/litestream.yml
 
-RUN mkdir -p /data
+RUN mkdir -p /data/sqlite
 EXPOSE 8080
 
 CMD ["litestream", "replicate", "-config", "/etc/litestream.yml", "-exec", "/app/server"]

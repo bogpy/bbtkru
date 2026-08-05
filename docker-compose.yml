@@ -1,0 +1,47 @@
+name: bbtkru
+
+services:
+  sqlite-init:
+    image: alpine:latest
+    restart: "no"
+    command:
+      - /bin/sh
+      - -ec
+      - |
+        if [ ! -s /data/sqlite/bbtkru.db ]; then
+          cp /seed/bbtkru.db /data/sqlite/bbtkru.db
+        fi
+    volumes:
+      - backend-sqlite:/data/sqlite
+      - ./backend/data/sqlite/bbtkru.db:/seed/bbtkru.db:ro
+
+  backend:
+    image: bbtkru-backend-test
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    init: true
+    restart: unless-stopped
+    depends_on:
+      sqlite-init:
+        condition: service_completed_successfully
+    ports:
+      - "${BACKEND_PORT:-8081}:8080"
+    env_file:
+      - ./backend/.env
+    environment:
+      APP_ENV: production
+      SQLX_SQLITE_DSN: "file:/data/sqlite/bbtkru.db?_pragma=foreign_keys(1)&_pragma=journal_mode(WAL)"
+    volumes:
+      - backend-sqlite:/data/sqlite
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/languages >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    stop_grace_period: 30s
+
+volumes:
+  backend-sqlite:
+    name: bbtkru-backend-sqlite

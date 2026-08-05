@@ -23,7 +23,7 @@ func main() {
 	}
 	log.SetOutput(file)
 	err = godotenv.Load()
-	if err != nil {
+	if err != nil && !os.IsNotExist(err) {
 		log.Fatal(err)
 	}
 
