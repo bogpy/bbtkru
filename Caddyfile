@@ -1,0 +1,4 @@
+api.fairintern.com {
+	encode zstd gzip
+	reverse_proxy backend:8080
+}

@@ -46,9 +46,22 @@ func main() {
 
 	router.SetTrustedProxies([]string{"127.0.0.1"})
 
+	allowedOrigins := make(map[string]struct{})
+	for _, origin := range strings.Split(os.Getenv("CORS_ALLOWED_ORIGINS"), ",") {
+		origin = strings.TrimSpace(origin)
+		if origin != "" {
+			allowedOrigins[origin] = struct{}{}
+		}
+	}
+
 	router.Use(cors.New(cors.Config{
 		AllowOriginFunc: func(origin string) bool {
-			return strings.HasPrefix(origin, "http://localhost:")
+			if origin == "http://localhost" || strings.HasPrefix(origin, "http://localhost:") ||
+				origin == "http://127.0.0.1" || strings.HasPrefix(origin, "http://127.0.0.1:") {
+				return true
+			}
+			_, ok := allowedOrigins[origin]
+			return ok
 		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
