@@ -129,6 +129,8 @@ enum LocationType {
 }
 
 class RequestForVacancy {
+  static const Object _unset = Object();
+
   final String? title;
   final int? experience;
   final int? salary;
@@ -154,8 +156,8 @@ class RequestForVacancy {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
 
-    if (title != null) {
-      map['title'] = title;
+    if (title != null && title!.trim().isNotEmpty) {
+      map['title'] = title!.trim();
     }
     if (experience != null) {
       map['experience'] = experience;
@@ -169,8 +171,8 @@ class RequestForVacancy {
     if (location != null) {
       map['location'] = location!.displayName;
     }
-    if (country != null) {
-      map['country'] = country;
+    if (country != null && country!.trim().isNotEmpty) {
+      map['country'] = country!.trim();
     }
     if (hours != null) {
       map['hours'] = hours;
@@ -186,24 +188,30 @@ class RequestForVacancy {
   }
 
   RequestForVacancy copyWith({
-    String? title,
-    int? experience,
-    int? salary,
-    EmploymentType? employment,
-    LocationType? location,
-    String? country,
-    int? hours,
+    Object? title = _unset,
+    Object? experience = _unset,
+    Object? salary = _unset,
+    Object? employment = _unset,
+    Object? location = _unset,
+    Object? country = _unset,
+    Object? hours = _unset,
     List<String>? languages,
     List<String>? technologies,
   }) {
     return RequestForVacancy(
-      title: title ?? this.title,
-      experience: experience ?? this.experience,
-      salary: salary ?? this.salary,
-      employment: employment ?? this.employment,
-      location: location ?? this.location,
-      country: country ?? this.country,
-      hours: hours ?? this.hours,
+      title: identical(title, _unset) ? this.title : title as String?,
+      experience: identical(experience, _unset)
+          ? this.experience
+          : experience as int?,
+      salary: identical(salary, _unset) ? this.salary : salary as int?,
+      employment: identical(employment, _unset)
+          ? this.employment
+          : employment as EmploymentType?,
+      location: identical(location, _unset)
+          ? this.location
+          : location as LocationType?,
+      country: identical(country, _unset) ? this.country : country as String?,
+      hours: identical(hours, _unset) ? this.hours : hours as int?,
       languages: languages ?? this.languages,
       technologies: technologies ?? this.technologies,
     );

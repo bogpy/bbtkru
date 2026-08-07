@@ -35,6 +35,9 @@ func main() {
 		repository.PopulateDB(db)
 		return
 	}
+	if err := repository.MigrateDB(db); err != nil {
+		log.Fatalf("Failed to migrate database: %v", err)
+	}
 	env := handlers.NewEnv(db)
 
 	router := gin.Default()
@@ -88,6 +91,7 @@ func main() {
 	private := router.Group("/private")
 	private.Use(auth.JwtMiddleware())
 	{
+		private.GET("/companies", env.GetOwnedCompanies)
 		private.POST("/vacancies", env.InsertVacancy)
 		private.POST("/applicants", env.InsertApplicant)
 		private.POST("/companies", env.InsertCompany)

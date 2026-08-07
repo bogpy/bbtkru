@@ -14,9 +14,9 @@ const (
 
 type User struct {
 	ID       int64    `db:"id" json:"id"`
-	Name     string   `db:"name" json:"name"`
-	Email    string   `db:"email" json:"email"`
-	Password string   `db:"password" json:"password,omitempty"`
+	Name     string   `db:"name" json:"name" binding:"required,max=100"`
+	Email    string   `db:"email" json:"email" binding:"required,email,max=100"`
+	Password string   `db:"password" json:"password,omitempty" binding:"required,min=6,max=72"`
 	Type     UserType `db:"type" json:"type"`
 }
 

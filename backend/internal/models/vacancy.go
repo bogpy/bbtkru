@@ -49,10 +49,11 @@ func (x *Vacancy) GetTechnologies() []Technology {
 }
 
 type RequestForVacancy struct {
+	Title        *string         `form:"title"`
 	Experience   *int            `form:"experience"`
 	Salary       *int            `form:"salary"`
-	Employment   *EmploymentType `form:"employment" binding:"omitempty,oneof=internship fullTime partTime"`
-	Location     *LocationType   `form:"location" binding:"omitempty,oneof=remote hybrid inOffice"`
+	Employment   *EmploymentType `form:"employment" binding:"omitempty,oneof=Internship Full-time Part-time"`
+	Location     *LocationType   `form:"location" binding:"omitempty,oneof=Remote Hybrid In-office"`
 	Hours        *int            `form:"hours"`
 	Country      *string         `form:"country"`
 	Languages    []Language      `form:"languages,parser=encoding.TextUnmarshaler" collection_format:"csv"`

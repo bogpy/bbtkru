@@ -3,6 +3,7 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/bogpy/bbtkru/internal/auth"
 	"github.com/bogpy/bbtkru/internal/models"
@@ -19,7 +20,7 @@ func (e Env) LoginHandler(c *gin.Context) {
 	var user models.User
 	err := e.db.Get(&user,
 		"SELECT id, name, email, password, COALESCE(type, '') AS type FROM user WHERE email = ?",
-		loginReq.Email,
+		strings.ToLower(strings.TrimSpace(loginReq.Email)),
 	)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email"})
@@ -57,6 +58,21 @@ func (e Env) RegisterHandler(c *gin.Context) {
 		)
 		return
 	}
+	user.Name = strings.TrimSpace(user.Name)
+	user.Email = strings.ToLower(strings.TrimSpace(user.Email))
+	if user.Name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Name is required"})
+		return
+	}
+
+	token, err := auth.GenerateJWT(user.Email)
+	if err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{"error": "Failed to generate token"},
+		)
+		return
+	}
 
 	if err := user.HashPassword(); err != nil {
 		c.JSON(
@@ -67,7 +83,7 @@ func (e Env) RegisterHandler(c *gin.Context) {
 	}
 
 	query := `INSERT INTO user (name, email, password) VALUES (?, ?, ?)`
-	_, err := e.db.Exec(query, user.Name, user.Email, user.Password)
+	result, err := e.db.Exec(query, user.Name, user.Email, user.Password)
 	if err != nil {
 		c.JSON(
 			http.StatusConflict,
@@ -77,7 +93,20 @@ func (e Env) RegisterHandler(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully"})
+	user.ID, err = result.LastInsertId()
+	if err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			gin.H{"error": "Failed to complete registration"},
+		)
+		return
+	}
+	user.Password = ""
+
+	c.JSON(http.StatusCreated, gin.H{
+		"token": token,
+		"user":  user,
+	})
 }
 
 func (e Env) MeHandler(c *gin.Context) {

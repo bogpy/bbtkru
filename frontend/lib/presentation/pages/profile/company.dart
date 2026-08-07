@@ -39,9 +39,11 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
         title: const Text('Company Profile'),
         actions: [
           IconButton(
-            icon: Icon(ref.watch(themeProvider) == ThemeMode.light
-                ? Icons.dark_mode
-                : Icons.light_mode),
+            icon: Icon(
+              ref.watch(themeProvider) == ThemeMode.light
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
+            ),
             onPressed: () {
               ref.read(themeProvider.notifier).toggleTheme();
             },
@@ -86,7 +88,9 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
   Widget _buildHeader(BuildContext context, Company company) {
     return Card(
       elevation: 0,
-      color: Theme.of(context).colorScheme.secondaryContainer.withValues(alpha: 0.3),
+      color: Theme.of(
+        context,
+      ).colorScheme.secondaryContainer.withValues(alpha: 0.3),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -97,7 +101,7 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
                 radius: 50,
                 backgroundColor: Theme.of(context).colorScheme.secondary,
                 child: Text(
-                  company.name[0].toUpperCase(),
+                  company.initial,
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -109,14 +113,20 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
             const SizedBox(height: 16),
             Text(
               company.name,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.location_on, size: 16, color: Theme.of(context).colorScheme.primary),
+                Icon(
+                  Icons.location_on,
+                  size: 16,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
                 const SizedBox(width: 4),
                 Text(
                   company.country,
@@ -139,7 +149,9 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Theme.of(context).dividerColor.withValues(alpha: 0.1)),
+        side: BorderSide(
+          color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -185,14 +197,20 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
               ),
               const SizedBox(width: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 2,
+                ),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   vacancies.length.toString(),
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -201,8 +219,12 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
         if (vacancies.isEmpty)
           Card(
             elevation: 0,
-            color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.1),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            color: Theme.of(
+              context,
+            ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.1),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
             child: const Padding(
               padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
               child: Center(
@@ -230,22 +252,38 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
               return Card(
                 elevation: 2,
                 shadowColor: Colors.black12,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 8,
+                  ),
                   title: Text(
                     vacancy.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Row(
                       children: [
-                        Icon(Icons.location_on, size: 14, color: Colors.grey[600]),
+                        Icon(
+                          Icons.location_on,
+                          size: 14,
+                          color: Colors.grey[600],
+                        ),
                         const SizedBox(width: 4),
                         Text(vacancy.location.displayName),
                         const SizedBox(width: 12),
-                        Icon(Icons.access_time, size: 14, color: Colors.grey[600]),
+                        Icon(
+                          Icons.access_time,
+                          size: 14,
+                          color: Colors.grey[600],
+                        ),
                         const SizedBox(width: 4),
                         Text(vacancy.employment.displayName),
                       ],
@@ -263,7 +301,11 @@ class _CompanyProfilePageState extends ConsumerState<CompanyProfilePage> {
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),
-                  onTap: () => Navigator.pushNamed(context, '/vacancy', arguments: vacancy.id),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    '/vacancy',
+                    arguments: vacancy.id,
+                  ),
                 ),
               );
             },

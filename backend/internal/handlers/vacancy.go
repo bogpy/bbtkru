@@ -56,10 +56,26 @@ func (e Env) InsertVacancies(c *gin.Context) {
 }
 
 func (e Env) InsertVacancy(c *gin.Context) {
+	userID, ok := e.authenticatedUserID(c)
+	if !ok {
+		return
+	}
+
 	var vacancy *models.Vacancy
 
 	if err := c.ShouldBindJSON(&vacancy); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	companyRepository := repository.NewCompanyRepository(e.db)
+	owned, err := companyRepository.IsOwnedBy(vacancy.CompanyID, userID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to verify company ownership"})
+		return
+	}
+	if !owned {
+		c.JSON(http.StatusForbidden, gin.H{"error": "You can only post vacancies for your own companies"})
 		return
 	}
 
@@ -130,15 +146,20 @@ func (e Env) InsertVacancy(c *gin.Context) {
 }
 
 func (e Env) DeleteVacancyByID(c *gin.Context) {
+	userID, ok := e.authenticatedUserID(c)
+	if !ok {
+		return
+	}
+
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 		return
 	}
 	r := repository.NewVacancyRepository(e.db)
-	err = r.DeleteVacancy(id)
+	err = r.DeleteVacancyOwnedBy(id, userID)
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Vacancy not deleted"})
+		c.JSON(http.StatusForbidden, gin.H{"error": "Vacancy not found or not owned by user"})
 		return
 	}
 	c.JSON(http.StatusOK, nil)

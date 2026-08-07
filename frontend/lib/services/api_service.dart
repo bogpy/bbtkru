@@ -5,6 +5,20 @@ import '../models/company.dart';
 import '../models/vacancy.dart';
 import '../models/user.dart';
 
+List<Map<String, dynamic>> _decodeObjectList(dynamic data) {
+  if (data == null) return const [];
+  if (data is! List) {
+    throw const FormatException('Expected a list response');
+  }
+
+  return data.map((item) {
+    if (item is! Map) {
+      throw const FormatException('Expected an object in list response');
+    }
+    return Map<String, dynamic>.from(item);
+  }).toList();
+}
+
 class ApiService {
   static const String _baseUrl = String.fromEnvironment(
     'API_BASE_URL',
@@ -78,7 +92,7 @@ class ApiService {
   Future<User> getMe() async {
     try {
       final response = await _dio.get('/auth/me');
-      return User.fromJson(response.data);
+      return User.fromJson(response.data['user']);
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -99,8 +113,7 @@ class ApiService {
     try {
       final response = await _dio.get('/companies/vacancies/$id');
       if (response.statusCode == 200) {
-        final List data = response.data;
-        return data.map((json) => Vacancy.fromJson(json)).toList();
+        return _decodeObjectList(response.data).map(Vacancy.fromJson).toList();
       }
       throw Exception('Failed to load company vacancies');
     } on DioException catch (e) {
@@ -137,8 +150,7 @@ class ApiService {
         cancelToken: cancelToken,
       );
       if (response.statusCode == 200) {
-        final List data = response.data;
-        return data.map((json) => Company.fromJson(json)).toList();
+        return _decodeObjectList(response.data).map(Company.fromJson).toList();
       }
       throw Exception('Failed to load companies');
     } on DioException catch (e) {
@@ -158,8 +170,7 @@ class ApiService {
         cancelToken: cancelToken,
       );
       if (response.statusCode == 200) {
-        final List data = response.data;
-        return data.map((json) => Vacancy.fromJson(json)).toList();
+        return _decodeObjectList(response.data).map(Vacancy.fromJson).toList();
       }
       throw Exception('Failed to load vacancies');
     } on DioException catch (e) {
@@ -179,8 +190,9 @@ class ApiService {
         cancelToken: cancelToken,
       );
       if (response.statusCode == 200) {
-        final List data = response.data;
-        return data.map((json) => Applicant.fromJson(json)).toList();
+        return _decodeObjectList(
+          response.data,
+        ).map(Applicant.fromJson).toList();
       }
       throw Exception('Failed to load applicants');
     } on DioException catch (e) {
@@ -215,6 +227,15 @@ class ApiService {
     }
   }
 
+  Future<List<Company>> getMyCompanies() async {
+    try {
+      final response = await _dio.get('/private/companies');
+      return _decodeObjectList(response.data).map(Company.fromJson).toList();
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   // --- Creation ---
 
   Future<void> createApplicant(PublicationRequestForApplicant request) async {
@@ -225,9 +246,13 @@ class ApiService {
     }
   }
 
-  Future<void> createCompany(Company company) async {
+  Future<Company> createCompany(Company company) async {
     try {
-      await _dio.post('/private/companies', data: company.toJson());
+      final response = await _dio.post(
+        '/private/companies',
+        data: company.toJson(),
+      );
+      return Company.fromJson(response.data);
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -242,12 +267,24 @@ class ApiService {
   }
 
   String _handleError(DioException e) {
-    if (e.type == DioExceptionType.connectionTimeout)
+    if (e.type == DioExceptionType.connectionTimeout) {
       return "Check your internet.";
-    if (e.response?.statusCode == 403)
+    }
+
+    final responseData = e.response?.data;
+    if (responseData is Map<String, dynamic>) {
+      final serverMessage = responseData['error'] ?? responseData['message'];
+      if (serverMessage is String && serverMessage.isNotEmpty) {
+        return serverMessage;
+      }
+    }
+
+    if (e.response?.statusCode == 403) {
       return "IP Not Whitelisted (CORS/IP Error).";
-    if (e.response?.statusCode == 401)
+    }
+    if (e.response?.statusCode == 401) {
       return "Unauthorized. Please login again.";
-    return e.response?.data?['message'] ?? e.message ?? "Something went wrong.";
+    }
+    return e.message ?? "Something went wrong.";
   }
 }

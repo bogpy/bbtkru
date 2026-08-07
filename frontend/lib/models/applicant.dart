@@ -80,21 +80,33 @@ class Applicant {
 
   static EducationType _parseEducation(dynamic value) {
     for (var type in EducationType.values) {
-      if (type.name == value || type.displayName == value) return type;
+      if (type.name == value ||
+          type.displayName == value ||
+          type.apiValue == value) {
+        return type;
+      }
     }
     return EducationType.bachelor;
   }
 
   static SpecialtyType _parseSpecialty(dynamic value) {
     for (var type in SpecialtyType.values) {
-      if (type.name == value || type.displayName == value) return type;
+      if (type.name == value ||
+          type.displayName == value ||
+          type.apiValue == value) {
+        return type;
+      }
     }
     return SpecialtyType.frontend;
   }
 
   static LevelType _parseLevel(dynamic value) {
     for (var type in LevelType.values) {
-      if (type.name == value || type.displayName == value) return type;
+      if (type.name == value ||
+          type.displayName == value ||
+          type.apiValue == value) {
+        return type;
+      }
     }
     return LevelType.junior;
   }
@@ -216,6 +228,8 @@ extension LevelTypeApi on LevelType {
 }
 
 class RequestForApplicant {
+  static const Object _unset = Object();
+
   final String? name;
   final int? experience;
   final LevelType? level;
@@ -242,42 +256,54 @@ class RequestForApplicant {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (name != null) map['name'] = name;
+    if (name != null && name!.trim().isNotEmpty) map['name'] = name!.trim();
     if (experience != null) map['experience'] = experience;
     if (level != null) map['level'] = level!.apiValue;
     if (graduated != null) map['graduated'] = graduated;
     if (education != null) map['education'] = education!.apiValue;
     if (specialty != null) map['specialty'] = specialty!.apiValue;
-    if (languagesRequired.isNotEmpty)
+    if (languagesRequired.isNotEmpty) {
       map['languagesRequired'] = languagesRequired.join(',');
-    if (languagesOptional.isNotEmpty)
+    }
+    if (languagesOptional.isNotEmpty) {
       map['languagesOptional'] = languagesOptional.join(',');
-    if (technologiesRequired.isNotEmpty)
+    }
+    if (technologiesRequired.isNotEmpty) {
       map['technologiesRequired'] = technologiesRequired.join(',');
-    if (technologiesOptional.isNotEmpty)
+    }
+    if (technologiesOptional.isNotEmpty) {
       map['technologiesOptional'] = technologiesOptional.join(',');
+    }
     return map;
   }
 
   RequestForApplicant copyWith({
-    String? name,
-    int? experience,
-    LevelType? level,
-    bool? graduated,
-    EducationType? education,
-    SpecialtyType? specialty,
+    Object? name = _unset,
+    Object? experience = _unset,
+    Object? level = _unset,
+    Object? graduated = _unset,
+    Object? education = _unset,
+    Object? specialty = _unset,
     List<String>? languagesRequired,
     List<String>? languagesOptional,
     List<String>? technologiesRequired,
     List<String>? technologiesOptional,
   }) {
     return RequestForApplicant(
-      name: name ?? this.name,
-      experience: experience ?? this.experience,
-      level: level ?? this.level,
-      graduated: graduated ?? this.graduated,
-      education: education ?? this.education,
-      specialty: specialty ?? this.specialty,
+      name: identical(name, _unset) ? this.name : name as String?,
+      experience: identical(experience, _unset)
+          ? this.experience
+          : experience as int?,
+      level: identical(level, _unset) ? this.level : level as LevelType?,
+      graduated: identical(graduated, _unset)
+          ? this.graduated
+          : graduated as bool?,
+      education: identical(education, _unset)
+          ? this.education
+          : education as EducationType?,
+      specialty: identical(specialty, _unset)
+          ? this.specialty
+          : specialty as SpecialtyType?,
       languagesRequired: languagesRequired ?? this.languagesRequired,
       languagesOptional: languagesOptional ?? this.languagesOptional,
       technologiesRequired: technologiesRequired ?? this.technologiesRequired,

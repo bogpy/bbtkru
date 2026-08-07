@@ -102,6 +102,11 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 	queryBuilder.WriteString("SELECT * FROM applicant a WHERE 1=1")
 	var args []any
 
+	if request.Name != nil && strings.TrimSpace(*request.Name) != "" {
+		queryBuilder.WriteString(" AND instr(lower(name), lower(?)) > 0")
+		args = append(args, strings.TrimSpace(*request.Name))
+	}
+
 	if request.Experience != nil {
 		queryBuilder.WriteString(" AND experience >= ?")
 		args = append(args, *request.Experience)
@@ -187,7 +192,7 @@ func (r ApplicantRepository) GetApplicants(request models.RequestForApplicant) (
 		return nil, err
 	}
 	query = r.DB.Rebind(query)
-	var applicants []models.Applicant
+	applicants := make([]models.Applicant, 0)
 	err = r.DB.Select(&applicants, query, args...)
 	if err != nil {
 		log.Printf("Select failure: %v\nQuery: %v\n", err, query)
