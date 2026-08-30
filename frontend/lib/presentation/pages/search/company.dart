@@ -54,9 +54,11 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(ref.watch(themeProvider) == ThemeMode.light
-                ? Icons.dark_mode
-                : Icons.light_mode),
+            icon: Icon(
+              ref.watch(themeProvider) == ThemeMode.light
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
+            ),
             onPressed: () {
               ref.read(themeProvider.notifier).toggleTheme();
             },
@@ -69,13 +71,13 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
           if (isExpanded)
             Container(
               width: 320,
-              color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+              color: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
               child: SingleChildScrollView(child: _buildCompanySearchBar()),
             ),
           if (isExpanded) const VerticalDivider(width: 1, thickness: 1),
-          Expanded(
-            child: _buildCompanyResults(),
-          ),
+          Expanded(child: _buildCompanyResults()),
         ],
       ),
     );
@@ -134,7 +136,9 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
             label: 'Operating Country',
             initialValue: request.country,
             onChanged: (val) {
-              ref.read(companyRequestProvider.notifier).update(request.copyWith(country: val));
+              ref
+                  .read(companyRequestProvider.notifier)
+                  .update(request.copyWith(country: val));
             },
           ),
           const SizedBox(height: 16),
@@ -142,7 +146,9 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
             label: 'Minimum Employee Count',
             initialValue: request.employeeCount,
             onChanged: (val) {
-              ref.read(companyRequestProvider.notifier).update(request.copyWith(employeeCount: val));
+              ref
+                  .read(companyRequestProvider.notifier)
+                  .update(request.copyWith(employeeCount: val));
             },
           ),
         ],
@@ -158,7 +164,9 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
       error: (error, stack) => Center(child: Text('Error: $error')),
       data: (items) {
         if (items.isEmpty) {
-          return const Center(child: Text("No companies found matching filters."));
+          return const Center(
+            child: Text("No companies found matching filters."),
+          );
         }
 
         return ListView.builder(
@@ -166,11 +174,14 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
           itemBuilder: (context, index) {
             final item = items[index];
             return ListTile(
-              leading: CircleAvatar(child: Text(item.name[0])),
+              leading: CircleAvatar(child: Text(item.initial)),
               title: Text(item.name),
-              subtitle: Text("${item.country} • ${item.employeeCount} employees"),
+              subtitle: Text(
+                "${item.country} • ${item.employeeCount} employees",
+              ),
               trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-              onTap: () => Navigator.pushNamed(context, '/company', arguments: item.id),
+              onTap: () =>
+                  Navigator.pushNamed(context, '/company', arguments: item.id),
             );
           },
         );
@@ -178,4 +189,3 @@ class _CompanySearchPageState extends ConsumerState<CompanySearchPage> {
     );
   }
 }
-

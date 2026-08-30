@@ -69,10 +69,49 @@ func (e Env) InsertApplicant(c *gin.Context) {
 	r := repository.NewApplicantRepository(e.db)
 	err := r.InsertApplicant(applicant)
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Applicant not added"})
+		log.Printf("Error inserting applicant: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Applicant not added"})
 		return
 	}
-	c.JSON(http.StatusOK, nil)
+
+	var languages []models.Language
+	if err := e.db.Select(&languages, "SELECT id, name FROM language"); err != nil {
+		log.Printf("Error loading languages: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Applicant languages not added"})
+		return
+	}
+
+	languageIDs := make(map[string]int64, len(languages))
+	for _, language := range languages {
+		languageIDs[language.Name] = language.ID
+	}
+
+	var technologies []models.Technology
+	if err := e.db.Select(&technologies, "SELECT id, name FROM technology"); err != nil {
+		log.Printf("Error loading technologies: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Applicant technologies not added"})
+		return
+	}
+
+	technologyIDs := make(map[string]int64, len(technologies))
+	for _, technology := range technologies {
+		technologyIDs[technology.Name] = technology.ID
+	}
+
+	if err := r.InsertJunction(
+		[]*models.Applicant{applicant},
+		languageIDs,
+		technologyIDs,
+	); err != nil {
+		log.Printf("Error inserting applicant skills: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Applicant skills not added"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"message": "Applicant added successfully",
+		"id":      applicant.ID,
+	})
 }
 
 func (e Env) DeleteApplicantByID(c *gin.Context) {

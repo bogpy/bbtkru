@@ -39,19 +39,45 @@ func ConnectDB() *sqlx.DB {
 	return db
 }
 
+func MigrateDB(db *sqlx.DB) error {
+	var ownerColumnCount int
+	if err := db.Get(
+		&ownerColumnCount,
+		`SELECT COUNT(*) FROM pragma_table_info('company') WHERE name = 'ownerUserID'`,
+	); err != nil {
+		return fmt.Errorf("check company ownership migration: %w", err)
+	}
+
+	if ownerColumnCount == 0 {
+		if _, err := db.Exec(
+			`ALTER TABLE company ADD COLUMN ownerUserID INTEGER REFERENCES user(id) ON DELETE SET NULL`,
+		); err != nil {
+			return fmt.Errorf("add company owner column: %w", err)
+		}
+	}
+
+	if _, err := db.Exec(
+		`CREATE INDEX IF NOT EXISTS idx_company_owner_user_id ON company(ownerUserID)`,
+	); err != nil {
+		return fmt.Errorf("create company owner index: %w", err)
+	}
+
+	return nil
+}
+
 func InitDB(db *sqlx.DB) {
 	fmt.Print("Initializing database...")
 	schema := `
-		DROP TABLE IF EXISTS user;
 		DROP TABLE IF EXISTS applicant_language;
 		DROP TABLE IF EXISTS applicant_technology;
 		DROP TABLE IF EXISTS vacancy_language;
 		DROP TABLE IF EXISTS vacancy_technology;
-		DROP TABLE IF EXISTS language;
-		DROP TABLE IF EXISTS technology;
-		DROP TABLE IF EXISTS applicant;
 		DROP TABLE IF EXISTS vacancy;
 		DROP TABLE IF EXISTS company;
+		DROP TABLE IF EXISTS applicant;
+		DROP TABLE IF EXISTS language;
+		DROP TABLE IF EXISTS technology;
+		DROP TABLE IF EXISTS user;
 
 		CREATE TABLE user (
 			id INTEGER PRIMARY KEY,
@@ -79,8 +105,12 @@ func InitDB(db *sqlx.DB) {
 			name			VARCHAR(100) NOT NULL UNIQUE,
 			country			VARCHAR(50),
 			yearFound		INT,
-			employeeCount	INT
+			employeeCount	INT,
+			ownerUserID		INTEGER,
+			FOREIGN KEY (ownerUserID) REFERENCES user(id) ON DELETE SET NULL
 		);
+
+		CREATE INDEX idx_company_owner_user_id ON company(ownerUserID);
 
 		CREATE TABLE vacancy (
 			id INTEGER PRIMARY KEY,

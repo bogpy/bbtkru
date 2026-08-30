@@ -20,6 +20,11 @@ func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]mod
 	var queryBuilder strings.Builder
 	queryBuilder.WriteString("SELECT * FROM vacancy v WHERE 1=1")
 	var args []any
+	if request.Title != nil && strings.TrimSpace(*request.Title) != "" {
+		queryBuilder.WriteString(" AND instr(lower(title), lower(?)) > 0")
+		args = append(args, strings.TrimSpace(*request.Title))
+	}
+
 	if request.Experience != nil {
 		queryBuilder.WriteString(" AND experience <= ?")
 		args = append(args, *request.Experience)
@@ -45,9 +50,9 @@ func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]mod
 		args = append(args, *request.Location)
 	}
 
-	if request.Country != nil {
-		queryBuilder.WriteString(" AND (SELECT c.country FROM company c WHERE c.id = v.companyID) = ?")
-		args = append(args, *request.Country)
+	if request.Country != nil && strings.TrimSpace(*request.Country) != "" {
+		queryBuilder.WriteString(" AND instr(lower((SELECT c.country FROM company c WHERE c.id = v.companyID)), lower(?)) > 0")
+		args = append(args, strings.TrimSpace(*request.Country))
 	}
 
 	if len(request.Languages) > 0 {
@@ -106,7 +111,7 @@ func (r VacancyRepository) GetVacancies(request models.RequestForVacancy) ([]mod
 		return nil, err
 	}
 	query = r.DB.Rebind(query)
-	var vacancies []models.Vacancy
+	vacancies := make([]models.Vacancy, 0)
 	err = r.DB.Select(&vacancies, query, args...)
 	if err != nil {
 		return nil, err
@@ -203,10 +208,11 @@ func (r VacancyRepository) InsertJunction(vacancies []*models.Vacancy, language_
 		}
 	}
 	tx := r.DB.MustBegin()
-	_, err := tx.NamedExec(query, args1)
-	if err != nil {
-		tx.Rollback()
-		return err
+	if len(args1) > 0 {
+		if _, err := tx.NamedExec(query, args1); err != nil {
+			tx.Rollback()
+			return err
+		}
 	}
 	query = `INSERT INTO vacancy_technology
 				(vacancy_id, technology_id)
@@ -222,13 +228,13 @@ func (r VacancyRepository) InsertJunction(vacancies []*models.Vacancy, language_
 			args2 = append(args2, VacancyTechnology{vacancy.ID, technologyID})
 		}
 	}
-	_, err = tx.NamedExec(query, args2)
-	if err != nil {
-		tx.Rollback()
-		return err
+	if len(args2) > 0 {
+		if _, err := tx.NamedExec(query, args2); err != nil {
+			tx.Rollback()
+			return err
+		}
 	}
-	tx.Commit()
-	return nil
+	return tx.Commit()
 }
 
 func (r VacancyRepository) GetLanguages(id int64) ([]models.Language, error) {
@@ -317,5 +323,26 @@ func (r VacancyRepository) DeleteVacancy(id int64) error {
 		return fmt.Errorf("Not found vacancy with id: %v", id)
 	}
 
+	return nil
+}
+
+func (r VacancyRepository) DeleteVacancyOwnedBy(id, userID int64) error {
+	result, err := r.DB.Exec(
+		`DELETE FROM vacancy
+		 WHERE id = ?
+		   AND companyID IN (SELECT id FROM company WHERE ownerUserID = ?)`,
+		id,
+		userID,
+	)
+	if err != nil {
+		return err
+	}
+	count, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if count == 0 {
+		return fmt.Errorf("vacancy not found or not owned by user")
+	}
 	return nil
 }

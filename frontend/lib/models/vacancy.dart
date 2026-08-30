@@ -1,4 +1,3 @@
-
 class Vacancy {
   final int id;
   final String title;
@@ -31,13 +30,15 @@ class Vacancy {
   });
 
   factory Vacancy.fromJson(Map<String, dynamic> json) {
-    // Handle "Languages" and "Technologies" capitalized keys from API
-    final List<String> langs = (json['Languages'] as List?)?.cast<String>() ?? 
-                               (json['languages'] as List?)?.cast<String>() ?? 
-                               const [];
-    final List<String> techs = (json['Technologies'] as List?)?.cast<String>() ?? 
-                               (json['technologies'] as List?)?.cast<String>() ?? 
-                               const [];
+    final List<String> langs =
+        (json['Languages'] as List?)?.cast<String>() ??
+        (json['languages'] as List?)?.cast<String>() ??
+        const [];
+
+    final List<String> techs =
+        (json['Technologies'] as List?)?.cast<String>() ??
+        (json['technologies'] as List?)?.cast<String>() ??
+        const [];
 
     return Vacancy(
       id: json['id'] as int? ?? 0,
@@ -57,57 +58,79 @@ class Vacancy {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'description': description,
-        'companyID': companyID,
-        'companyName': companyName,
-        'experience': experience,
-        'salary': salary,
-        'hours': hours,
-        'employment': employment.name,
-        'location': location.name,
-        'languages': languages,
-        'technologies': technologies,
-        'score': score,
-      };
+    'id': id,
+    'title': title,
+    'description': description,
+    'companyID': companyID,
+    'companyName': companyName,
+    'experience': experience,
+    'salary': salary,
+    'hours': hours,
+    'employment': employment.displayName,
+    'location': location.displayName,
+    'languages': languages,
+    'technologies': technologies,
+    'score': score,
+  };
 
   static EmploymentType _parseEmployment(dynamic value) {
-    if (value == "Internship") return EmploymentType.internship;
-    if (value == "Part-time") return EmploymentType.partTime;
+    if (value == 'Internship') {
+      return EmploymentType.internship;
+    }
+    if (value == 'Part-time') {
+      return EmploymentType.partTime;
+    }
     return EmploymentType.fullTime;
   }
 
   static LocationType _parseLocation(dynamic value) {
-    if (value == "Remote") return LocationType.remote;
-    if (value == "Hybrid") return LocationType.hybrid;
+    if (value == 'Remote') {
+      return LocationType.remote;
+    }
+    if (value == 'Hybrid') {
+      return LocationType.hybrid;
+    }
     return LocationType.inOffice;
   }
 }
 
 enum EmploymentType {
-  internship, fullTime, partTime;
+  internship,
+  fullTime,
+  partTime;
+
   String get displayName {
     switch (this) {
-      case EmploymentType.internship: return 'Internship';
-      case EmploymentType.fullTime: return 'Full-time';
-      case EmploymentType.partTime: return 'Part-time';
+      case EmploymentType.internship:
+        return 'Internship';
+      case EmploymentType.fullTime:
+        return 'Full-time';
+      case EmploymentType.partTime:
+        return 'Part-time';
     }
   }
 }
 
 enum LocationType {
-  remote, hybrid, inOffice;
+  remote,
+  hybrid,
+  inOffice;
+
   String get displayName {
     switch (this) {
-      case LocationType.remote: return 'Remote';
-      case LocationType.hybrid: return 'Hybrid';
-      case LocationType.inOffice: return 'In-office';
+      case LocationType.remote:
+        return 'Remote';
+      case LocationType.hybrid:
+        return 'Hybrid';
+      case LocationType.inOffice:
+        return 'In-office';
     }
   }
 }
 
 class RequestForVacancy {
+  static const Object _unset = Object();
+
   final String? title;
   final int? experience;
   final int? salary;
@@ -132,37 +155,63 @@ class RequestForVacancy {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (title != null) map['title'] = title;
-    if (experience != null) map['experience'] = experience;
-    if (salary != null) map['salary'] = salary;
-    if (employment != null) map['employment'] = employment?.name;
-    if (location != null) map['location'] = location?.name;
-    if (country != null) map['country'] = country;
-    if (hours != null) map['hours'] = hours;
-    if (languages.isNotEmpty) map['languages'] = languages.join(',');
-    if (technologies.isNotEmpty) map['technologies'] = technologies.join(',');
+
+    if (title != null && title!.trim().isNotEmpty) {
+      map['title'] = title!.trim();
+    }
+    if (experience != null) {
+      map['experience'] = experience;
+    }
+    if (salary != null) {
+      map['salary'] = salary;
+    }
+    if (employment != null) {
+      map['employment'] = employment!.displayName;
+    }
+    if (location != null) {
+      map['location'] = location!.displayName;
+    }
+    if (country != null && country!.trim().isNotEmpty) {
+      map['country'] = country!.trim();
+    }
+    if (hours != null) {
+      map['hours'] = hours;
+    }
+    if (languages.isNotEmpty) {
+      map['languages'] = languages.join(',');
+    }
+    if (technologies.isNotEmpty) {
+      map['technologies'] = technologies.join(',');
+    }
+
     return map;
   }
 
   RequestForVacancy copyWith({
-    String? title,
-    int? experience,
-    int? salary,
-    EmploymentType? employment,
-    LocationType? location,
-    String? country,
-    int? hours,
+    Object? title = _unset,
+    Object? experience = _unset,
+    Object? salary = _unset,
+    Object? employment = _unset,
+    Object? location = _unset,
+    Object? country = _unset,
+    Object? hours = _unset,
     List<String>? languages,
     List<String>? technologies,
   }) {
     return RequestForVacancy(
-      title: title ?? this.title,
-      experience: experience ?? this.experience,
-      salary: salary ?? this.salary,
-      employment: employment ?? this.employment,
-      location: location ?? this.location,
-      country: country ?? this.country,
-      hours: hours ?? this.hours,
+      title: identical(title, _unset) ? this.title : title as String?,
+      experience: identical(experience, _unset)
+          ? this.experience
+          : experience as int?,
+      salary: identical(salary, _unset) ? this.salary : salary as int?,
+      employment: identical(employment, _unset)
+          ? this.employment
+          : employment as EmploymentType?,
+      location: identical(location, _unset)
+          ? this.location
+          : location as LocationType?,
+      country: identical(country, _unset) ? this.country : country as String?,
+      hours: identical(hours, _unset) ? this.hours : hours as int?,
       languages: languages ?? this.languages,
       technologies: technologies ?? this.technologies,
     );

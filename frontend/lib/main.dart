@@ -26,7 +26,8 @@ void main() async {
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -131,13 +132,20 @@ class MainPage extends ConsumerWidget {
                 }
               },
             ),
-            loading: () => const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
-            error: (_, __) => IconButton(icon: const Icon(Icons.error), onPressed: () {}),
+            loading: () => const SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+            error: (_, _) =>
+                IconButton(icon: const Icon(Icons.error), onPressed: () {}),
           ),
           IconButton(
-            icon: Icon(ref.watch(themeProvider) == ThemeMode.light
-                ? Icons.dark_mode
-                : Icons.light_mode),
+            icon: Icon(
+              ref.watch(themeProvider) == ThemeMode.light
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
+            ),
             onPressed: () {
               ref.read(themeProvider.notifier).toggleTheme();
             },
@@ -158,15 +166,22 @@ class MainPage extends ConsumerWidget {
               LayoutBuilder(
                 builder: (context, constraints) {
                   final bool isDesktop = constraints.maxWidth > 1000;
-                  
+
                   final searchSection = Column(
                     children: [
-                      Text("I am looking for...", style: Theme.of(context).textTheme.headlineSmall),
+                      Text(
+                        "I am looking for...",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
-                        onPressed: () => Navigator.pushNamed(context, '/search_applicant'),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/search_applicant'),
                         icon: const Icon(Icons.person, size: 28),
-                        label: const Text('My Dream Employee', style: TextStyle(fontSize: 18)),
+                        label: const Text(
+                          'My Dream Employee',
+                          style: TextStyle(fontSize: 18),
+                        ),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(400, 80),
                           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -174,9 +189,13 @@ class MainPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
-                        onPressed: () => Navigator.pushNamed(context, '/search_vacancy'),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/search_vacancy'),
                         icon: const Icon(Icons.money, size: 28),
-                        label: const Text('My Dream Job', style: TextStyle(fontSize: 18)),
+                        label: const Text(
+                          'My Dream Job',
+                          style: TextStyle(fontSize: 18),
+                        ),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(400, 80),
                           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -184,9 +203,13 @@ class MainPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
-                        onPressed: () => Navigator.pushNamed(context, '/search_company'),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/search_company'),
                         icon: const Icon(Icons.business, size: 28),
-                        label: const Text('My Dream Company', style: TextStyle(fontSize: 18)),
+                        label: const Text(
+                          'My Dream Company',
+                          style: TextStyle(fontSize: 18),
+                        ),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(400, 80),
                           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -197,12 +220,19 @@ class MainPage extends ConsumerWidget {
 
                   final publishSection = Column(
                     children: [
-                      Text("I want to publish...", style: Theme.of(context).textTheme.headlineSmall),
+                      Text(
+                        "I want to publish...",
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
-                        onPressed: () => Navigator.pushNamed(context, '/publish_applicant'),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/publish_applicant'),
                         icon: const Icon(Icons.description, size: 28),
-                        label: const Text('My Resume', style: TextStyle(fontSize: 18)),
+                        label: const Text(
+                          'My Resume',
+                          style: TextStyle(fontSize: 18),
+                        ),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(400, 80),
                           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -210,9 +240,13 @@ class MainPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
-                        onPressed: () => Navigator.pushNamed(context, '/publish_vacancy'),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/publish_vacancy'),
                         icon: const Icon(Icons.add_task, size: 28),
-                        label: const Text('A New Vacancy', style: TextStyle(fontSize: 18)),
+                        label: const Text(
+                          'A New Vacancy',
+                          style: TextStyle(fontSize: 18),
+                        ),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(400, 80),
                           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -220,9 +254,13 @@ class MainPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
-                        onPressed: () => Navigator.pushNamed(context, '/publish_company'),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/publish_company'),
                         icon: const Icon(Icons.add_business, size: 28),
-                        label: const Text('A Company Profile', style: TextStyle(fontSize: 18)),
+                        label: const Text(
+                          'A Company Profile',
+                          style: TextStyle(fontSize: 18),
+                        ),
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(400, 80),
                           padding: const EdgeInsets.symmetric(horizontal: 20),

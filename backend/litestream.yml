@@ -1,0 +1,12 @@
+access-key-id: ${LITESTREAM_ACCESS_KEY_ID}
+secret-access-key: ${LITESTREAM_SECRET_ACCESS_KEY}
+
+dbs:
+  - path: /data/sqlite/bbtkru.db
+    replicas:
+      - type: s3
+        endpoint: https://storage.yandexcloud.net
+        region: ru-central1
+        bucket: fairintern-sqlite-backups
+        path: bbtkru.db
+        force-path-style: true

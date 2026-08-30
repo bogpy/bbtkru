@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -22,7 +23,7 @@ func main() {
 	}
 	log.SetOutput(file)
 	err = godotenv.Load()
-	if err != nil {
+	if err != nil && !os.IsNotExist(err) {
 		log.Fatal(err)
 	}
 
@@ -33,6 +34,9 @@ func main() {
 		repository.InitDB(db)
 		repository.PopulateDB(db)
 		return
+	}
+	if err := repository.MigrateDB(db); err != nil {
+		log.Fatalf("Failed to migrate database: %v", err)
 	}
 	env := handlers.NewEnv(db)
 
@@ -45,8 +49,23 @@ func main() {
 
 	router.SetTrustedProxies([]string{"127.0.0.1"})
 
+	allowedOrigins := make(map[string]struct{})
+	for _, origin := range strings.Split(os.Getenv("CORS_ALLOWED_ORIGINS"), ",") {
+		origin = strings.TrimSpace(origin)
+		if origin != "" {
+			allowedOrigins[origin] = struct{}{}
+		}
+	}
+
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5001"},
+		AllowOriginFunc: func(origin string) bool {
+			if origin == "http://localhost" || strings.HasPrefix(origin, "http://localhost:") ||
+				origin == "http://127.0.0.1" || strings.HasPrefix(origin, "http://127.0.0.1:") {
+				return true
+			}
+			_, ok := allowedOrigins[origin]
+			return ok
+		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -67,10 +86,12 @@ func main() {
 	router.POST("/auth/login", env.LoginHandler)
 	router.POST("/auth/register", env.RegisterHandler)
 	router.GET("/auth/logout", env.LogoutHandler)
+	router.GET("/auth/me", auth.JwtMiddleware(), env.MeHandler)
 
 	private := router.Group("/private")
 	private.Use(auth.JwtMiddleware())
 	{
+		private.GET("/companies", env.GetOwnedCompanies)
 		private.POST("/vacancies", env.InsertVacancy)
 		private.POST("/applicants", env.InsertApplicant)
 		private.POST("/companies", env.InsertCompany)

@@ -18,7 +18,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
   void _submit() async {
     if (!_formKey.currentState!.validate()) return;
-    
+
     setState(() => _isLoading = true);
     try {
       await ref.read(authProvider.notifier).register(_name, _email, _password);
@@ -28,7 +28,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             SnackBar(content: Text(ref.read(authProvider).error.toString())),
           );
         } else {
-          Navigator.pushReplacementNamed(context, '/');
+          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
         }
       }
     } finally {
@@ -47,7 +47,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             constraints: const BoxConstraints(maxWidth: 400),
             child: Card(
               elevation: 4,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(32.0),
                 child: Form(
@@ -58,7 +60,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     children: [
                       Text(
                         'Create Account',
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.headlineMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 32),
@@ -69,7 +72,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           border: OutlineInputBorder(),
                         ),
                         onChanged: (val) => _name = val,
-                        validator: (val) => val == null || val.isEmpty ? 'Enter your name' : null,
+                        validator: (val) => val == null || val.isEmpty
+                            ? 'Enter your name'
+                            : null,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
@@ -80,7 +85,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                         onChanged: (val) => _email = val,
-                        validator: (val) => val == null || val.isEmpty ? 'Enter your email' : null,
+                        validator: (val) => val == null || val.isEmpty
+                            ? 'Enter your email'
+                            : null,
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
@@ -91,18 +98,25 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
                         obscureText: true,
                         onChanged: (val) => _password = val,
-                        validator: (val) => val == null || val.length < 6 ? 'Password must be at least 6 chars' : null,
+                        validator: (val) => val == null || val.length < 6
+                            ? 'Password must be at least 6 chars'
+                            : null,
                       ),
                       const SizedBox(height: 32),
                       ElevatedButton(
                         onPressed: _isLoading ? null : _submit,
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
-                        child: _isLoading 
-                          ? const CircularProgressIndicator()
-                          : const Text('Register', style: TextStyle(fontSize: 16)),
+                        child: _isLoading
+                            ? const CircularProgressIndicator()
+                            : const Text(
+                                'Register',
+                                style: TextStyle(fontSize: 16),
+                              ),
                       ),
                       const SizedBox(height: 16),
                       TextButton(
